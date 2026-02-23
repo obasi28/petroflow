@@ -51,6 +51,7 @@ export function useRunMonteCarlo(wellId: string, analysisId: string) {
     mutationFn: (data: DCAMonteCarloRequest) =>
       api.post(`/wells/${wellId}/dca/${analysisId}/monte-carlo`, data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dca", wellId] });
       queryClient.invalidateQueries({ queryKey: ["dca", wellId, analysisId] });
     },
   });

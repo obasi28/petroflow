@@ -61,6 +61,14 @@ def transform_production_data(
     if not date_col:
         raise ValueError("Date column mapping is required")
 
+    available_columns = set(df.columns.tolist())
+    for mapped_col in (date_col, oil_col, gas_col, water_col):
+        if mapped_col and mapped_col not in available_columns:
+            raise ValueError(
+                f"Mapped column '{mapped_col}' was not found in file. "
+                "Please review the mapping and try again."
+            )
+
     for _, row in df.iterrows():
         try:
             prod_date = pd.to_datetime(row[date_col]).date()

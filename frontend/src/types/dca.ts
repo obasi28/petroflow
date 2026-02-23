@@ -80,7 +80,7 @@ export interface DCAMonteCarloRequest {
 }
 
 export interface ParameterDistribution {
-  distribution: "normal" | "lognormal" | "uniform" | "triangular";
+  type: "normal" | "lognormal" | "uniform" | "triangular";
   mean?: number;
   std?: number;
   min?: number;

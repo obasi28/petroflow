@@ -2,6 +2,14 @@ import type { ApiResponse } from "@/types/api";
 
 const API_BASE = "/api/v1";
 
+function isDemoToken(token: string | null): boolean {
+  return !!token && token.startsWith("demo-token-");
+}
+
+function canUseDevAuthFallback(): boolean {
+  return process.env.NEXT_PUBLIC_ENABLE_DEMO_AUTH === "true";
+}
+
 class ApiClient {
   private baseUrl: string;
 
@@ -28,9 +36,13 @@ class ApiClient {
     if (!response.ok) {
       if (response.status === 401) {
         if (typeof window !== "undefined") {
-          localStorage.removeItem("petroflow_token");
-          localStorage.removeItem("petroflow_user");
-          window.location.href = "/login";
+          const token = localStorage.getItem("petroflow_token");
+          // In development demo mode, keep local auth and avoid redirect loops.
+          if (!(canUseDevAuthFallback() && isDemoToken(token))) {
+            localStorage.removeItem("petroflow_token");
+            localStorage.removeItem("petroflow_user");
+            window.location.href = "/login";
+          }
         }
       }
 

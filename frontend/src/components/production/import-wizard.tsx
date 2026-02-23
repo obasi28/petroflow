@@ -50,15 +50,16 @@ export function ImportWizard({ wellId, onComplete }: ImportWizardProps) {
   const [step, setStep] = useState<Step>("upload");
   const [file, setFile] = useState<File | null>(null);
   const [headers, setHeaders] = useState<string[]>([]);
-  const [preview, setPreview] = useState<string[][]>([]);
+  const [preview, setPreview] = useState<Array<Array<string | number | null>>>([]);
   const [mapping, setMapping] = useState<Record<string, string>>({});
+  const [isParsing, setIsParsing] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const selectedFile = acceptedFiles[0];
     if (selectedFile) {
       setFile(selectedFile);
-      parseCSVHeaders(selectedFile);
+      void parseFilePreview(selectedFile);
     }
   }, []);
 
@@ -72,28 +73,45 @@ export function ImportWizard({ wellId, onComplete }: ImportWizardProps) {
     maxFiles: 1,
   });
 
-  async function parseCSVHeaders(file: File) {
-    const text = await file.text();
-    const lines = text.split("\n").filter((l) => l.trim());
-    if (lines.length > 0) {
-      const hdrs = lines[0].split(",").map((h) => h.trim().replace(/"/g, ""));
-      setHeaders(hdrs);
+  async function parseFilePreview(selectedFile: File) {
+    setIsParsing(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
 
-      // Auto-detect mapping
-      const autoMap: Record<string, string> = {};
-      hdrs.forEach((h) => {
-        const normalized = h.toLowerCase().replace(/[\s-]/g, "_");
-        const match = EXPECTED_COLUMNS.find(
-          (col) => normalized.includes(col) || col.includes(normalized)
-        );
-        if (match) autoMap[match] = h;
-      });
-      setMapping(autoMap);
+      const result = await api.upload<{
+        columns: string[];
+        preview: Array<Array<string | number | null>>;
+        suggested_mapping: Record<string, string>;
+      }>("/imports/upload", formData);
 
-      // Preview first 5 data rows
-      const previewRows = lines.slice(1, 6).map((line) => line.split(",").map((c) => c.trim().replace(/"/g, "")));
-      setPreview(previewRows);
+      if (result.status !== "success" || !result.data) {
+        toast.error(result.errors?.[0]?.message || "Failed to parse file");
+        return;
+      }
+
+      setHeaders(result.data.columns || []);
+      setPreview(result.data.preview || []);
+
+      const normalizedMapping: Record<string, string> = {};
+      const suggested = result.data.suggested_mapping || {};
+      const suggestedKeyMap: Record<string, string> = {
+        date_column: "production_date",
+        oil_column: "oil_rate",
+        gas_column: "gas_rate",
+        water_column: "water_rate",
+      };
+      for (const [suggestedKey, targetKey] of Object.entries(suggestedKeyMap)) {
+        if (suggested[suggestedKey]) {
+          normalizedMapping[targetKey] = suggested[suggestedKey];
+        }
+      }
+      setMapping(normalizedMapping);
       setStep("mapping");
+    } catch {
+      toast.error("Failed to parse file. Please try another file.");
+    } finally {
+      setIsParsing(false);
     }
   }
 
@@ -145,9 +163,17 @@ export function ImportWizard({ wellId, onComplete }: ImportWizardProps) {
               }`}
             >
               <input {...getInputProps()} />
-              <Upload className="mb-4 h-10 w-10 text-muted-foreground" />
+              {isParsing ? (
+                <Loader2 className="mb-4 h-10 w-10 animate-spin text-muted-foreground" />
+              ) : (
+                <Upload className="mb-4 h-10 w-10 text-muted-foreground" />
+              )}
               <p className="text-sm font-medium">
-                {isDragActive ? "Drop the file here" : "Drag and drop a file, or click to browse"}
+                {isParsing
+                  ? "Analyzing file..."
+                  : isDragActive
+                    ? "Drop the file here"
+                    : "Drag and drop a file, or click to browse"}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 Supports CSV, XLS, XLSX

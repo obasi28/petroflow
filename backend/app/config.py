@@ -1,4 +1,7 @@
-from pydantic_settings import BaseSettings
+try:
+    from pydantic_settings import BaseSettings
+except ImportError:  # pragma: no cover - compatibility shim for pydantic v1 envs
+    from pydantic import BaseSettings
 from functools import lru_cache
 
 

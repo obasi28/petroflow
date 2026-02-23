@@ -3,6 +3,21 @@ import type { AuthTokens, LoginRequest, RegisterRequest, UserProfile } from "@/t
 const TOKEN_KEY = "petroflow_token";
 const USER_KEY = "petroflow_user";
 
+function buildDemoUser(email?: string): UserProfile {
+  return {
+    id: "00000000-0000-0000-0000-000000000001",
+    email: email || "demo@petroflow.local",
+    name: "Demo Engineer",
+    team_id: "00000000-0000-0000-0000-000000000001",
+    role: "owner",
+    created_at: new Date().toISOString(),
+  };
+}
+
+function canUseDevAuthFallback(): boolean {
+  return process.env.NEXT_PUBLIC_ENABLE_DEMO_AUTH === "true";
+}
+
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
   return localStorage.getItem(TOKEN_KEY);
@@ -34,34 +49,59 @@ export function clearAuth(): void {
 }
 
 export async function login(credentials: LoginRequest): Promise<{ token: string; user: UserProfile }> {
-  const res = await fetch("/api/v1/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials),
-  });
+  try {
+    const res = await fetch("/api/v1/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    });
 
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({ detail: "Login failed" }));
-    throw new Error(error.detail || error.errors?.[0]?.message || "Invalid email or password");
+    if (!res.ok) {
+      const error = await res.json().catch(() => ({ detail: "Login failed" }));
+      const message = error.detail || error.errors?.[0]?.message || "Invalid email or password";
+
+      // Development preview fallback when backend/database is unavailable.
+      if (canUseDevAuthFallback() && res.status >= 500) {
+        const demoUser = buildDemoUser(credentials.email);
+        const demoToken = `demo-token-${Date.now()}`;
+        setAuth(demoToken, demoUser);
+        return { token: demoToken, user: demoUser };
+      }
+
+      throw new Error(message);
+    }
+
+    const data: { status: string; data: AuthTokens } = await res.json();
+    const token = data.data.token;
+
+    // Fetch full user profile (includes team_id and role)
+    const profileRes = await fetch("/api/v1/auth/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!profileRes.ok) {
+      if (canUseDevAuthFallback() && profileRes.status >= 500) {
+        const demoUser = buildDemoUser(credentials.email);
+        setAuth(token, demoUser);
+        return { token, user: demoUser };
+      }
+      throw new Error("Failed to fetch user profile");
+    }
+
+    const profileData: { status: string; data: UserProfile } = await profileRes.json();
+    const user = profileData.data;
+
+    setAuth(token, user);
+    return { token, user };
+  } catch (err) {
+    if (canUseDevAuthFallback()) {
+      const demoUser = buildDemoUser(credentials.email);
+      const demoToken = `demo-token-${Date.now()}`;
+      setAuth(demoToken, demoUser);
+      return { token: demoToken, user: demoUser };
+    }
+    throw err;
   }
-
-  const data: { status: string; data: AuthTokens } = await res.json();
-  const token = data.data.token;
-
-  // Fetch full user profile (includes team_id and role)
-  const profileRes = await fetch("/api/v1/auth/me", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (!profileRes.ok) {
-    throw new Error("Failed to fetch user profile");
-  }
-
-  const profileData: { status: string; data: UserProfile } = await profileRes.json();
-  const user = profileData.data;
-
-  setAuth(token, user);
-  return { token, user };
 }
 
 export async function register(data: RegisterRequest): Promise<{ token: string; user: UserProfile }> {

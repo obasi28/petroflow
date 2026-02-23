@@ -50,7 +50,7 @@ export function MonteCarloDialog({
     params.forEach((p) => {
       const val = fittedParams[p] || 1;
       initial[p] = {
-        distribution: "normal",
+        type: "normal",
         mean: val,
         std: val * 0.1,
       };
@@ -141,8 +141,8 @@ export function MonteCarloDialog({
                 </Label>
                 <div className="grid grid-cols-3 gap-2">
                   <Select
-                    value={distributions[param]?.distribution || "normal"}
-                    onValueChange={(v) => updateDistribution(param, "distribution", v)}
+                    value={distributions[param]?.type || "normal"}
+                    onValueChange={(v) => updateDistribution(param, "type", v)}
                   >
                     <SelectTrigger className="h-7 text-xs">
                       <SelectValue />

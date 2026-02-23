@@ -10,15 +10,14 @@ from app.dependencies import get_current_user, CurrentUser
 from app.models.dca import DCAAnalysis, DCAForecastPoint
 from app.models.production import ProductionRecord
 from app.schemas.dca import (
-    DCACreate, DCAUpdate, DCAResponse, DCAForecastRequest,
+    DCACreate, DCAResponse,
     DCAMonteCarloRequest, DCAAutoFitRequest, DCAAutoFitResponse,
 )
 from app.schemas.common import success_response
-from app.utils.exceptions import NotFoundException, EngineException
+from app.utils.exceptions import NotFoundException, EngineException, ValidationException
 from app.engine.dca.fitting import DCAFitter
 from app.engine.dca.forecasting import generate_forecast
-from app.engine.dca.diagnostics import compute_diagnostics
-from app.tasks.dca_tasks import run_monte_carlo
+from app.engine.dca.monte_carlo import MonteCarloEUR
 
 router = APIRouter(tags=["dca"])
 
@@ -73,6 +72,28 @@ async def _get_production_arrays(
     return np.array(t_list), np.array(q_list), last_cum or 0.0
 
 
+def _normalize_param_distributions(param_distributions: dict) -> dict:
+    """
+    Accept both `type` and legacy `distribution` keys from clients.
+    """
+    normalized = {}
+    for param, config in param_distributions.items():
+        if not isinstance(config, dict):
+            raise ValidationException(f"Invalid distribution config for '{param}'")
+
+        dist_type = config.get("type") or config.get("distribution")
+        if not dist_type:
+            raise ValidationException(
+                f"Distribution type missing for '{param}'",
+                field=f"param_distributions.{param}.type",
+            )
+
+        normalized[param] = {**config, "type": dist_type}
+        normalized[param].pop("distribution", None)
+
+    return normalized
+
+
 @router.get("/wells/{well_id}/dca")
 async def list_analyses(
     well_id: uuid.UUID,
@@ -85,6 +106,21 @@ async def list_analyses(
         .order_by(DCAAnalysis.updated_at.desc())
     )
     analyses = list(result.scalars().all())
+
+    if analyses:
+        analysis_ids = [a.id for a in analyses]
+        points_result = await db.execute(
+            select(DCAForecastPoint)
+            .where(DCAForecastPoint.analysis_id.in_(analysis_ids))
+            .order_by(DCAForecastPoint.forecast_date.asc())
+        )
+        points = list(points_result.scalars().all())
+        points_by_analysis: dict[uuid.UUID, list[DCAForecastPoint]] = {}
+        for point in points:
+            points_by_analysis.setdefault(point.analysis_id, []).append(point)
+        for analysis in analyses:
+            analysis.forecast_points = points_by_analysis.get(analysis.id, [])
+
     return success_response(
         [DCAResponse.model_validate(a).model_dump() for a in analyses]
     )
@@ -230,19 +266,38 @@ async def start_monte_carlo(
     if not analysis:
         raise NotFoundException("DCA analysis not found")
 
-    task = run_monte_carlo.delay({
-        "model_type": analysis.model_type,
-        "parameters": analysis.parameters,
-        "param_distributions": data.param_distributions,
-        "economic_limit": data.economic_limit,
-        "cum_to_date": analysis.cum_at_forecast_start or 0.0,
-        "iterations": data.iterations,
-    })
+    try:
+        normalized_distributions = _normalize_param_distributions(data.param_distributions)
+        mc = MonteCarloEUR()
+        result = mc.run(
+            model_type=analysis.model_type,
+            base_parameters=analysis.parameters,
+            param_distributions=normalized_distributions,
+            economic_limit=data.economic_limit,
+            cum_to_date=analysis.cum_at_forecast_start or 0.0,
+            iterations=data.iterations,
+        )
+    except ValidationException:
+        raise
+    except Exception as exc:
+        raise EngineException(f"Monte Carlo simulation failed: {str(exc)}")
 
-    analysis.status = "running"
+    analysis.monte_carlo_results = {
+        "p10": result.eur_p10,
+        "p50": result.eur_p50,
+        "p90": result.eur_p90,
+        "mean": result.eur_mean,
+        "std": result.eur_std,
+        "iterations": result.iterations,
+    }
+    analysis.status = "completed"
     await db.flush()
+    await db.refresh(analysis)
 
-    return success_response({"task_id": task.id, "status": "running"})
+    return success_response({
+        "status": "completed",
+        "monte_carlo_results": analysis.monte_carlo_results,
+    })
 
 
 @router.post("/dca/auto-fit")
