@@ -11,8 +11,6 @@ export function useProduction(wellId: string, filters: ProductionFilters = {}) {
       api.get<ProductionRecord[]>(`/wells/${wellId}/production`, {
         start_date: filters.start_date,
         end_date: filters.end_date,
-        page: filters.page,
-        per_page: filters.per_page,
       }),
     enabled: !!wellId,
   });

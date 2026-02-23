@@ -42,13 +42,13 @@ export async function login(credentials: LoginRequest): Promise<{ token: string;
 
   if (!res.ok) {
     const error = await res.json().catch(() => ({ detail: "Login failed" }));
-    throw new Error(error.detail || "Invalid email or password");
+    throw new Error(error.detail || error.errors?.[0]?.message || "Invalid email or password");
   }
 
   const data: { status: string; data: AuthTokens } = await res.json();
-  const token = data.data.access_token;
+  const token = data.data.token;
 
-  // Fetch user profile
+  // Fetch full user profile (includes team_id and role)
   const profileRes = await fetch("/api/v1/auth/me", {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -73,7 +73,7 @@ export async function register(data: RegisterRequest): Promise<{ token: string; 
 
   if (!res.ok) {
     const error = await res.json().catch(() => ({ detail: "Registration failed" }));
-    throw new Error(error.detail || "Registration failed");
+    throw new Error(error.detail || error.errors?.[0]?.message || "Registration failed");
   }
 
   // Auto-login after registration

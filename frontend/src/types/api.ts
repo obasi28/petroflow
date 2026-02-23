@@ -24,8 +24,12 @@ export interface PaginatedParams {
 }
 
 export interface AuthTokens {
-  access_token: string;
-  token_type: string;
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+  };
 }
 
 export interface LoginRequest {

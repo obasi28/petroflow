@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     nextauth_secret: str = "change-this-to-a-random-secret"
     access_token_expire_minutes: int = 60 * 24  # 24 hours
 
-    model_config = {"env_file": ".env", "extra": "ignore"}
+    model_config = {"env_file": ("../.env", ".env"), "extra": "ignore"}
 
     @property
     def cors_origins(self) -> list[str]:

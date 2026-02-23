@@ -2,9 +2,9 @@ services:
   db:
     image: timescale/timescaledb:latest-pg16
     environment:
-      POSTGRES_USER: petroflow
-      POSTGRES_PASSWORD: petroflow
-      POSTGRES_DB: petroflow
+      POSTGRES_USER: ${POSTGRES_USER:-petroflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-petroflow}
+      POSTGRES_DB: ${POSTGRES_DB:-petroflow}
     ports:
       - "5432:5432"
     volumes:
@@ -29,9 +29,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-    volumes:
-      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     ports:
       - "8000:8000"
     environment:
@@ -51,8 +49,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     command: celery -A app.tasks.celery_app worker --loglevel=info
-    volumes:
-      - ./backend:/app
     environment:
       DATABASE_URL: postgresql+asyncpg://petroflow:petroflow@db:5432/petroflow
       DATABASE_URL_SYNC: postgresql://petroflow:petroflow@db:5432/petroflow
@@ -64,6 +60,19 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:8000
+    env_file:
+      - .env
+    depends_on:
+      - backend
 
 volumes:
   pgdata:
