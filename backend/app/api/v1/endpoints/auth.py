@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from passlib.context import CryptContext
+import re
 from app.database import get_db
 from app.models.user import User, Team, TeamMembership
 from app.middleware.auth import create_access_token, verify_token
@@ -18,6 +19,23 @@ class RegisterRequest:
         self.email = email
         self.password = password
         self.name = name
+
+
+def _slugify_workspace_name(email: str) -> str:
+    local_part = email.split("@", 1)[0].lower()
+    slug = re.sub(r"[^a-z0-9]+", "-", local_part).strip("-")
+    return slug or "workspace"
+
+
+async def _unique_team_slug(db: AsyncSession, base_slug: str) -> str:
+    candidate = base_slug
+    suffix = 2
+    while True:
+        existing = await db.execute(select(Team.id).where(Team.slug == candidate))
+        if existing.scalar_one_or_none() is None:
+            return candidate
+        candidate = f"{base_slug}-{suffix}"
+        suffix += 1
 
 
 @router.post("/register")
@@ -40,7 +58,7 @@ async def register(
     await db.flush()
 
     # Auto-create personal team
-    slug = email.split("@")[0].lower().replace(".", "-")
+    slug = await _unique_team_slug(db, _slugify_workspace_name(email))
     team = Team(name=f"{name}'s Workspace", slug=slug, owner_id=user.id)
     db.add(team)
     await db.flush()
