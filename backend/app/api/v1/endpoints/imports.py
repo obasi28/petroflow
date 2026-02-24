@@ -3,6 +3,7 @@ import uuid
 from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from app.database import get_db
 from app.dependencies import get_current_user, CurrentUser
 from app.models.well import Well
@@ -114,6 +115,48 @@ def _is_non_empty_value(value: object) -> bool:
     if isinstance(value, str) and value.strip() == "":
         return False
     return True
+
+
+WELL_STRING_MAX_LENGTHS: dict[str, int] = {
+    "well_name": 255,
+    "api_number": 14,
+    "uwi": 20,
+    "county": 100,
+    "state_province": 100,
+    "country": 100,
+    "basin": 100,
+    "field_name": 255,
+    "formation": 255,
+    "operator": 255,
+    "well_type": 20,
+    "well_status": 20,
+    "orientation": 20,
+}
+
+WELL_ENUM_VALUES: dict[str, set[str]] = {
+    "well_type": {"oil", "gas", "oil_gas", "injection"},
+    "well_status": {"active", "shut_in", "plugged", "drilling", "completing"},
+    "orientation": {"vertical", "horizontal", "deviated"},
+}
+
+
+def _validate_well_payload(payload: dict) -> None:
+    for field, max_length in WELL_STRING_MAX_LENGTHS.items():
+        value = payload.get(field)
+        if isinstance(value, str) and len(value) > max_length:
+            raise ValueError(f"Field '{field}' exceeds max length {max_length}")
+
+    for field, allowed in WELL_ENUM_VALUES.items():
+        value = payload.get(field)
+        if isinstance(value, str) and value not in allowed:
+            raise ValueError(f"Field '{field}' has invalid value '{value}'")
+
+    lat = payload.get("latitude")
+    lon = payload.get("longitude")
+    if lat is not None and (lat < -90 or lat > 90):
+        raise ValueError("Field 'latitude' must be between -90 and 90")
+    if lon is not None and (lon < -180 or lon > 180):
+        raise ValueError("Field 'longitude' must be between -180 and 180")
 
 
 @router.post("/upload")
@@ -283,6 +326,8 @@ async def upload_wells_file(
             if payload.get("project_id"):
                 payload["project_id"] = uuid.UUID(payload["project_id"])
 
+            _validate_well_payload(payload)
+
             existing_well = None
             if payload.get("api_number"):
                 existing_result = await db.execute(
@@ -324,6 +369,13 @@ async def upload_wells_file(
                 "row": row_idx,
                 "message": str(exc),
             })
+
+    try:
+        await db.flush()
+    except SQLAlchemyError as exc:
+        raise ValidationException(
+            f"Well import failed during database write: {str(exc)}"
+        )
 
     return success_response({
         "file_name": filename,
