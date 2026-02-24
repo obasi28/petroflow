@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 import numpy as np
 
 from app.database import get_db
@@ -102,24 +103,11 @@ async def list_analyses(
 ):
     result = await db.execute(
         select(DCAAnalysis)
+        .options(selectinload(DCAAnalysis.forecast_points))
         .where(DCAAnalysis.well_id == well_id, DCAAnalysis.team_id == current_user.team_id)
         .order_by(DCAAnalysis.updated_at.desc())
     )
     analyses = list(result.scalars().all())
-
-    if analyses:
-        analysis_ids = [a.id for a in analyses]
-        points_result = await db.execute(
-            select(DCAForecastPoint)
-            .where(DCAForecastPoint.analysis_id.in_(analysis_ids))
-            .order_by(DCAForecastPoint.forecast_date.asc())
-        )
-        points = list(points_result.scalars().all())
-        points_by_analysis: dict[uuid.UUID, list[DCAForecastPoint]] = {}
-        for point in points:
-            points_by_analysis.setdefault(point.analysis_id, []).append(point)
-        for analysis in analyses:
-            analysis.forecast_points = points_by_analysis.get(analysis.id, [])
 
     return success_response(
         [DCAResponse.model_validate(a).model_dump() for a in analyses]
@@ -190,9 +178,14 @@ async def create_analysis(
         db.add(point)
 
     await db.flush()
-    await db.refresh(analysis)
+    analysis_result = await db.execute(
+        select(DCAAnalysis)
+        .options(selectinload(DCAAnalysis.forecast_points))
+        .where(DCAAnalysis.id == analysis.id)
+    )
+    analysis_with_points = analysis_result.scalar_one()
 
-    return success_response(DCAResponse.model_validate(analysis).model_dump())
+    return success_response(DCAResponse.model_validate(analysis_with_points).model_dump())
 
 
 @router.get("/wells/{well_id}/dca/{analysis_id}")
@@ -203,7 +196,9 @@ async def get_analysis(
     current_user: CurrentUser = Depends(get_current_user),
 ):
     result = await db.execute(
-        select(DCAAnalysis).where(
+        select(DCAAnalysis)
+        .options(selectinload(DCAAnalysis.forecast_points))
+        .where(
             DCAAnalysis.id == analysis_id,
             DCAAnalysis.well_id == well_id,
             DCAAnalysis.team_id == current_user.team_id,
@@ -212,14 +207,6 @@ async def get_analysis(
     analysis = result.scalar_one_or_none()
     if not analysis:
         raise NotFoundException("DCA analysis not found")
-
-    # Load forecast points
-    points = await db.execute(
-        select(DCAForecastPoint)
-        .where(DCAForecastPoint.analysis_id == analysis_id)
-        .order_by(DCAForecastPoint.forecast_date.asc())
-    )
-    analysis.forecast_points = list(points.scalars().all())
 
     return success_response(DCAResponse.model_validate(analysis).model_dump())
 
