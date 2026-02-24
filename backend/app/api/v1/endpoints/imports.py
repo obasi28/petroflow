@@ -112,7 +112,7 @@ def _normalize_well_column_mapping(mapping: dict) -> dict:
 def _is_non_empty_value(value: object) -> bool:
     if value is None:
         return False
-    if isinstance(value, str) and value.strip() == "":
+    if isinstance(value, str) and _is_placeholder_text(value):
         return False
     return True
 
@@ -146,15 +146,21 @@ WELL_ENUM_ALIASES: dict[str, dict[str, str]] = {
         "oil_gas": "oil_gas",
         "oil_and_gas": "oil_gas",
         "oilgas": "oil_gas",
+        "water_injector": "injection",
+        "gas_injector": "injection",
+        "water_injection": "injection",
+        "gas_injection": "injection",
         "injector": "injection",
         "injection": "injection",
     },
     "well_status": {
         "active": "active",
         "producing": "active",
+        "inactive": "shut_in",
         "shut_in": "shut_in",
         "shutin": "shut_in",
         "plugged": "plugged",
+        "abandoned": "plugged",
         "drilling": "drilling",
         "completing": "completing",
     },
@@ -164,6 +170,11 @@ WELL_ENUM_ALIASES: dict[str, dict[str, str]] = {
         "deviated": "deviated",
     },
 }
+
+
+def _is_placeholder_text(value: str) -> bool:
+    token = value.strip().lower()
+    return token in {"", "--", "-", "n/a", "na", "none", "null", "unassigned"}
 
 
 def _normalize_enum_token(value: str) -> str:
@@ -176,10 +187,17 @@ def _normalize_enum_token(value: str) -> str:
 
 
 def _normalize_well_payload(payload: dict) -> None:
+    for field, value in list(payload.items()):
+        if isinstance(value, str) and _is_placeholder_text(value):
+            payload.pop(field, None)
+
     for field, aliases in WELL_ENUM_ALIASES.items():
         value = payload.get(field)
         if isinstance(value, str):
             token = _normalize_enum_token(value)
+            if not token:
+                payload.pop(field, None)
+                continue
             payload[field] = aliases.get(token, token)
 
     country = payload.get("country")

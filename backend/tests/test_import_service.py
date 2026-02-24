@@ -8,6 +8,7 @@ from app.services.import_service import (
 from app.api.v1.endpoints.imports import (
     _normalize_column_mapping,
     _normalize_well_column_mapping,
+    _is_non_empty_value,
     _normalize_well_payload,
 )
 
@@ -174,3 +175,23 @@ def test_normalize_well_payload_accepts_common_enum_variants():
     assert payload["well_status"] == "shut_in"
     assert payload["orientation"] == "horizontal"
     assert payload["country"] == "US"
+
+
+def test_normalize_well_payload_accepts_inactive_and_water_injector():
+    payload = {
+        "well_type": "Water Injector",
+        "well_status": "Inactive",
+        "orientation": "--",
+    }
+
+    _normalize_well_payload(payload)
+
+    assert payload["well_type"] == "injection"
+    assert payload["well_status"] == "shut_in"
+    assert "orientation" not in payload
+
+
+def test_is_non_empty_value_treats_placeholder_as_empty():
+    assert _is_non_empty_value("--") is False
+    assert _is_non_empty_value("Unassigned") is False
+    assert _is_non_empty_value("Oil") is True
