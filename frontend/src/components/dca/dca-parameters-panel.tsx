@@ -1,7 +1,7 @@
 "use client";
 
 import type { DCAAnalysis } from "@/types/dca";
-import { MODEL_PARAMETERS, PARAMETER_UNITS } from "@/types/dca";
+import { MODEL_PARAMETERS, getParameterUnit } from "@/types/dca";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -45,7 +45,7 @@ export function DCAParametersPanel({ analysis }: DCAParametersPanelProps) {
                     : "--"}
                 </TableCell>
                 <TableCell className="text-right text-xs text-muted-foreground">
-                  {PARAMETER_UNITS[param] || "--"}
+                  {getParameterUnit(param, analysis.fluid_type) || "--"}
                 </TableCell>
               </TableRow>
             ))}

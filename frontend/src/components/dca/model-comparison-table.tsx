@@ -43,7 +43,7 @@ export function ModelComparisonTable({ results }: ModelComparisonTableProps) {
               <TableRow>
                 <TableHead className="text-xs">Rank</TableHead>
                 <TableHead className="text-xs">Model</TableHead>
-                <TableHead className="text-right text-xs">R\u00b2</TableHead>
+                <TableHead className="text-right text-xs">R2</TableHead>
                 <TableHead className="text-right text-xs">RMSE</TableHead>
                 <TableHead className="text-right text-xs">AIC</TableHead>
                 <TableHead className="text-right text-xs">EUR</TableHead>

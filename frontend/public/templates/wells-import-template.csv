@@ -1,0 +1,2 @@
+well_name,api_number,uwi,project_id,operator,well_type,well_status,orientation,basin,field_name,formation,state_province,county,country,latitude,longitude,spud_date,completion_date,first_prod_date,total_depth,lateral_length,num_stages,notes
+SMITH 1H,42-123-00001,US-42-123-00001,,Petro Ops,oil,active,horizontal,Permian,Midland,Wolfcamp,Texas,Midland,US,31.9974,-102.0779,2023-01-10,2023-03-05,2023-04-01,11000,8500,36,Imported via template

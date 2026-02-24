@@ -11,17 +11,21 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download } from "lucide-react";
-import type { DCAForecastPoint } from "@/types/dca";
+import { getFluidCumulativeUnit, getFluidRateUnit, type DCAForecastPoint, type FluidType } from "@/types/dca";
 import { formatDate } from "@/lib/utils";
 
 interface DCAForecastTableProps {
   forecastPoints: DCAForecastPoint[];
   modelType: string;
+  fluidType: FluidType;
 }
 
-export function DCAForecastTable({ forecastPoints, modelType }: DCAForecastTableProps) {
+export function DCAForecastTable({ forecastPoints, modelType, fluidType }: DCAForecastTableProps) {
+  const rateUnit = getFluidRateUnit(fluidType);
+  const cumulativeUnit = getFluidCumulativeUnit(fluidType);
+
   function exportToCSV() {
-    const headers = "Date,Month,Rate (bbl/d),Cumulative (bbl)\n";
+    const headers = `Date,Month,Rate (${rateUnit}),Cumulative (${cumulativeUnit})\n`;
     const rows = forecastPoints
       .map((p) => `${p.forecast_date},${p.time_months},${p.rate.toFixed(2)},${p.cumulative.toFixed(0)}`)
       .join("\n");
@@ -48,12 +52,12 @@ export function DCAForecastTable({ forecastPoints, modelType }: DCAForecastTable
         <div className="max-h-[300px] overflow-auto rounded-md border">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="text-xs">Date</TableHead>
-                <TableHead className="text-right text-xs">Month</TableHead>
-                <TableHead className="text-right text-xs">Rate (bbl/d)</TableHead>
-                <TableHead className="text-right text-xs">Cumulative (bbl)</TableHead>
-              </TableRow>
+                <TableRow>
+                  <TableHead className="text-xs">Date</TableHead>
+                  <TableHead className="text-right text-xs">Month</TableHead>
+                  <TableHead className="text-right text-xs">Rate ({rateUnit})</TableHead>
+                  <TableHead className="text-right text-xs">Cumulative ({cumulativeUnit})</TableHead>
+                </TableRow>
             </TableHeader>
             <TableBody>
               {forecastPoints.slice(0, 60).map((point) => (

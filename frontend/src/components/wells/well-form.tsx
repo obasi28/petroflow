@@ -23,6 +23,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Loader2 } from "lucide-react";
+import { useProjects } from "@/hooks/use-projects";
 
 interface WellFormProps {
   onSubmit: (data: WellCreateFormData) => void;
@@ -32,6 +33,8 @@ interface WellFormProps {
 
 export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) {
   const toInputValue = (value: string | number | undefined | null) => value ?? "";
+  const { data: projectsData } = useProjects();
+  const projects = projectsData?.data || [];
 
   const form = useForm<WellCreateFormData>({
     resolver: zodResolver(wellCreateSchema),
@@ -41,6 +44,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
       well_status: "active",
       orientation: "vertical",
       country: "US",
+      project_id: undefined,
       ...defaultValues,
     },
   });
@@ -89,6 +93,36 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
                   <FormControl>
                     <Input placeholder="Operator name" {...field} value={toInputValue(field.value)} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="project_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Project</FormLabel>
+                  <Select
+                    value={field.value || "none"}
+                    onValueChange={(value) =>
+                      field.onChange(value === "none" ? undefined : value)
+                    }
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Unassigned" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="none">Unassigned</SelectItem>
+                      {projects.map((project) => (
+                        <SelectItem key={project.id} value={project.id}>
+                          {project.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

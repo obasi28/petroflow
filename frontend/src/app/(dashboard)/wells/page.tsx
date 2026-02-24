@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, Upload } from "lucide-react";
 import type { WellFilters } from "@/types/well";
 
 export default function WellsPage() {
@@ -40,12 +40,20 @@ export default function WellsPage() {
             Manage your well inventory and analysis
           </p>
         </div>
-        <Button asChild>
-          <Link href="/wells/new">
-            <Plus className="mr-2 h-4 w-4" />
-            New Well
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          <Button asChild variant="outline">
+            <Link href="/wells/import">
+              <Upload className="mr-2 h-4 w-4" />
+              Import Wells
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link href="/wells/new">
+              <Plus className="mr-2 h-4 w-4" />
+              New Well
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="flex items-center gap-3">

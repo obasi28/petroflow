@@ -23,13 +23,21 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { BarChart3, Loader2 } from "lucide-react";
-import { MODEL_PARAMETERS, PARAMETER_UNITS, type DCAModelType, type ParameterDistribution } from "@/types/dca";
+import {
+  MODEL_PARAMETERS,
+  getFluidRateUnit,
+  getParameterUnit,
+  type DCAModelType,
+  type FluidType,
+  type ParameterDistribution,
+} from "@/types/dca";
 import { toast } from "sonner";
 
 interface MonteCarloDialogProps {
   wellId: string;
   analysisId: string;
   modelType: DCAModelType;
+  fluidType: FluidType;
   fittedParams: Record<string, number>;
   onComplete: () => void;
 }
@@ -38,6 +46,7 @@ export function MonteCarloDialog({
   wellId,
   analysisId,
   modelType,
+  fluidType,
   fittedParams,
   onComplete,
 }: MonteCarloDialogProps) {
@@ -115,7 +124,7 @@ export function MonteCarloDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs">Econ. Limit (bbl/d)</Label>
+              <Label className="text-xs">Econ. Limit ({getFluidRateUnit(fluidType)})</Label>
               <Input
                 type="number"
                 value={economicLimit}
@@ -137,7 +146,7 @@ export function MonteCarloDialog({
             {params.map((param) => (
               <div key={param} className="space-y-1.5">
                 <Label className="text-xs font-mono">
-                  {param} ({PARAMETER_UNITS[param]})
+                  {param} ({getParameterUnit(param, fluidType)})
                 </Label>
                 <div className="grid grid-cols-3 gap-2">
                   <Select

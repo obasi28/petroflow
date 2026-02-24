@@ -91,3 +91,4 @@ class DCAAutoFitResponse(BaseModel):
     aic: float
     bic: float
     eur: float | None
+    forecast_points: list[DCAForecastPointResponse] = []

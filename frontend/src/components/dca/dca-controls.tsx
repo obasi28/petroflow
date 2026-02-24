@@ -17,6 +17,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   MODEL_LABELS,
+  FLUID_LABELS,
+  getFluidRateUnit,
   type DCAModelType,
   type FluidType,
   type ChartScale,
@@ -36,8 +38,12 @@ export function DCAControls({ wellId }: DCAControlsProps) {
     setChartScale,
     showForecast,
     setShowForecast,
-    setSelectedAnalysis,
+    setSelectedAnalysisId,
+    autoFitResults,
+    autoFitOverlayVisibility,
     setAutoFitResults,
+    setAutoFitOverlayVisible,
+    setAllAutoFitOverlays,
   } = useDCAStore();
 
   const [name, setName] = useState("DCA Analysis");
@@ -67,8 +73,8 @@ export function DCAControls({ wellId }: DCAControlsProps) {
     });
 
     if (result.status === "success" && result.data) {
-      setSelectedAnalysis(result.data);
-      toast.success(`${MODEL_LABELS[selectedModelType]} model fitted (R\u00b2 = ${result.data.r_squared?.toFixed(4) || "--"})`);
+      setSelectedAnalysisId(result.data.id);
+      toast.success(`${MODEL_LABELS[selectedModelType]} model fitted (R2 = ${result.data.r_squared?.toFixed(4) || "--"})`);
     } else {
       toast.error(result.errors?.[0]?.message || "Model fitting failed");
     }
@@ -185,7 +191,7 @@ export function DCAControls({ wellId }: DCAControlsProps) {
             />
           </div>
           <div className="space-y-1.5">
-            <Label className="text-xs">Econ. Limit (bbl/d)</Label>
+            <Label className="text-xs">Econ. Limit ({getFluidRateUnit(fluidType)})</Label>
             <Input
               type="number"
               value={economicLimit}
@@ -260,6 +266,59 @@ export function DCAControls({ wellId }: DCAControlsProps) {
             Auto-Fit All Models
           </Button>
         </div>
+
+        {autoFitResults.length > 0 && (
+          <>
+            <Separator />
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label className="text-xs">Auto-Fit Overlays</Label>
+                <div className="flex gap-1">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 px-2 text-[10px]"
+                    onClick={() => setAllAutoFitOverlays(true)}
+                  >
+                    Show all
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 px-2 text-[10px]"
+                    onClick={() => setAllAutoFitOverlays(false)}
+                  >
+                    Hide all
+                  </Button>
+                </div>
+              </div>
+              <div className="space-y-1">
+                {[...autoFitResults]
+                  .sort((a, b) => a.aic - b.aic)
+                  .map((result, index) => (
+                    <label
+                      key={result.model_type}
+                      className="flex cursor-pointer items-center justify-between rounded border border-border/60 px-2 py-1 text-[11px]"
+                    >
+                      <span>
+                        #{index + 1} {MODEL_LABELS[result.model_type]} ({FLUID_LABELS[fluidType]})
+                      </span>
+                      <input
+                        type="checkbox"
+                        className="h-3.5 w-3.5"
+                        checked={Boolean(autoFitOverlayVisibility[result.model_type])}
+                        onChange={(e) =>
+                          setAutoFitOverlayVisible(result.model_type, e.target.checked)
+                        }
+                      />
+                    </label>
+                  ))}
+              </div>
+            </div>
+          </>
+        )}
       </CardContent>
     </Card>
   );

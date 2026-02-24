@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
+import { useProjects } from "@/hooks/use-projects";
+import type { Project } from "@/types/project";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,25 +29,13 @@ import { Plus, FolderKanban, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { formatDate } from "@/lib/utils";
 
-interface Project {
-  id: string;
-  name: string;
-  description: string | null;
-  well_count?: number;
-  created_at: string;
-  updated_at: string;
-}
-
 export default function ProjectsPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["projects"],
-    queryFn: () => api.get<Project[]>("/projects"),
-  });
+  const { data, isLoading } = useProjects();
 
   const createProject = useMutation({
     mutationFn: (payload: { name: string; description?: string }) =>

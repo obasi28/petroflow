@@ -12,7 +12,7 @@ from app.models.dca import DCAAnalysis, DCAForecastPoint
 from app.models.production import ProductionRecord
 from app.schemas.dca import (
     DCACreate, DCAResponse,
-    DCAMonteCarloRequest, DCAAutoFitRequest, DCAAutoFitResponse,
+    DCAMonteCarloRequest, DCAAutoFitRequest, DCAAutoFitResponse, DCAForecastPointResponse,
 )
 from app.schemas.common import success_response
 from app.utils.exceptions import NotFoundException, EngineException, ValidationException
@@ -93,6 +93,13 @@ def _normalize_param_distributions(param_distributions: dict) -> dict:
         normalized[param].pop("distribution", None)
 
     return normalized
+
+
+def _build_histogram(values: np.ndarray, bins: int = 30) -> tuple[list[float], list[int]]:
+    if values.size == 0:
+        return [], []
+    counts, edges = np.histogram(values, bins=bins)
+    return [float(v) for v in edges.tolist()], [int(v) for v in counts.tolist()]
 
 
 @router.get("/wells/{well_id}/dca")
@@ -269,6 +276,10 @@ async def start_monte_carlo(
     except Exception as exc:
         raise EngineException(f"Monte Carlo simulation failed: {str(exc)}")
 
+    histogram_bins, histogram_counts = _build_histogram(result.eur_distribution, bins=30)
+    sample_size = min(500, len(result.eur_distribution))
+    sample = result.eur_distribution[:sample_size]
+
     analysis.monte_carlo_results = {
         "p10": result.eur_p10,
         "p50": result.eur_p50,
@@ -276,6 +287,9 @@ async def start_monte_carlo(
         "mean": result.eur_mean,
         "std": result.eur_std,
         "iterations": result.iterations,
+        "histogram_bins": histogram_bins,
+        "histogram_counts": histogram_counts,
+        "eur_distribution_sample": [float(v) for v in sample.tolist()],
     }
     analysis.status = "completed"
     await db.flush()
@@ -309,6 +323,15 @@ async def auto_fit(
             economic_limit=5.0,
         )
         eur = forecast["cumulative"][-1] + cum_to_date if len(forecast["cumulative"]) > 0 else None
+        forecast_points = [
+            DCAForecastPointResponse(
+                forecast_date=data.start_date + timedelta(days=int(forecast["time"][i] * 30.4375)),
+                time_months=float(forecast["time"][i]),
+                rate=float(forecast["rate"][i]),
+                cumulative=float(forecast["cumulative"][i]),
+            )
+            for i in range(len(forecast["time"]))
+        ]
 
         response.append(DCAAutoFitResponse(
             model_type=r.model_type,
@@ -318,6 +341,7 @@ async def auto_fit(
             aic=r.aic,
             bic=r.bic,
             eur=eur,
+            forecast_points=forecast_points,
         ).model_dump())
 
     return success_response(response)

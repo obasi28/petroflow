@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useProduction } from "@/hooks/use-production";
@@ -24,13 +25,34 @@ export default function DCAPage() {
   const { data: prodData, isLoading: prodLoading } = useProduction(wellId, { per_page: 5000 });
   const { data: dcaData } = useDCAAnalyses(wellId);
 
-  const { selectedAnalysis, autoFitResults } = useDCAStore();
+  const {
+    selectedAnalysisId,
+    setSelectedAnalysisId,
+    autoFitResults,
+    autoFitOverlayVisibility,
+  } = useDCAStore();
 
-  const productionRecords = prodData?.data || [];
-  const analyses = dcaData?.data || [];
+  const productionRecords = useMemo(() => prodData?.data || [], [prodData?.data]);
+  const analyses = useMemo(() => dcaData?.data || [], [dcaData?.data]);
 
-  // Use the selected analysis or the latest one
-  const currentAnalysis = selectedAnalysis || (analyses.length > 0 ? analyses[0] : null);
+  useEffect(() => {
+    if (analyses.length === 0) {
+      if (selectedAnalysisId) {
+        setSelectedAnalysisId(null);
+      }
+      return;
+    }
+    const selectedStillExists = selectedAnalysisId
+      ? analyses.some((analysis) => analysis.id === selectedAnalysisId)
+      : false;
+    if (!selectedStillExists) {
+      setSelectedAnalysisId(analyses[0].id);
+    }
+  }, [analyses, selectedAnalysisId, setSelectedAnalysisId]);
+
+  const currentAnalysis = selectedAnalysisId
+    ? (analyses.find((analysis) => analysis.id === selectedAnalysisId) ?? analyses[0] ?? null)
+    : (analyses[0] ?? null);
 
   if (prodLoading) {
     return (
@@ -67,6 +89,8 @@ export default function DCAPage() {
             <DCAChart
               productionData={productionRecords}
               analysis={currentAnalysis}
+              autoFitResults={autoFitResults}
+              autoFitOverlayVisibility={autoFitOverlayVisibility}
             />
           </CardContent>
         </Card>
@@ -89,6 +113,7 @@ export default function DCAPage() {
               <DCAForecastTable
                 forecastPoints={currentAnalysis.forecast_points}
                 modelType={currentAnalysis.model_type}
+                fluidType={currentAnalysis.fluid_type}
               />
             ) : (
               <Card>
@@ -122,6 +147,7 @@ export default function DCAPage() {
               wellId={wellId}
               analysisId={currentAnalysis.id}
               modelType={currentAnalysis.model_type}
+              fluidType={currentAnalysis.fluid_type}
               fittedParams={currentAnalysis.parameters}
               onComplete={() => {
                 queryClient.invalidateQueries({ queryKey: ["dca", wellId] });

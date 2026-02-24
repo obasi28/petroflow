@@ -4,16 +4,41 @@ import { useMemo } from "react";
 import { PlotlyChart } from "@/components/charts/plotly-chart";
 import { useDCAStore } from "@/stores/dca-store";
 import type { ProductionRecord } from "@/types/production";
-import type { DCAAnalysis } from "@/types/dca";
+import {
+  MODEL_LABELS,
+  getFluidRateUnit,
+  getFluidRateValue,
+  type DCAAnalysis,
+  type DCAAutoFitResult,
+  type DCAModelType,
+} from "@/types/dca";
 import { chartColors } from "@/components/charts/base-chart";
 
 interface DCAChartProps {
   productionData: ProductionRecord[];
   analysis: DCAAnalysis | null;
+  autoFitResults: DCAAutoFitResult[];
+  autoFitOverlayVisibility: Partial<Record<DCAModelType, boolean>>;
 }
 
-export function DCAChart({ productionData, analysis }: DCAChartProps) {
+const AUTO_FIT_COLORS = [
+  "hsl(280, 65%, 60%)",
+  "hsl(190, 80%, 45%)",
+  "hsl(45, 85%, 55%)",
+  "hsl(330, 75%, 60%)",
+  "hsl(110, 55%, 50%)",
+  "hsl(15, 80%, 58%)",
+];
+
+export function DCAChart({
+  productionData,
+  analysis,
+  autoFitResults,
+  autoFitOverlayVisibility,
+}: DCAChartProps) {
   const { chartScale, showForecast } = useDCAStore();
+  const fluidType = analysis?.fluid_type ?? "oil";
+  const rateUnit = getFluidRateUnit(fluidType);
 
   const traces = useMemo(() => {
     const plotTraces: Plotly.Data[] = [];
@@ -21,14 +46,14 @@ export function DCAChart({ productionData, analysis }: DCAChartProps) {
     // Actual production data
     if (productionData.length > 0) {
       const dates = productionData.map((r) => r.production_date);
-      const rates = productionData.map((r) => r.oil_rate ?? 0);
+      const rates = productionData.map((r) => getFluidRateValue(fluidType, r));
 
       plotTraces.push({
         x: dates,
         y: rates,
         type: "scatter",
         mode: "markers",
-        name: "Actual Production",
+        name: `${fluidType.toUpperCase()} Actual`,
         marker: {
           color: chartColors.oil,
           size: 5,
@@ -61,10 +86,10 @@ export function DCAChart({ productionData, analysis }: DCAChartProps) {
           y: fitPoints.map((p) => p.rate),
           type: "scatter",
           mode: "lines",
-          name: `${analysis.model_type} Fit`,
+          name: `${MODEL_LABELS[analysis.model_type]} Fit`,
           line: {
             color: chartColors.forecast,
-            width: 2,
+            width: 2.5,
           },
         });
       }
@@ -93,7 +118,7 @@ export function DCAChart({ productionData, analysis }: DCAChartProps) {
           y: [analysis.economic_limit, analysis.economic_limit],
           type: "scatter",
           mode: "lines",
-          name: `Econ. Limit (${analysis.economic_limit} bbl/d)`,
+          name: `Econ. Limit (${analysis.economic_limit} ${rateUnit})`,
           line: {
             color: "hsl(0, 72%, 51%)",
             width: 1,
@@ -101,27 +126,41 @@ export function DCAChart({ productionData, analysis }: DCAChartProps) {
           },
         });
       }
-
-      // Monte Carlo P10/P50/P90 bands
-      if (analysis.monte_carlo_results) {
-        const mc = analysis.monte_carlo_results;
-        // Show P90 and P10 as horizontal reference lines
-        const lastDate = forecastDates[forecastDates.length - 1];
-        const firstDate = forecastDates[0];
-
-        plotTraces.push({
-          x: [firstDate, lastDate],
-          y: [0, 0], // placeholder
-          type: "scatter",
-          mode: "none",
-          name: `P90: ${mc.p90?.toFixed(0) || "--"} | P50: ${mc.p50?.toFixed(0) || "--"} | P10: ${mc.p10?.toFixed(0) || "--"} bbl`,
-          showlegend: true,
-        });
-      }
     }
 
+    const sortedAutoFitResults = [...autoFitResults].sort((a, b) => a.aic - b.aic);
+    sortedAutoFitResults.forEach((result, index) => {
+      if (!autoFitOverlayVisibility[result.model_type]) {
+        return;
+      }
+      if (!result.forecast_points || result.forecast_points.length === 0) {
+        return;
+      }
+      plotTraces.push({
+        x: result.forecast_points.map((p) => p.forecast_date),
+        y: result.forecast_points.map((p) => p.rate),
+        type: "scatter",
+        mode: "lines",
+        name: `Auto-Fit #${index + 1}: ${MODEL_LABELS[result.model_type]}`,
+        line: {
+          color: AUTO_FIT_COLORS[index % AUTO_FIT_COLORS.length],
+          width: 1.5,
+          dash: "dash",
+        },
+        opacity: 0.7,
+      });
+    });
+
     return plotTraces;
-  }, [productionData, analysis, showForecast]);
+  }, [
+    analysis,
+    autoFitOverlayVisibility,
+    autoFitResults,
+    fluidType,
+    productionData,
+    rateUnit,
+    showForecast,
+  ]);
 
   const yAxisType = chartScale === "log-log" || chartScale === "semi-log" ? "log" : "linear";
   const xAxisType = chartScale === "log-log" ? "log" : undefined;
@@ -133,10 +172,10 @@ export function DCAChart({ productionData, analysis }: DCAChartProps) {
         layout={{
           xaxis: {
             title: { text: "Date", font: { size: 10 } },
-            type: xAxisType as "date" | "log" | "linear" | undefined,
+            type: xAxisType,
           },
           yaxis: {
-            title: { text: "Rate (bbl/d)", font: { size: 10 } },
+            title: { text: `Rate (${rateUnit})`, font: { size: 10 } },
             type: yAxisType,
             rangemode: "tozero",
           },

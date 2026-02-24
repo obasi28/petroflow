@@ -71,6 +71,7 @@ export interface DCAAutoFitResult {
   aic: number;
   bic: number;
   eur: number | null;
+  forecast_points?: DCAForecastPoint[];
 }
 
 export interface DCAMonteCarloRequest {
@@ -96,6 +97,9 @@ export interface MonteCarloResults {
   std: number;
   iterations: number;
   eur_distribution?: number[];
+  eur_distribution_sample?: number[];
+  histogram_bins?: number[];
+  histogram_counts?: number[];
 }
 
 export const MODEL_LABELS: Record<DCAModelType, string> = {
@@ -117,7 +121,7 @@ export const MODEL_PARAMETERS: Record<DCAModelType, string[]> = {
 };
 
 export const PARAMETER_UNITS: Record<string, string> = {
-  qi: "bbl/d",
+  qi: "rate",
   di: "1/month",
   b: "dimensionless",
   d_min: "1/month",
@@ -126,3 +130,59 @@ export const PARAMETER_UNITS: Record<string, string> = {
   a: "dimensionless",
   m: "dimensionless",
 };
+
+export const FLUID_LABELS: Record<FluidType, string> = {
+  oil: "Oil",
+  gas: "Gas",
+  water: "Water",
+  boe: "BOE",
+};
+
+export const FLUID_RATE_UNITS: Record<FluidType, string> = {
+  oil: "bbl/d",
+  gas: "Mcf/d",
+  water: "bbl/d",
+  boe: "boe/d",
+};
+
+export const FLUID_CUM_UNITS: Record<FluidType, string> = {
+  oil: "bbl",
+  gas: "Mcf",
+  water: "bbl",
+  boe: "boe",
+};
+
+export const FLUID_RATE_FIELDS: Record<FluidType, "oil_rate" | "gas_rate" | "water_rate" | "boe"> = {
+  oil: "oil_rate",
+  gas: "gas_rate",
+  water: "water_rate",
+  boe: "boe",
+};
+
+export function getFluidRateUnit(fluidType: FluidType): string {
+  return FLUID_RATE_UNITS[fluidType] || FLUID_RATE_UNITS.oil;
+}
+
+export function getFluidCumulativeUnit(fluidType: FluidType): string {
+  return FLUID_CUM_UNITS[fluidType] || FLUID_CUM_UNITS.oil;
+}
+
+export function getFluidRateValue(
+  fluidType: FluidType,
+  record: {
+    oil_rate: number | null;
+    gas_rate: number | null;
+    water_rate: number | null;
+    boe: number | null;
+  },
+): number {
+  const field = FLUID_RATE_FIELDS[fluidType] || FLUID_RATE_FIELDS.oil;
+  return record[field] ?? 0;
+}
+
+export function getParameterUnit(parameterName: string, fluidType: FluidType): string {
+  if (parameterName === "qi") {
+    return getFluidRateUnit(fluidType);
+  }
+  return PARAMETER_UNITS[parameterName] || "dimensionless";
+}

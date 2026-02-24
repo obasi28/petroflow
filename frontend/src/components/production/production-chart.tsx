@@ -12,7 +12,6 @@ import {
   ChartGrid,
   ChartXAxis,
   ChartYAxis,
-  ChartTooltip,
   chartColors,
 } from "@/components/charts/base-chart";
 import { Button } from "@/components/ui/button";
@@ -32,12 +31,13 @@ export function ProductionChart({ data }: ProductionChartProps) {
       year: "2-digit",
       month: "short",
     }),
-    oil: mode === "rate" ? record.oil_rate : record.cum_oil,
-    gas: mode === "rate" ? record.gas_rate : record.cum_gas,
-    water: mode === "rate" ? record.water_rate : record.cum_water,
+    oil: mode === "rate" ? (record.oil_rate ?? null) : (record.cum_oil ?? null),
+    gas: mode === "rate" ? (record.gas_rate ?? null) : (record.cum_gas ?? null),
+    water: mode === "rate" ? (record.water_rate ?? null) : (record.cum_water ?? null),
   }));
 
-  const yLabel = mode === "rate" ? "Rate (bbl/d or Mcf/d)" : "Cumulative";
+  const liquidsUnit = mode === "rate" ? "bbl/d" : "bbl";
+  const gasUnit = mode === "rate" ? "Mcf/d" : "Mcf";
 
   return (
     <div className="space-y-3">
@@ -68,8 +68,42 @@ export function ProductionChart({ data }: ProductionChartProps) {
           <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 10 }}>
             <ChartGrid />
             <ChartXAxis dataKey="date" />
-            <ChartYAxis label={{ value: yLabel, angle: -90, position: "insideLeft", offset: -5, style: { fontSize: 10, fill: "hsl(240, 5%, 64.9%)" } }} />
-            <Tooltip content={<ChartTooltip />} />
+            <ChartYAxis
+              yAxisId="liquid"
+              label={{
+                value: `Liquids (${liquidsUnit})`,
+                angle: -90,
+                position: "insideLeft",
+                offset: -5,
+                style: { fontSize: 10, fill: "hsl(240, 5%, 64.9%)" },
+              }}
+            />
+            <ChartYAxis
+              yAxisId="gas"
+              orientation="right"
+              label={{
+                value: `Gas (${gasUnit})`,
+                angle: 90,
+                position: "insideRight",
+                offset: -2,
+                style: { fontSize: 10, fill: "hsl(240, 5%, 64.9%)" },
+              }}
+            />
+            <Tooltip
+              formatter={(value, name) => {
+                const unit = name === "Gas" ? gasUnit : liquidsUnit;
+                if (typeof value === "number") {
+                  return [`${value.toFixed(1)} ${unit}`, name];
+                }
+                return [value, name];
+              }}
+              contentStyle={{
+                borderRadius: 8,
+                border: "1px solid hsl(240, 3.7%, 15.9%)",
+                backgroundColor: "hsl(224, 71%, 4%)",
+                fontSize: 11,
+              }}
+            />
             <Legend
               wrapperStyle={{ fontSize: 11, fontFamily: "var(--font-sans)" }}
             />
@@ -77,6 +111,7 @@ export function ProductionChart({ data }: ProductionChartProps) {
               type="monotone"
               dataKey="oil"
               name="Oil"
+              yAxisId="liquid"
               stroke={chartColors.oil}
               strokeWidth={1.5}
               dot={false}
@@ -86,6 +121,7 @@ export function ProductionChart({ data }: ProductionChartProps) {
               type="monotone"
               dataKey="gas"
               name="Gas"
+              yAxisId="gas"
               stroke={chartColors.gas}
               strokeWidth={1.5}
               dot={false}
@@ -95,6 +131,7 @@ export function ProductionChart({ data }: ProductionChartProps) {
               type="monotone"
               dataKey="water"
               name="Water"
+              yAxisId="liquid"
               stroke={chartColors.water}
               strokeWidth={1.5}
               dot={false}
