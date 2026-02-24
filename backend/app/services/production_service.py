@@ -3,6 +3,7 @@ from datetime import date
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, delete
 from app.models.production import ProductionRecord
+from app.models.dca import DCAAnalysis
 from app.schemas.production import ProductionRecordCreate, ProductionStatistics
 
 
@@ -34,6 +35,7 @@ async def upsert_production(
     records: list[ProductionRecordCreate],
 ) -> int:
     count = 0
+    production_changed = False
     for rec in records:
         existing = await db.execute(
             select(ProductionRecord).where(
@@ -59,6 +61,8 @@ async def upsert_production(
         if existing:
             for field, value in data.items():
                 setattr(existing, field, value)
+            # Any production history update makes prior DCA fits stale.
+            production_changed = True
         else:
             record = ProductionRecord(
                 well_id=well_id,
@@ -67,7 +71,16 @@ async def upsert_production(
                 **data,
             )
             db.add(record)
+            production_changed = True
         count += 1
+
+    if production_changed:
+        await db.execute(
+            delete(DCAAnalysis).where(
+                DCAAnalysis.well_id == well_id,
+                DCAAnalysis.team_id == team_id,
+            )
+        )
 
     await db.flush()
     return count

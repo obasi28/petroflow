@@ -34,6 +34,8 @@ export function DCAControls({ wellId }: DCAControlsProps) {
   const {
     selectedModelType,
     setSelectedModelType,
+    selectedFluidType,
+    setSelectedFluidType,
     chartScale,
     setChartScale,
     showForecast,
@@ -47,7 +49,6 @@ export function DCAControls({ wellId }: DCAControlsProps) {
   } = useDCAStore();
 
   const [name, setName] = useState("DCA Analysis");
-  const [fluidType, setFluidType] = useState<FluidType>("oil");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [forecastMonths, setForecastMonths] = useState(360);
@@ -65,7 +66,7 @@ export function DCAControls({ wellId }: DCAControlsProps) {
     const result = await createDCA.mutateAsync({
       name,
       model_type: selectedModelType,
-      fluid_type: fluidType,
+      fluid_type: selectedFluidType,
       start_date: startDate,
       end_date: endDate || undefined,
       economic_limit: economicLimit,
@@ -88,7 +89,7 @@ export function DCAControls({ wellId }: DCAControlsProps) {
 
     const result = await autoFit.mutateAsync({
       well_id: wellId,
-      fluid_type: fluidType,
+      fluid_type: selectedFluidType,
       start_date: startDate,
       end_date: endDate || undefined,
     });
@@ -140,7 +141,7 @@ export function DCAControls({ wellId }: DCAControlsProps) {
         {/* Fluid Type */}
         <div className="space-y-1.5">
           <Label className="text-xs">Fluid Type</Label>
-          <Select value={fluidType} onValueChange={(v) => setFluidType(v as FluidType)}>
+          <Select value={selectedFluidType} onValueChange={(v) => setSelectedFluidType(v as FluidType)}>
             <SelectTrigger className="h-8 text-xs">
               <SelectValue />
             </SelectTrigger>
@@ -191,7 +192,7 @@ export function DCAControls({ wellId }: DCAControlsProps) {
             />
           </div>
           <div className="space-y-1.5">
-            <Label className="text-xs">Econ. Limit ({getFluidRateUnit(fluidType)})</Label>
+            <Label className="text-xs">Econ. Limit ({getFluidRateUnit(selectedFluidType)})</Label>
             <Input
               type="number"
               value={economicLimit}
@@ -303,7 +304,7 @@ export function DCAControls({ wellId }: DCAControlsProps) {
                       className="flex cursor-pointer items-center justify-between rounded border border-border/60 px-2 py-1 text-[11px]"
                     >
                       <span>
-                        #{index + 1} {MODEL_LABELS[result.model_type]} ({FLUID_LABELS[fluidType]})
+                        #{index + 1} {MODEL_LABELS[result.model_type]} ({FLUID_LABELS[selectedFluidType]})
                       </span>
                       <input
                         type="checkbox"

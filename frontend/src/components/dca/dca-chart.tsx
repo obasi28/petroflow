@@ -36,9 +36,10 @@ export function DCAChart({
   autoFitResults,
   autoFitOverlayVisibility,
 }: DCAChartProps) {
-  const { chartScale, showForecast } = useDCAStore();
-  const fluidType = analysis?.fluid_type ?? "oil";
+  const { chartScale, showForecast, selectedFluidType } = useDCAStore();
+  const fluidType = selectedFluidType;
   const rateUnit = getFluidRateUnit(fluidType);
+  const analysisMatchesFluid = analysis ? analysis.fluid_type === fluidType : false;
 
   const traces = useMemo(() => {
     const plotTraces: Plotly.Data[] = [];
@@ -63,7 +64,7 @@ export function DCAChart({
     }
 
     // Fitted curve + forecast
-    if (analysis && analysis.forecast_points.length > 0) {
+    if (analysis && analysis.forecast_points.length > 0 && analysisMatchesFluid) {
       const forecastDates = analysis.forecast_points.map((p) => p.forecast_date);
 
       // Find the split point between fit and forecast
@@ -154,6 +155,7 @@ export function DCAChart({
     return plotTraces;
   }, [
     analysis,
+    analysisMatchesFluid,
     autoFitOverlayVisibility,
     autoFitResults,
     fluidType,

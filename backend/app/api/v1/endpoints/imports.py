@@ -120,6 +120,7 @@ def _is_non_empty_value(value: object) -> bool:
 async def upload_file(
     file: UploadFile = File(...),
     well_id: str | None = Form(None),
+    replace_existing: bool = Form(False),
     column_mapping: str | None = Form(None),
     db: AsyncSession = Depends(get_db),
     current_user: CurrentUser = Depends(get_current_user),
@@ -189,6 +190,11 @@ async def upload_file(
     if not records:
         raise ValidationException("No valid production rows found in uploaded file")
 
+    deleted_count = 0
+    if replace_existing:
+        deleted_count = await production_service.delete_production(
+            db, well_uuid, current_user.team_id
+        )
     imported_count = await production_service.upsert_production(
         db, well_uuid, current_user.team_id, records
     )
@@ -198,6 +204,8 @@ async def upload_file(
         "file_type": file_type,
         "records_detected": len(records),
         "records_imported": imported_count,
+        "replace_existing": replace_existing,
+        "records_deleted": deleted_count,
     })
 
 

@@ -28,6 +28,7 @@ export default function DCAPage() {
   const {
     selectedAnalysisId,
     setSelectedAnalysisId,
+    setSelectedFluidType,
     autoFitResults,
     autoFitOverlayVisibility,
   } = useDCAStore();
@@ -47,8 +48,9 @@ export default function DCAPage() {
       : false;
     if (!selectedStillExists) {
       setSelectedAnalysisId(analyses[0].id);
+      setSelectedFluidType(analyses[0].fluid_type);
     }
-  }, [analyses, selectedAnalysisId, setSelectedAnalysisId]);
+  }, [analyses, selectedAnalysisId, setSelectedAnalysisId, setSelectedFluidType]);
 
   const currentAnalysis = selectedAnalysisId
     ? (analyses.find((analysis) => analysis.id === selectedAnalysisId) ?? analyses[0] ?? null)

@@ -54,6 +54,7 @@ export function ImportWizard({ wellId, onComplete }: ImportWizardProps) {
   const [mapping, setMapping] = useState<Record<string, string>>({});
   const [isParsing, setIsParsing] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
+  const [replaceExisting, setReplaceExisting] = useState(true);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const selectedFile = acceptedFiles[0];
@@ -132,11 +133,16 @@ export function ImportWizard({ wellId, onComplete }: ImportWizardProps) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("well_id", wellId);
+      formData.append("replace_existing", String(replaceExisting));
       formData.append("column_mapping", JSON.stringify(mapping));
 
-      const result = await api.upload(`/imports/upload`, formData);
+      const result = await api.upload<{ records_deleted?: number }>(`/imports/upload`, formData);
       if (result.status === "success") {
-        toast.success("Production data imported successfully");
+        if (replaceExisting) {
+          toast.success(`Production data replaced successfully (${result.data?.records_deleted ?? 0} old rows removed)`);
+        } else {
+          toast.success("Production data imported successfully");
+        }
         onComplete();
       } else {
         toast.error(result.errors?.[0]?.message || "Import failed");
@@ -281,6 +287,15 @@ export function ImportWizard({ wellId, onComplete }: ImportWizardProps) {
             </div>
 
             <div className="flex justify-end gap-2">
+              <label className="mr-auto flex items-center gap-2 text-xs text-muted-foreground">
+                <input
+                  type="checkbox"
+                  className="h-3.5 w-3.5"
+                  checked={replaceExisting}
+                  onChange={(e) => setReplaceExisting(e.target.checked)}
+                />
+                Replace existing production history for this well
+              </label>
               <Button variant="outline" onClick={() => setStep("mapping")}>
                 Back
               </Button>

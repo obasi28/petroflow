@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import type { DCAModelType, ChartScale, DCAAutoFitResult } from "@/types/dca";
+import type { DCAModelType, ChartScale, DCAAutoFitResult, FluidType } from "@/types/dca";
 
 interface DCAState {
   selectedModelType: DCAModelType;
+  selectedFluidType: FluidType;
   chartScale: ChartScale;
   selectedAnalysisId: string | null;
   showForecast: boolean;
@@ -12,6 +13,7 @@ interface DCAState {
   autoFitOverlayVisibility: Partial<Record<DCAModelType, boolean>>;
 
   setSelectedModelType: (type: DCAModelType) => void;
+  setSelectedFluidType: (type: FluidType) => void;
   setChartScale: (scale: ChartScale) => void;
   setSelectedAnalysisId: (analysisId: string | null) => void;
   setShowForecast: (show: boolean) => void;
@@ -25,6 +27,7 @@ interface DCAState {
 
 const initialState = {
   selectedModelType: "modified_hyperbolic" as DCAModelType,
+  selectedFluidType: "oil" as FluidType,
   chartScale: "semi-log" as ChartScale,
   selectedAnalysisId: null,
   showForecast: true,
@@ -38,6 +41,7 @@ export const useDCAStore = create<DCAState>((set) => ({
   ...initialState,
 
   setSelectedModelType: (type) => set({ selectedModelType: type }),
+  setSelectedFluidType: (type) => set({ selectedFluidType: type }),
   setChartScale: (scale) => set({ chartScale: scale }),
   setSelectedAnalysisId: (analysisId) => set({ selectedAnalysisId: analysisId }),
   setShowForecast: (show) => set({ showForecast: show }),

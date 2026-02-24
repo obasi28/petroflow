@@ -165,3 +165,29 @@ def test_dca_create_list_detail_serialization_regression() -> None:
     assert mc_results["iterations"] == 300
     assert len(mc_results["histogram_bins"]) > 1
     assert len(mc_results["histogram_counts"]) > 0
+
+    # Production updates should invalidate stale DCA analyses
+    _assert_success(
+        client,
+        "POST",
+        f"/api/v1/wells/{well_id}/production",
+        headers=headers,
+        json={
+            "records": [
+                {
+                    "production_date": "2024-03-01",
+                    "days_on": 31,
+                    "oil_rate": 88.0,
+                    "gas_rate": 440.0,
+                    "water_rate": 25.0,
+                }
+            ]
+        },
+    )
+    refreshed = _assert_success(
+        client,
+        "GET",
+        f"/api/v1/wells/{well_id}/dca",
+        headers=headers,
+    )
+    assert len(refreshed["data"]) == 0
