@@ -61,6 +61,8 @@ export interface DCAAutoFitRequest {
   fluid_type?: FluidType;
   start_date: string;
   end_date?: string;
+  forecast_months?: number;
+  economic_limit?: number;
 }
 
 export interface DCAAutoFitResult {

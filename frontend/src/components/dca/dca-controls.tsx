@@ -92,6 +92,8 @@ export function DCAControls({ wellId }: DCAControlsProps) {
       fluid_type: selectedFluidType,
       start_date: startDate,
       end_date: endDate || undefined,
+      forecast_months: forecastMonths,
+      economic_limit: economicLimit,
     });
 
     if (result.status === "success" && result.data) {

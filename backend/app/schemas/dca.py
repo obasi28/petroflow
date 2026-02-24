@@ -43,6 +43,8 @@ class DCAAutoFitRequest(BaseModel):
     fluid_type: str = "oil"
     start_date: date
     end_date: date | None = None
+    forecast_months: int = Field(default=360, ge=1, le=600)
+    economic_limit: float = Field(default=5.0, ge=0)
 
 
 class DCAForecastPointResponse(BaseModel):

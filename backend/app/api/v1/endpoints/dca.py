@@ -319,8 +319,8 @@ async def auto_fit(
         forecast = generate_forecast(
             model_type=r.model_type,
             parameters=r.parameters,
-            forecast_months=360,
-            economic_limit=5.0,
+            forecast_months=data.forecast_months,
+            economic_limit=data.economic_limit,
         )
         eur = forecast["cumulative"][-1] + cum_to_date if len(forecast["cumulative"]) > 0 else None
         forecast_points = [

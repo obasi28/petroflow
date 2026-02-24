@@ -147,6 +147,27 @@ def test_dca_create_list_detail_serialization_regression() -> None:
     assert detail["data"]["id"] == analysis_id
     assert len(detail["data"]["forecast_points"]) > 0
 
+    # Auto-fit should honor caller-provided forecast configuration (not hardcoded 360).
+    auto_fit = _assert_success(
+        client,
+        "POST",
+        "/api/v1/dca/auto-fit",
+        headers=headers,
+        json={
+            "well_id": well_id,
+            "fluid_type": "oil",
+            "start_date": "2024-01-01",
+            "end_date": "2024-03-01",
+            "forecast_months": 24,
+            "economic_limit": 10.0,
+        },
+    )
+    assert len(auto_fit["data"]) > 0
+    for model in auto_fit["data"]:
+        if model["forecast_points"]:
+            max_t = max(point["time_months"] for point in model["forecast_points"])
+            assert max_t <= 24.1
+
     monte_carlo = _assert_success(
         client,
         "POST",
