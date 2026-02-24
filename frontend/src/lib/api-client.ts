@@ -47,6 +47,10 @@ class ApiClient {
       }
 
       const errorBody = await response.json().catch(() => null);
+      const detail = errorBody?.detail;
+      const detailMessage = Array.isArray(detail)
+        ? detail[0]?.msg || detail[0]?.message
+        : detail;
       return {
         status: "error",
         data: null,
@@ -54,7 +58,7 @@ class ApiClient {
         errors: errorBody?.errors || [
           {
             code: `HTTP_${response.status}`,
-            message: errorBody?.detail || response.statusText,
+            message: detailMessage || response.statusText,
           },
         ],
       };

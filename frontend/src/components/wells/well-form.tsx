@@ -31,6 +31,8 @@ interface WellFormProps {
 }
 
 export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) {
+  const toInputValue = (value: string | number | undefined | null) => value ?? "";
+
   const form = useForm<WellCreateFormData>({
     resolver: zodResolver(wellCreateSchema),
     defaultValues: {
@@ -59,7 +61,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
                 <FormItem>
                   <FormLabel>Well Name *</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. SMITH 1-24H" {...field} />
+                    <Input placeholder="e.g. SMITH 1-24H" {...field} value={toInputValue(field.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -72,7 +74,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
                 <FormItem>
                   <FormLabel>API Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="42-123-12345" {...field} />
+                    <Input placeholder="42-123-12345" {...field} value={toInputValue(field.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,7 +87,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
                 <FormItem>
                   <FormLabel>Operator</FormLabel>
                   <FormControl>
-                    <Input placeholder="Operator name" {...field} />
+                    <Input placeholder="Operator name" {...field} value={toInputValue(field.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,7 +108,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Well Type</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue />
@@ -129,7 +131,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Status</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue />
@@ -153,7 +155,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Orientation</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue />
@@ -181,49 +183,49 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
             <FormField control={form.control} name="basin" render={({ field }) => (
               <FormItem>
                 <FormLabel>Basin</FormLabel>
-                <FormControl><Input placeholder="e.g. Permian" {...field} /></FormControl>
+                <FormControl><Input placeholder="e.g. Permian" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="field_name" render={({ field }) => (
               <FormItem>
                 <FormLabel>Field</FormLabel>
-                <FormControl><Input placeholder="Field name" {...field} /></FormControl>
+                <FormControl><Input placeholder="Field name" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="formation" render={({ field }) => (
               <FormItem>
                 <FormLabel>Formation</FormLabel>
-                <FormControl><Input placeholder="e.g. Wolfcamp A" {...field} /></FormControl>
+                <FormControl><Input placeholder="e.g. Wolfcamp A" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="county" render={({ field }) => (
               <FormItem>
                 <FormLabel>County</FormLabel>
-                <FormControl><Input placeholder="County" {...field} /></FormControl>
+                <FormControl><Input placeholder="County" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="state_province" render={({ field }) => (
               <FormItem>
                 <FormLabel>State/Province</FormLabel>
-                <FormControl><Input placeholder="e.g. Texas" {...field} /></FormControl>
+                <FormControl><Input placeholder="e.g. Texas" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="latitude" render={({ field }) => (
               <FormItem>
                 <FormLabel>Latitude</FormLabel>
-                <FormControl><Input type="number" step="any" placeholder="31.9686" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" placeholder="31.9686" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="longitude" render={({ field }) => (
               <FormItem>
                 <FormLabel>Longitude</FormLabel>
-                <FormControl><Input type="number" step="any" placeholder="-102.0779" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" placeholder="-102.0779" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
@@ -239,21 +241,21 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
             <FormField control={form.control} name="spud_date" render={({ field }) => (
               <FormItem>
                 <FormLabel>Spud Date</FormLabel>
-                <FormControl><Input type="date" {...field} /></FormControl>
+                <FormControl><Input type="date" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="completion_date" render={({ field }) => (
               <FormItem>
                 <FormLabel>Completion Date</FormLabel>
-                <FormControl><Input type="date" {...field} /></FormControl>
+                <FormControl><Input type="date" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="first_prod_date" render={({ field }) => (
               <FormItem>
                 <FormLabel>First Production Date</FormLabel>
-                <FormControl><Input type="date" {...field} /></FormControl>
+                <FormControl><Input type="date" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
@@ -269,21 +271,21 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
             <FormField control={form.control} name="total_depth" render={({ field }) => (
               <FormItem>
                 <FormLabel>Total Depth (ft)</FormLabel>
-                <FormControl><Input type="number" step="any" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="lateral_length" render={({ field }) => (
               <FormItem>
                 <FormLabel>Lateral Length (ft)</FormLabel>
-                <FormControl><Input type="number" step="any" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="num_stages" render={({ field }) => (
               <FormItem>
                 <FormLabel>Frac Stages</FormLabel>
-                <FormControl><Input type="number" {...field} /></FormControl>
+                <FormControl><Input type="number" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
@@ -299,42 +301,42 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
             <FormField control={form.control} name="initial_pressure" render={({ field }) => (
               <FormItem>
                 <FormLabel>Initial Pressure (psi)</FormLabel>
-                <FormControl><Input type="number" step="any" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="reservoir_temp" render={({ field }) => (
               <FormItem>
                 <FormLabel>Reservoir Temp (F)</FormLabel>
-                <FormControl><Input type="number" step="any" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="porosity" render={({ field }) => (
               <FormItem>
                 <FormLabel>Porosity (fraction)</FormLabel>
-                <FormControl><Input type="number" step="0.001" placeholder="0.08" {...field} /></FormControl>
+                <FormControl><Input type="number" step="0.001" placeholder="0.08" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="water_saturation" render={({ field }) => (
               <FormItem>
                 <FormLabel>Water Saturation (fraction)</FormLabel>
-                <FormControl><Input type="number" step="0.001" placeholder="0.30" {...field} /></FormControl>
+                <FormControl><Input type="number" step="0.001" placeholder="0.30" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="net_pay" render={({ field }) => (
               <FormItem>
                 <FormLabel>Net Pay (ft)</FormLabel>
-                <FormControl><Input type="number" step="any" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
             <FormField control={form.control} name="permeability" render={({ field }) => (
               <FormItem>
                 <FormLabel>Permeability (md)</FormLabel>
-                <FormControl><Input type="number" step="any" {...field} /></FormControl>
+                <FormControl><Input type="number" step="any" {...field} value={toInputValue(field.value)} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />

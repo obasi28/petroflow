@@ -10,8 +10,18 @@ export default function NewWellPage() {
   const router = useRouter();
   const createWell = useCreateWell();
 
+  function normalizePayload(data: WellCreateFormData): WellCreateFormData {
+    const cleanedEntries = Object.entries(data).filter(([, value]) => {
+      if (value === "" || value === null || value === undefined) return false;
+      if (typeof value === "number" && Number.isNaN(value)) return false;
+      if (Array.isArray(value) && value.length === 0) return false;
+      return true;
+    });
+    return Object.fromEntries(cleanedEntries) as WellCreateFormData;
+  }
+
   async function onSubmit(data: WellCreateFormData) {
-    const result = await createWell.mutateAsync(data);
+    const result = await createWell.mutateAsync(normalizePayload(data));
     if (result.status === "success" && result.data) {
       toast.success("Well created successfully");
       router.push(`/wells/${result.data.id}`);
