@@ -5,7 +5,11 @@ from app.services.import_service import (
     transform_production_data,
     transform_well_data,
 )
-from app.api.v1.endpoints.imports import _normalize_column_mapping, _normalize_well_column_mapping
+from app.api.v1.endpoints.imports import (
+    _normalize_column_mapping,
+    _normalize_well_column_mapping,
+    _normalize_well_payload,
+)
 
 
 CSV_SAMPLE = b"""Prod Date,Oil Rate,Gas Rate,Water Rate
@@ -154,3 +158,19 @@ def test_transform_well_data_builds_well_payloads():
     assert records[0]["latitude"] == 31.9974
     assert records[0]["first_prod_date"] == "2023-04-01"
     assert records[0]["country"] == "US"
+
+
+def test_normalize_well_payload_accepts_common_enum_variants():
+    payload = {
+        "well_type": "Oil",
+        "well_status": "Shut In",
+        "orientation": "Horizontal",
+        "country": "us",
+    }
+
+    _normalize_well_payload(payload)
+
+    assert payload["well_type"] == "oil"
+    assert payload["well_status"] == "shut_in"
+    assert payload["orientation"] == "horizontal"
+    assert payload["country"] == "US"

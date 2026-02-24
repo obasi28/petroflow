@@ -139,6 +139,53 @@ WELL_ENUM_VALUES: dict[str, set[str]] = {
     "orientation": {"vertical", "horizontal", "deviated"},
 }
 
+WELL_ENUM_ALIASES: dict[str, dict[str, str]] = {
+    "well_type": {
+        "oil": "oil",
+        "gas": "gas",
+        "oil_gas": "oil_gas",
+        "oil_and_gas": "oil_gas",
+        "oilgas": "oil_gas",
+        "injector": "injection",
+        "injection": "injection",
+    },
+    "well_status": {
+        "active": "active",
+        "producing": "active",
+        "shut_in": "shut_in",
+        "shutin": "shut_in",
+        "plugged": "plugged",
+        "drilling": "drilling",
+        "completing": "completing",
+    },
+    "orientation": {
+        "vertical": "vertical",
+        "horizontal": "horizontal",
+        "deviated": "deviated",
+    },
+}
+
+
+def _normalize_enum_token(value: str) -> str:
+    normalized = value.strip().lower()
+    normalized = normalized.replace("&", " and ")
+    normalized = normalized.replace("/", " ")
+    normalized = normalized.replace("-", " ")
+    normalized = normalized.replace("_", " ")
+    return "_".join(normalized.split())
+
+
+def _normalize_well_payload(payload: dict) -> None:
+    for field, aliases in WELL_ENUM_ALIASES.items():
+        value = payload.get(field)
+        if isinstance(value, str):
+            token = _normalize_enum_token(value)
+            payload[field] = aliases.get(token, token)
+
+    country = payload.get("country")
+    if isinstance(country, str):
+        payload["country"] = country.strip().upper()
+
 
 def _validate_well_payload(payload: dict) -> None:
     for field, max_length in WELL_STRING_MAX_LENGTHS.items():
@@ -326,6 +373,7 @@ async def upload_wells_file(
             if payload.get("project_id"):
                 payload["project_id"] = uuid.UUID(payload["project_id"])
 
+            _normalize_well_payload(payload)
             _validate_well_payload(payload)
 
             existing_well = None
