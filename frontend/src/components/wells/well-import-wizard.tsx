@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -58,6 +59,7 @@ interface WellImportWizardProps {
 }
 
 export function WellImportWizard({ onComplete }: WellImportWizardProps) {
+  const queryClient = useQueryClient();
   const [step, setStep] = useState<Step>("upload");
   const [file, setFile] = useState<File | null>(null);
   const [headers, setHeaders] = useState<string[]>([]);
@@ -65,6 +67,13 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
   const [mapping, setMapping] = useState<Record<string, string>>({});
   const [isParsing, setIsParsing] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
+  const [lastImportSummary, setLastImportSummary] = useState<{
+    rows_detected: number;
+    created_count: number;
+    updated_count: number;
+    skipped_count: number;
+    errors?: Array<{ row: number; message: string }>;
+  } | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const selectedFile = acceptedFiles[0];
@@ -140,6 +149,7 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
         created_count: number;
         updated_count: number;
         skipped_count: number;
+        errors?: Array<{ row: number; message: string }>;
       }>("/imports/wells/upload", formData);
 
       if (result.status !== "success" || !result.data) {
@@ -147,9 +157,17 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
         return;
       }
 
-      toast.success(
-        `Import complete: ${result.data.created_count} created, ${result.data.updated_count} updated, ${result.data.skipped_count} skipped.`,
-      );
+      setLastImportSummary(result.data);
+      const importedCount = result.data.created_count + result.data.updated_count;
+      if (importedCount <= 0) {
+        toast.error(
+          `Import finished with no new wells. ${result.data.skipped_count} skipped. Check column mapping and row errors.`,
+        );
+        return;
+      }
+
+      toast.success(`Import complete: ${result.data.created_count} created, ${result.data.updated_count} updated.`);
+      await queryClient.invalidateQueries({ queryKey: ["wells"] });
       onComplete();
     } catch {
       toast.error("Well import failed");
@@ -170,6 +188,32 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
           </div>
         ))}
       </div>
+
+      {lastImportSummary && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Last Import Result</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-xs">
+            <div className="grid grid-cols-2 gap-2">
+              <ResultMetric label="Rows Detected" value={String(lastImportSummary.rows_detected)} />
+              <ResultMetric label="Created" value={String(lastImportSummary.created_count)} />
+              <ResultMetric label="Updated" value={String(lastImportSummary.updated_count)} />
+              <ResultMetric label="Skipped" value={String(lastImportSummary.skipped_count)} />
+            </div>
+            {lastImportSummary.errors && lastImportSummary.errors.length > 0 && (
+              <div className="space-y-1 rounded border border-border/60 p-2">
+                <p className="font-medium text-amber-400">Row Errors</p>
+                {lastImportSummary.errors.slice(0, 5).map((error, index) => (
+                  <p key={`${error.row}-${index}`} className="font-mono text-[11px] text-muted-foreground">
+                    row {error.row}: {error.message}
+                  </p>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       <div className="flex items-center justify-between rounded border border-dashed px-3 py-2 text-xs">
         <span className="text-muted-foreground">Use template CSV for quickest mapping and clean upsert.</span>
@@ -304,6 +348,15 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
           </CardContent>
         </Card>
       )}
+    </div>
+  );
+}
+
+function ResultMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded border border-border/60 px-2 py-1.5">
+      <p className="text-muted-foreground">{label}</p>
+      <p className="font-mono font-medium">{value}</p>
     </div>
   );
 }

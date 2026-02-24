@@ -14,6 +14,10 @@ interface DCAResultsSummaryProps {
 export function DCAResultsSummary({ analysis }: DCAResultsSummaryProps) {
   const rateUnit = getFluidRateUnit(analysis.fluid_type);
   const cumulativeUnit = getFluidCumulativeUnit(analysis.fluid_type);
+  const mcP50 = analysis.monte_carlo_results?.p50 ?? null;
+  const deterministicEur = analysis.eur ?? null;
+  const mcWarning =
+    mcP50 != null && deterministicEur != null && deterministicEur > 0 && mcP50 > deterministicEur * 10;
 
   return (
     <div className="space-y-3">
@@ -95,6 +99,11 @@ export function DCAResultsSummary({ analysis }: DCAResultsSummaryProps) {
               label="Iterations"
               value={analysis.monte_carlo_results.iterations?.toString() || "--"}
             />
+            {mcWarning && (
+              <p className="rounded border border-amber-400/40 bg-amber-500/10 px-2 py-1 text-[11px] text-amber-300">
+                Monte Carlo P50 is much larger than deterministic EUR. Review parameter distributions and start date.
+              </p>
+            )}
             <Separator />
             <MonteCarloResultsChart
               fluidType={analysis.fluid_type}

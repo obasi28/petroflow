@@ -41,6 +41,7 @@ class MonteCarloEUR:
         cum_to_date: float = 0.0,
         iterations: int = 10000,
         max_time_months: int = 600,
+        param_bounds: dict[str, tuple[float, float]] | None = None,
     ) -> MonteCarloResult:
         """
         Run Monte Carlo simulation.
@@ -76,6 +77,9 @@ class MonteCarloEUR:
             params = dict(base_parameters)
             for param_name, dist_config in param_distributions.items():
                 sample = self._sample_parameter(dist_config)
+                if param_bounds and param_name in param_bounds:
+                    low, high = param_bounds[param_name]
+                    sample = float(np.clip(sample, low, high))
                 params[param_name] = sample
                 param_samples[param_name][i] = sample
 
@@ -118,17 +122,29 @@ class MonteCarloEUR:
         """Sample a single value from a configured distribution."""
         dist_type = config["type"]
         if dist_type == "normal":
-            return float(np.random.normal(config["mean"], config["std"]))
+            return float(np.random.normal(config["mean"], max(config.get("std", 0), 1e-12)))
         elif dist_type == "lognormal":
             mu = config["mean"]
             sigma = config["std"]
+            mu = max(mu, 1e-12)
+            sigma = max(sigma, 1e-12)
             sigma_ln = np.sqrt(np.log(1 + (sigma / mu) ** 2))
             mu_ln = np.log(mu) - 0.5 * sigma_ln**2
             return float(np.random.lognormal(mu_ln, sigma_ln))
         elif dist_type == "uniform":
-            return float(np.random.uniform(config["min"], config["max"]))
+            lower = config["min"]
+            upper = config["max"]
+            if upper < lower:
+                lower, upper = upper, lower
+            return float(np.random.uniform(lower, upper))
         elif dist_type == "triangular":
-            return float(np.random.triangular(config["min"], config["mode"], config["max"]))
+            lower = config["min"]
+            mode = config["mode"]
+            upper = config["max"]
+            if upper < lower:
+                lower, upper = upper, lower
+            mode = min(max(mode, lower), upper)
+            return float(np.random.triangular(lower, mode, upper))
         else:
             raise ValueError(f"Unknown distribution type: {dist_type}")
 

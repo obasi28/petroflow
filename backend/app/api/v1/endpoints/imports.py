@@ -260,6 +260,12 @@ async def upload_wells_file(
     except ValueError as exc:
         raise ValidationException(str(exc), field="column_mapping")
 
+    if not transformed:
+        raise ValidationException(
+            "No valid well rows found. Ensure at least one row has well_name/API/UWI mapped.",
+            field="column_mapping",
+        )
+
     created_count = 0
     updated_count = 0
     skipped_count = 0

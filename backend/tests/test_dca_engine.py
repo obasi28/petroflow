@@ -56,3 +56,26 @@ def test_monte_carlo_runs_and_percentiles_are_ordered():
     assert result.iterations == 300
     # SPE/PRMS semantics: P10 >= P50 >= P90 in volume space.
     assert result.eur_p10 >= result.eur_p50 >= result.eur_p90
+
+
+def test_monte_carlo_honors_parameter_bounds():
+    np.random.seed(42)
+    mc = MonteCarloEUR()
+    result = mc.run(
+        model_type="exponential",
+        base_parameters={"qi": 1000.0, "di": 0.1},
+        param_distributions={
+            "qi": {"type": "normal", "mean": 1000.0, "std": 5000.0},
+            "di": {"type": "normal", "mean": 0.1, "std": 5.0},
+        },
+        param_bounds={"qi": (1.0, 5000.0), "di": (1e-4, 1.0)},
+        economic_limit=20.0,
+        iterations=200,
+        max_time_months=120,
+    )
+
+    assert result.iterations == 200
+    assert np.min(result.parameter_samples["qi"]) >= 1.0
+    assert np.max(result.parameter_samples["qi"]) <= 5000.0
+    assert np.min(result.parameter_samples["di"]) >= 1e-4
+    assert np.max(result.parameter_samples["di"]) <= 1.0

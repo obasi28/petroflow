@@ -58,10 +58,11 @@ export function MonteCarloDialog({
     const params = MODEL_PARAMETERS[modelType] || [];
     params.forEach((p) => {
       const val = fittedParams[p] || 1;
+      const isDeclineLike = p === "di" || p === "d_min" || p === "tau" || p === "a";
       initial[p] = {
-        type: "normal",
+        type: isDeclineLike ? "lognormal" : "normal",
         mean: val,
-        std: val * 0.1,
+        std: Math.max(val * 0.1, 1e-6),
       };
     });
     return initial;

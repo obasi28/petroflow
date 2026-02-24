@@ -52,12 +52,15 @@ async def _get_production_arrays(
 
     base_date = records[0].production_date
     t_list, q_list = [], []
+    estimated_cum = 0.0
     for rec in records:
         rate = getattr(rec, rate_field)
         if rate is not None and rate > 0:
             months = (rec.production_date - base_date).days / 30.4375
             t_list.append(months)
             q_list.append(rate)
+            days_on = rec.days_on if rec.days_on and rec.days_on > 0 else 30.4375
+            estimated_cum += float(rate) * float(days_on)
 
     if len(t_list) < 3:
         raise EngineException("Insufficient non-zero production data points")
@@ -70,7 +73,8 @@ async def _get_production_arrays(
             last_cum = val
             break
 
-    return np.array(t_list), np.array(q_list), last_cum or 0.0
+    cum_to_date = last_cum if last_cum is not None else estimated_cum
+    return np.array(t_list), np.array(q_list), cum_to_date or 0.0
 
 
 def _normalize_param_distributions(param_distributions: dict) -> dict:
@@ -100,6 +104,16 @@ def _build_histogram(values: np.ndarray, bins: int = 30) -> tuple[list[float], l
         return [], []
     counts, edges = np.histogram(values, bins=bins)
     return [float(v) for v in edges.tolist()], [int(v) for v in counts.tolist()]
+
+
+def _model_param_bounds(model_type: str) -> dict[str, tuple[float, float]]:
+    cfg = DCAFitter.BOUNDS.get(model_type)
+    if not cfg:
+        return {}
+    return {
+        name: (float(cfg["lower"][idx]), float(cfg["upper"][idx]))
+        for idx, name in enumerate(cfg["names"])
+    }
 
 
 @router.get("/wells/{well_id}/dca")
@@ -270,6 +284,8 @@ async def start_monte_carlo(
             economic_limit=data.economic_limit,
             cum_to_date=analysis.cum_at_forecast_start or 0.0,
             iterations=data.iterations,
+            max_time_months=analysis.forecast_months,
+            param_bounds=_model_param_bounds(analysis.model_type),
         )
     except ValidationException:
         raise

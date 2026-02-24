@@ -18,4 +18,7 @@ Use this section for new rounds.
 
 | Round | Date | Observation | Priority | Status | Notes/Decision | Commit |
 |---|---|---|---|---|---|---|
-|  |  |  |  | todo |  |  |
+| 2 | 2026-02-24 | Monte Carlo EUR looks inconsistent versus deterministic EUR and may produce unrealistic volumes. | high | done | Added physically bounded Monte Carlo sampling (model parameter bounds), tied MC horizon to analysis forecast months, and added UI warning when MC P50 is far above deterministic EUR. | pending |
+| 2 | 2026-02-24 | Well metadata import can report success but wells may not appear in the wells list. | high | done | Prevent false-success by surfacing created/updated/skipped/errors, blocking success flow when 0 rows imported, invalidating wells query after import, and returning validation error when no valid well rows were parsed. | pending |
+| 2 | 2026-02-24 | DCA should auto-select a start date by default (while still allowing manual override). | medium | done | Added global DCA start-date state and automatic prefill to first positive production date for selected fluid when no user-selected date exists. | pending |
+| 2 | 2026-02-24 | Add preliminary data analysis/cleaning indicators (outliers, zero values) before DCA run. | high | done | Added DCA Data Quality panel with zero/null/negative/outlier checks, suggested start date, and one-click apply to help pre-fit screening. | pending |

@@ -38,6 +38,14 @@ export function DCAControls({ wellId }: DCAControlsProps) {
     setSelectedFluidType,
     chartScale,
     setChartScale,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    forecastMonths,
+    setForecastMonths,
+    economicLimit,
+    setEconomicLimit,
     showForecast,
     setShowForecast,
     setSelectedAnalysisId,
@@ -49,11 +57,6 @@ export function DCAControls({ wellId }: DCAControlsProps) {
   } = useDCAStore();
 
   const [name, setName] = useState("DCA Analysis");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [forecastMonths, setForecastMonths] = useState(360);
-  const [economicLimit, setEconomicLimit] = useState(5.0);
-
   const createDCA = useCreateDCA(wellId);
   const autoFit = useAutoFit();
 

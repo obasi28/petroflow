@@ -5,6 +5,10 @@ interface DCAState {
   selectedModelType: DCAModelType;
   selectedFluidType: FluidType;
   chartScale: ChartScale;
+  startDate: string;
+  endDate: string;
+  forecastMonths: number;
+  economicLimit: number;
   selectedAnalysisId: string | null;
   showForecast: boolean;
   showMonteCarlo: boolean;
@@ -15,6 +19,10 @@ interface DCAState {
   setSelectedModelType: (type: DCAModelType) => void;
   setSelectedFluidType: (type: FluidType) => void;
   setChartScale: (scale: ChartScale) => void;
+  setStartDate: (value: string) => void;
+  setEndDate: (value: string) => void;
+  setForecastMonths: (value: number) => void;
+  setEconomicLimit: (value: number) => void;
   setSelectedAnalysisId: (analysisId: string | null) => void;
   setShowForecast: (show: boolean) => void;
   setShowMonteCarlo: (show: boolean) => void;
@@ -29,6 +37,10 @@ const initialState = {
   selectedModelType: "modified_hyperbolic" as DCAModelType,
   selectedFluidType: "oil" as FluidType,
   chartScale: "semi-log" as ChartScale,
+  startDate: "",
+  endDate: "",
+  forecastMonths: 360,
+  economicLimit: 5.0,
   selectedAnalysisId: null,
   showForecast: true,
   showMonteCarlo: false,
@@ -43,6 +55,10 @@ export const useDCAStore = create<DCAState>((set) => ({
   setSelectedModelType: (type) => set({ selectedModelType: type }),
   setSelectedFluidType: (type) => set({ selectedFluidType: type }),
   setChartScale: (scale) => set({ chartScale: scale }),
+  setStartDate: (value) => set({ startDate: value }),
+  setEndDate: (value) => set({ endDate: value }),
+  setForecastMonths: (value) => set({ forecastMonths: value }),
+  setEconomicLimit: (value) => set({ economicLimit: value }),
   setSelectedAnalysisId: (analysisId) => set({ selectedAnalysisId: analysisId }),
   setShowForecast: (show) => set({ showForecast: show }),
   setShowMonteCarlo: (show) => set({ showMonteCarlo: show }),

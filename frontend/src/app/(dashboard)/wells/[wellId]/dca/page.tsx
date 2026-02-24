@@ -8,6 +8,7 @@ import { useDCAAnalyses } from "@/hooks/use-dca";
 import { useDCAStore } from "@/stores/dca-store";
 import { DCAChart } from "@/components/dca/dca-chart";
 import { DCAControls } from "@/components/dca/dca-controls";
+import { DCADataQualityPanel } from "@/components/dca/dca-data-quality-panel";
 import { DCAParametersPanel } from "@/components/dca/dca-parameters-panel";
 import { DCAResultsSummary } from "@/components/dca/dca-results-summary";
 import { DCAForecastTable } from "@/components/dca/dca-forecast-table";
@@ -16,6 +17,7 @@ import { ModelComparisonTable } from "@/components/dca/model-comparison-table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getFluidRateValue } from "@/types/dca";
 
 export default function DCAPage() {
   const params = useParams();
@@ -28,7 +30,10 @@ export default function DCAPage() {
   const {
     selectedAnalysisId,
     setSelectedAnalysisId,
+    selectedFluidType,
     setSelectedFluidType,
+    startDate,
+    setStartDate,
     autoFitResults,
     autoFitOverlayVisibility,
   } = useDCAStore();
@@ -56,6 +61,16 @@ export default function DCAPage() {
     ? (analyses.find((analysis) => analysis.id === selectedAnalysisId) ?? analyses[0] ?? null)
     : (analyses[0] ?? null);
 
+  useEffect(() => {
+    if (startDate) {
+      return;
+    }
+    const firstPositive = productionRecords.find((record) => getFluidRateValue(selectedFluidType, record) > 0);
+    if (firstPositive) {
+      setStartDate(firstPositive.production_date);
+    }
+  }, [productionRecords, selectedFluidType, setStartDate, startDate]);
+
   if (prodLoading) {
     return (
       <div className="space-y-4">
@@ -82,6 +97,12 @@ export default function DCAPage() {
       {/* Left Panel: Controls */}
       <div className="space-y-3">
         <DCAControls wellId={wellId} />
+        <DCADataQualityPanel
+          productionData={productionRecords}
+          fluidType={selectedFluidType}
+          currentStartDate={startDate}
+          onApplySuggestedStartDate={(value) => setStartDate(value)}
+        />
       </div>
 
       {/* Center Panel: Chart + Tables */}
