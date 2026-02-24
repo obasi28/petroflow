@@ -85,6 +85,16 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
     maxFiles: 1,
   });
 
+  function renderPreviewCell(cell: unknown): string | number {
+    if (cell === null || cell === undefined || cell === "") {
+      return "--";
+    }
+    if (typeof cell === "string" || typeof cell === "number") {
+      return cell;
+    }
+    return String(cell);
+  }
+
   async function parseFilePreview(selectedFile: File) {
     setIsParsing(true);
     try {
@@ -269,7 +279,7 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
                     <TableRow key={rowIndex}>
                       {row.map((value, cellIndex) => (
                         <TableCell key={cellIndex} className="whitespace-nowrap text-xs font-mono">
-                          {value}
+                          {renderPreviewCell(value)}
                         </TableCell>
                       ))}
                     </TableRow>

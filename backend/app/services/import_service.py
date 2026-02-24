@@ -1,7 +1,8 @@
 import io
 import uuid
+import math
 import pandas as pd
-from datetime import date
+from datetime import date, datetime
 
 
 WELL_COLUMN_ALIASES: dict[str, list[str]] = {
@@ -59,11 +60,49 @@ def _read_table(file_content: bytes, file_type: str):
     return pd.read_excel(io.BytesIO(file_content))
 
 
+def _to_json_safe_preview_value(value):
+    """Convert pandas/numpy values into JSON-safe preview cells."""
+    if value is None:
+        return None
+
+    if isinstance(value, (datetime, date, pd.Timestamp)):
+        return value.isoformat()
+
+    try:
+        if pd.isna(value):
+            return None
+    except TypeError:
+        # Some objects don't support pd.isna checks.
+        pass
+
+    # Convert numpy scalar objects to Python native scalars.
+    if hasattr(value, "item"):
+        try:
+            value = value.item()
+        except Exception:
+            pass
+
+    if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+        return None
+
+    if isinstance(value, (str, int, float, bool)):
+        return value
+
+    return str(value)
+
+
+def _build_preview_rows(df: pd.DataFrame) -> list[list]:
+    return [
+        [_to_json_safe_preview_value(value) for value in row]
+        for row in df.head(10).to_numpy().tolist()
+    ]
+
+
 def parse_csv(file_content: bytes) -> tuple[list[str], list[list]]:
     """Parse CSV file and return column names and preview rows."""
     df = pd.read_csv(io.BytesIO(file_content), nrows=100)
     columns = list(df.columns)
-    preview = df.head(10).values.tolist()
+    preview = _build_preview_rows(df)
     return columns, preview
 
 
@@ -71,7 +110,7 @@ def parse_excel(file_content: bytes) -> tuple[list[str], list[list]]:
     """Parse Excel file and return column names and preview rows."""
     df = pd.read_excel(io.BytesIO(file_content), nrows=100)
     columns = list(df.columns)
-    preview = df.head(10).values.tolist()
+    preview = _build_preview_rows(df)
     return columns, preview
 
 

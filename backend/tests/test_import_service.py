@@ -23,6 +23,14 @@ def test_parse_csv_returns_headers_and_preview():
     assert len(preview) == 2
 
 
+def test_parse_csv_preview_normalizes_blank_values_to_none():
+    csv_sample = b"""Prod Date,Oil Rate,Gas Rate\n2024-01-01,100,\n2024-02-01,,470\n"""
+    _, preview = parse_csv(csv_sample)
+
+    assert preview[0][2] is None
+    assert preview[1][1] is None
+
+
 def test_auto_detect_columns_maps_common_names():
     mapping = auto_detect_columns(["Prod Date", "Oil Rate", "Gas Rate", "Water Rate"])
 
