@@ -101,6 +101,49 @@ async def list_projects(
     )
 
 
+class ProjectListSummary(BaseModel):
+    project_id: uuid.UUID
+    well_count: int
+    dca_count: int
+
+
+@router.get("/summaries")
+async def list_project_summaries(
+    db: AsyncSession = Depends(get_db),
+    current_user: CurrentUser = Depends(get_current_user),
+):
+    """Return lightweight well/DCA counts for every project (single query)."""
+    query = (
+        select(
+            Project.id.label("project_id"),
+            func.count(func.distinct(Well.id)).label("well_count"),
+            func.count(func.distinct(DCAAnalysis.id)).label("dca_count"),
+        )
+        .outerjoin(
+            Well,
+            (Well.project_id == Project.id) & (Well.is_deleted == False),
+        )
+        .outerjoin(
+            DCAAnalysis,
+            (DCAAnalysis.well_id == Well.id)
+            & (DCAAnalysis.team_id == current_user.team_id),
+        )
+        .where(Project.team_id == current_user.team_id)
+        .group_by(Project.id)
+    )
+    result = await db.execute(query)
+    rows = result.all()
+    summaries = [
+        ProjectListSummary(
+            project_id=row.project_id,
+            well_count=row.well_count,
+            dca_count=row.dca_count,
+        ).model_dump()
+        for row in rows
+    ]
+    return success_response(summaries)
+
+
 @router.post("")
 async def create_project(
     data: ProjectCreate,

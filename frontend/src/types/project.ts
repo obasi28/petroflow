@@ -21,6 +21,12 @@ export interface ProjectDCAAnalysis {
   updated_at: string;
 }
 
+export interface ProjectListSummary {
+  project_id: string;
+  well_count: number;
+  dca_count: number;
+}
+
 export interface ProjectSummary {
   project_id: string;
   well_count: number;

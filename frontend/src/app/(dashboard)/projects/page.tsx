@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
-import { useProjects } from "@/hooks/use-projects";
+import { useProjects, useProjectSummaries } from "@/hooks/use-projects";
 import type { Project } from "@/types/project";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Plus, FolderKanban, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -36,6 +37,11 @@ export default function ProjectsPage() {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useProjects();
+  const { data: summariesData } = useProjectSummaries();
+
+  const summaryMap = new Map(
+    summariesData?.data?.map((s) => [s.project_id, s]) ?? [],
+  );
 
   const createProject = useMutation({
     mutationFn: (payload: { name: string; description?: string }) =>
@@ -61,7 +67,7 @@ export default function ProjectsPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
           <p className="text-muted-foreground">
-            Organize wells into projects for grouped analysis
+            Organize wells and analyses into projects
           </p>
         </div>
 
@@ -132,31 +138,42 @@ export default function ProjectsPage() {
             <FolderKanban className="mb-4 h-12 w-12 text-muted-foreground/50" />
             <p className="text-muted-foreground">No projects yet.</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Create a project to organize your wells.
+              Create a project to organize your wells and analyses.
             </p>
           </CardContent>
         </Card>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <Link key={project.id} href={`/projects/${project.id}`}>
-              <Card className="h-full transition-colors hover:border-primary/50">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{project.name}</CardTitle>
-                  {project.description && (
-                    <CardDescription className="line-clamp-2">
-                      {project.description}
-                    </CardDescription>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Created {formatDate(project.created_at)}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+          {projects.map((project) => {
+            const summary = summaryMap.get(project.id);
+            return (
+              <Link key={project.id} href={`/projects/${project.id}`}>
+                <Card className="h-full transition-colors hover:border-primary/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">{project.name}</CardTitle>
+                    {project.description && (
+                      <CardDescription className="line-clamp-2">
+                        {project.description}
+                      </CardDescription>
+                    )}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span>Created {formatDate(project.created_at)}</span>
+                      <div className="flex gap-1.5">
+                        <Badge variant="secondary" className="text-[10px]">
+                          {summary?.well_count ?? 0} wells
+                        </Badge>
+                        <Badge variant="outline" className="text-[10px]">
+                          {summary?.dca_count ?? 0} DCA
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>

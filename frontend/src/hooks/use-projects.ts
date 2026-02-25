@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
-import type { Project, ProjectDCAAnalysis, ProjectSummary } from "@/types/project";
+import type { Project, ProjectDCAAnalysis, ProjectListSummary, ProjectSummary } from "@/types/project";
 
 export function useProjects() {
   return useQuery({
@@ -24,6 +24,13 @@ export function useProjectDCA(projectId: string) {
     queryKey: ["projects", projectId, "dca"],
     queryFn: () => api.get<ProjectDCAAnalysis[]>(`/projects/${projectId}/dca`),
     enabled: !!projectId,
+  });
+}
+
+export function useProjectSummaries() {
+  return useQuery({
+    queryKey: ["projects", "summaries"],
+    queryFn: () => api.get<ProjectListSummary[]>("/projects/summaries"),
   });
 }
 

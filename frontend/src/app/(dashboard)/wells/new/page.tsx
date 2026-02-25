@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateWell } from "@/hooks/use-wells";
 import { WellForm } from "@/components/wells/well-form";
 import type { WellCreateFormData } from "@/lib/validators";
@@ -8,6 +8,8 @@ import { toast } from "sonner";
 
 export default function NewWellPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const defaultProjectId = searchParams.get("project_id") || undefined;
   const createWell = useCreateWell();
 
   function normalizePayload(data: WellCreateFormData): WellCreateFormData {
@@ -38,7 +40,11 @@ export default function NewWellPage() {
           Add a new well to your inventory
         </p>
       </div>
-      <WellForm onSubmit={onSubmit} isLoading={createWell.isPending} />
+      <WellForm
+        onSubmit={onSubmit}
+        isLoading={createWell.isPending}
+        defaultValues={defaultProjectId ? { project_id: defaultProjectId } : undefined}
+      />
     </div>
   );
 }

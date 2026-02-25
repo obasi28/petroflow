@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useProject, useProjectDCA, useProjectSummary } from "@/hooks/use-projects";
 import { useWells } from "@/hooks/use-wells";
@@ -12,9 +13,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Plus, Upload } from "lucide-react";
 import { formatCumulative, formatDate } from "@/lib/utils";
 
 export default function ProjectDetailPage() {
@@ -54,11 +57,27 @@ export default function ProjectDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">{project.name}</h1>
-        {project.description && (
-          <p className="text-muted-foreground">{project.description}</p>
-        )}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">{project.name}</h1>
+          {project.description && (
+            <p className="text-muted-foreground">{project.description}</p>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/projects/${projectId}/import-wells`}>
+              <Upload className="mr-2 h-4 w-4" />
+              Import Wells
+            </Link>
+          </Button>
+          <Button asChild size="sm">
+            <Link href={`/wells/new?project_id=${projectId}`}>
+              <Plus className="mr-2 h-4 w-4" />
+              New Well
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-3 md:grid-cols-4">

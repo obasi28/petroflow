@@ -1,4 +1,5 @@
 import json
+import logging
 import uuid
 from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from app.database import get_db
 from app.dependencies import get_current_user, CurrentUser
+from app.models.project import Project
 from app.models.well import Well
 from app.schemas.common import success_response
 from app.schemas.production import ProductionRecordCreate
@@ -19,6 +21,8 @@ from app.services.import_service import (
     transform_well_data,
 )
 from app.utils.exceptions import ValidationException
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/imports", tags=["imports"])
 
@@ -322,11 +326,28 @@ async def upload_wells_file(
     file: UploadFile = File(...),
     execute: bool = Form(False),
     column_mapping: str | None = Form(None),
+    project_id: str | None = Form(None),
     db: AsyncSession = Depends(get_db),
     current_user: CurrentUser = Depends(get_current_user),
 ):
     content = await file.read()
     filename = (file.filename or "unknown").lower()
+
+    # Validate project_id if provided
+    resolved_project_id: uuid.UUID | None = None
+    if project_id:
+        try:
+            resolved_project_id = uuid.UUID(project_id)
+        except ValueError:
+            raise ValidationException("Invalid project_id format", field="project_id")
+        proj_result = await db.execute(
+            select(Project.id).where(
+                Project.id == resolved_project_id,
+                Project.team_id == current_user.team_id,
+            )
+        )
+        if not proj_result.scalar_one_or_none():
+            raise ValidationException("Project not found", field="project_id")
 
     if filename.endswith(".csv"):
         file_type = "csv"
@@ -386,9 +407,13 @@ async def upload_wells_file(
             }
             if not payload.get("well_name"):
                 skipped_count += 1
+                errors.append({"row": row_idx, "message": "Missing well_name"})
                 continue
 
-            if payload.get("project_id"):
+            # Inject project_id from form param (overrides CSV column)
+            if resolved_project_id:
+                payload["project_id"] = resolved_project_id
+            elif payload.get("project_id"):
                 payload["project_id"] = uuid.UUID(payload["project_id"])
 
             _normalize_well_payload(payload)
@@ -430,6 +455,7 @@ async def upload_wells_file(
                 )
                 created_count += 1
         except Exception as exc:
+            logger.warning("Well import row %d skipped: %s", row_idx, exc, exc_info=True)
             skipped_count += 1
             errors.append({
                 "row": row_idx,

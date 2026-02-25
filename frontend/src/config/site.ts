@@ -26,14 +26,14 @@ export const mainNavItems: NavItem[] = [
     icon: LayoutDashboard,
   },
   {
-    title: "Wells",
-    href: "/wells",
-    icon: Droplets,
-  },
-  {
     title: "Projects",
     href: "/projects",
     icon: FolderKanban,
+  },
+  {
+    title: "Wells",
+    href: "/wells",
+    icon: Droplets,
   },
 ];
 

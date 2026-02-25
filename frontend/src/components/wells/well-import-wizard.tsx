@@ -24,9 +24,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArrowRight, Check, FileSpreadsheet, Loader2, Upload } from "lucide-react";
+import { ArrowRight, Check, CheckCircle2, FileSpreadsheet, Loader2, Upload, XCircle } from "lucide-react";
 
-type Step = "upload" | "mapping" | "preview";
+type Step = "upload" | "mapping" | "preview" | "results";
 
 const EXPECTED_COLUMNS = [
   "well_name",
@@ -54,11 +54,20 @@ const EXPECTED_COLUMNS = [
   "notes",
 ];
 
-interface WellImportWizardProps {
-  onComplete: () => void;
+interface ImportSummary {
+  rows_detected: number;
+  created_count: number;
+  updated_count: number;
+  skipped_count: number;
+  errors?: Array<{ row: number; message: string }>;
 }
 
-export function WellImportWizard({ onComplete }: WellImportWizardProps) {
+interface WellImportWizardProps {
+  onComplete: () => void;
+  projectId?: string;
+}
+
+export function WellImportWizard({ onComplete, projectId }: WellImportWizardProps) {
   const queryClient = useQueryClient();
   const [step, setStep] = useState<Step>("upload");
   const [file, setFile] = useState<File | null>(null);
@@ -67,13 +76,7 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
   const [mapping, setMapping] = useState<Record<string, string>>({});
   const [isParsing, setIsParsing] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
-  const [lastImportSummary, setLastImportSummary] = useState<{
-    rows_detected: number;
-    created_count: number;
-    updated_count: number;
-    skipped_count: number;
-    errors?: Array<{ row: number; message: string }>;
-  } | null>(null);
+  const [lastImportSummary, setLastImportSummary] = useState<ImportSummary | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const selectedFile = acceptedFiles[0];
@@ -143,14 +146,11 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
       formData.append("file", file);
       formData.append("execute", "true");
       formData.append("column_mapping", JSON.stringify(mapping));
+      if (projectId) {
+        formData.append("project_id", projectId);
+      }
 
-      const result = await api.upload<{
-        rows_detected: number;
-        created_count: number;
-        updated_count: number;
-        skipped_count: number;
-        errors?: Array<{ row: number; message: string }>;
-      }>("/imports/wells/upload", formData);
+      const result = await api.upload<ImportSummary>("/imports/wells/upload", formData);
 
       if (result.status !== "success" || !result.data) {
         toast.error(result.errors?.[0]?.message || "Well import failed");
@@ -159,16 +159,25 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
 
       setLastImportSummary(result.data);
       const importedCount = result.data.created_count + result.data.updated_count;
+
       if (importedCount <= 0) {
         toast.error(
           `Import finished with no new wells. ${result.data.skipped_count} skipped. Check column mapping and row errors.`,
         );
+        setStep("results");
         return;
       }
 
       toast.success(`Import complete: ${result.data.created_count} created, ${result.data.updated_count} updated.`);
-      await queryClient.invalidateQueries({ queryKey: ["wells"] });
-      onComplete();
+
+      // Use refetchQueries instead of invalidateQueries — this awaits the
+      // network response so the cache has fresh data before we navigate.
+      await queryClient.refetchQueries({ queryKey: ["wells"] });
+      if (projectId) {
+        await queryClient.invalidateQueries({ queryKey: ["projects"] });
+      }
+
+      setStep("results");
     } catch {
       toast.error("Well import failed");
     } finally {
@@ -176,44 +185,20 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
     }
   }
 
+  const stepLabels: Step[] = ["upload", "mapping", "preview", "results"];
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        {(["upload", "mapping", "preview"] as Step[]).map((currentStep, index) => (
+        {stepLabels.map((currentStep, index) => (
           <div key={currentStep} className="flex items-center gap-2">
             <Badge variant={step === currentStep ? "default" : "outline"} className="capitalize">
               {index + 1}. {currentStep}
             </Badge>
-            {index < 2 && <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />}
+            {index < stepLabels.length - 1 && <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />}
           </div>
         ))}
       </div>
-
-      {lastImportSummary && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm">Last Import Result</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-xs">
-            <div className="grid grid-cols-2 gap-2">
-              <ResultMetric label="Rows Detected" value={String(lastImportSummary.rows_detected)} />
-              <ResultMetric label="Created" value={String(lastImportSummary.created_count)} />
-              <ResultMetric label="Updated" value={String(lastImportSummary.updated_count)} />
-              <ResultMetric label="Skipped" value={String(lastImportSummary.skipped_count)} />
-            </div>
-            {lastImportSummary.errors && lastImportSummary.errors.length > 0 && (
-              <div className="space-y-1 rounded border border-border/60 p-2">
-                <p className="font-medium text-amber-400">Row Errors</p>
-                {lastImportSummary.errors.slice(0, 5).map((error, index) => (
-                  <p key={`${error.row}-${index}`} className="font-mono text-[11px] text-muted-foreground">
-                    row {error.row}: {error.message}
-                  </p>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
 
       <div className="flex items-center justify-between rounded border border-dashed px-3 py-2 text-xs">
         <span className="text-muted-foreground">Use template CSV for quickest mapping and clean upsert.</span>
@@ -348,15 +333,83 @@ export function WellImportWizard({ onComplete }: WellImportWizardProps) {
           </CardContent>
         </Card>
       )}
+
+      {step === "results" && lastImportSummary && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-base">
+              {(lastImportSummary.created_count + lastImportSummary.updated_count) > 0 ? (
+                <CheckCircle2 className="h-5 w-5 text-green-500" />
+              ) : (
+                <XCircle className="h-5 w-5 text-red-500" />
+              )}
+              Import Results
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <ResultMetric label="Rows Detected" value={String(lastImportSummary.rows_detected)} />
+              <ResultMetric label="Created" value={String(lastImportSummary.created_count)} variant="success" />
+              <ResultMetric label="Updated" value={String(lastImportSummary.updated_count)} />
+              <ResultMetric label="Skipped" value={String(lastImportSummary.skipped_count)} variant={lastImportSummary.skipped_count > 0 ? "warning" : "default"} />
+            </div>
+            {lastImportSummary.errors && lastImportSummary.errors.length > 0 && (
+              <div className="space-y-1 rounded border border-border/60 p-3">
+                <p className="text-xs font-medium text-amber-400">Row Errors ({lastImportSummary.errors.length})</p>
+                {lastImportSummary.errors.slice(0, 10).map((error, index) => (
+                  <p key={`${error.row}-${index}`} className="font-mono text-[11px] text-muted-foreground">
+                    Row {error.row}: {error.message}
+                  </p>
+                ))}
+                {lastImportSummary.errors.length > 10 && (
+                  <p className="text-[11px] text-muted-foreground">
+                    ... and {lastImportSummary.errors.length - 10} more
+                  </p>
+                )}
+              </div>
+            )}
+            <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setStep("upload");
+                  setFile(null);
+                  setLastImportSummary(null);
+                }}
+              >
+                Import More
+              </Button>
+              <Button onClick={onComplete}>
+                View Wells
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
 
-function ResultMetric({ label, value }: { label: string; value: string }) {
+function ResultMetric({
+  label,
+  value,
+  variant = "default",
+}: {
+  label: string;
+  value: string;
+  variant?: "default" | "success" | "warning";
+}) {
+  const borderClass =
+    variant === "success"
+      ? "border-green-500/30"
+      : variant === "warning"
+        ? "border-amber-500/30"
+        : "border-border/60";
   return (
-    <div className="rounded border border-border/60 px-2 py-1.5">
-      <p className="text-muted-foreground">{label}</p>
-      <p className="font-mono font-medium">{value}</p>
+    <div className={`rounded border ${borderClass} px-2 py-1.5`}>
+      <p className="text-xs text-muted-foreground">{label}</p>
+      <p className="font-mono text-sm font-medium">{value}</p>
     </div>
   );
 }
