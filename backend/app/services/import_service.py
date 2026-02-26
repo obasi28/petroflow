@@ -219,7 +219,7 @@ def transform_well_data(file_content: bytes, file_type: str, column_mapping: dic
                     parsed_date = pd.to_datetime(value).date()
                 except (ValueError, TypeError):
                     continue
-                record[target_field] = parsed_date.isoformat()
+                record[target_field] = parsed_date
                 continue
 
             if target_field in WELL_NUMERIC_FIELDS:

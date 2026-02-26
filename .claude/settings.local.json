@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout codex/isolation-20260223)",
+      "Bash(git fetch origin)",
+      "Bash(git merge codex/isolation-20260223 --no-edit)",
+      "Bash(unzip -l \"/c/Users/eobasi.2NCJQ13/Downloads/impeccable-style-claude-code.zip\")",
+      "Bash(unzip -o \"/c/Users/eobasi.2NCJQ13/Downloads/impeccable-style-claude-code.zip\")",
+      "Bash(xargs grep -l \"autoFitResults\\\\|auto.fit\")",
+      "Bash(npx next build)",
+      "Bash(pip install -e \".[dev]\")",
+      "Bash(python -m pytest tests/ -v --tb=short)",
+      "Bash(git -C \"C:/Users/eobasi.2NCJQ13/Desktop/Reservoir engineer app\" log --oneline -10)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where npm)",
+      "Bash(where npx)",
+      "Bash(where node)",
+      "Bash(where psql)",
+      "Bash(pg_isready -h localhost -p 5432)",
+      "Bash(echo \"exit code: $?\")",
+      "Bash(pg_isready)",
+      "Bash(psql --version)",
+      "Bash(psql -U postgres -c \"SELECT 1 FROM pg_roles WHERE rolname=''petroflow''\")",
+      "Bash(psql -h 127.0.0.1 -U postgres -c \"SELECT pg_reload_conf\\(\\);\")",
+      "Bash(ls -la \"/c/Users/eobasi.2NCJQ13/Desktop/Reservoir engineer app/frontend/src/app/\\(auth\\)\")",
+      "Bash(xargs grep -l \"axios\\\\|fetch\\\\|api\\\\|interceptor\")",
+      "Bash(xargs grep -l \"getToken\\\\|login\\\\|register\")",
+      "Bash(psql -h localhost -U petroflow -d petroflow -c \"SELECT well_name, api_number, project_id FROM wells WHERE well_name LIKE ''EF-Well%'';\")",
+      "Bash(psql -h localhost -U petroflow -d petroflow -c \"SELECT well_name, api_number, basin, well_type, well_status, project_id, spud_date, completion_date FROM wells WHERE well_name LIKE ''EF-Well%'' ORDER BY well_name;\")",
+      "Bash(git status -u)",
+      "Bash(git add backend/app/services/import_service.py tasks/lessons.md CLAUDE.md frontend/.env.local .claude/launch.json .claude/commands/ .claude/skills/ .claude/settings.local.json)",
+      "Bash(git commit:*)",
+      "Bash(git add backend/app/services/import_service.py tasks/lessons.md CLAUDE.md .claude/launch.json .claude/commands/ .claude/skills/ .claude/settings.local.json)"
+    ]
+  }
+}
