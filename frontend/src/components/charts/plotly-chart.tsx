@@ -50,6 +50,10 @@ export function PlotlyChart({ data, layout, config, className, ...rest }: Plotly
     ...layout,
     xaxis: { ...darkLayout.xaxis, ...layout?.xaxis },
     yaxis: { ...darkLayout.yaxis, ...layout?.yaxis },
+    // Support dual Y-axis charts (PVT, etc.)
+    ...((layout as Record<string, unknown>)?.yaxis2
+      ? { yaxis2: { ...darkLayout.yaxis, ...(layout as Record<string, unknown>).yaxis2 as object } }
+      : {}),
   };
 
   const mergedConfig: Partial<Plotly.Config> = {

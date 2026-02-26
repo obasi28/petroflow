@@ -1,6 +1,9 @@
+import io
+import csv
 import uuid
 from datetime import date, timedelta
 from fastapi import APIRouter, Depends
+from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
@@ -230,6 +233,54 @@ async def get_analysis(
         raise NotFoundException("DCA analysis not found")
 
     return success_response(DCAResponse.model_validate(analysis).model_dump())
+
+
+@router.get("/wells/{well_id}/dca/{analysis_id}/export")
+async def export_dca_forecast_csv(
+    well_id: uuid.UUID,
+    analysis_id: uuid.UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: CurrentUser = Depends(get_current_user),
+):
+    result = await db.execute(
+        select(DCAAnalysis)
+        .options(selectinload(DCAAnalysis.forecast_points))
+        .where(
+            DCAAnalysis.id == analysis_id,
+            DCAAnalysis.well_id == well_id,
+            DCAAnalysis.team_id == current_user.team_id,
+        )
+    )
+    analysis = result.scalar_one_or_none()
+    if not analysis:
+        raise NotFoundException("DCA analysis not found")
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    # Header comment with model metadata
+    writer.writerow(["# DCA Forecast Export"])
+    writer.writerow([f"# Model: {analysis.model_type}"])
+    writer.writerow([f"# Fluid: {analysis.fluid_type}"])
+    writer.writerow([f"# R²: {analysis.r_squared:.6f}" if analysis.r_squared else "# R²: N/A"])
+    writer.writerow([f"# EUR: {analysis.eur:.1f}" if analysis.eur else "# EUR: N/A"])
+    params_str = ", ".join(f"{k}={v:.6f}" for k, v in (analysis.parameters or {}).items())
+    writer.writerow([f"# Parameters: {params_str}"])
+    writer.writerow([])
+
+    columns = ["forecast_date", "time_months", "rate", "cumulative"]
+    writer.writerow(columns)
+
+    for pt in sorted(analysis.forecast_points, key=lambda p: p.time_months):
+        writer.writerow([pt.forecast_date, f"{pt.time_months:.2f}", f"{pt.rate:.4f}", f"{pt.cumulative:.2f}"])
+
+    output.seek(0)
+    filename = f"dca_forecast_{analysis.model_type}_{well_id}.csv"
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
 
 
 @router.delete("/wells/{well_id}/dca/{analysis_id}")

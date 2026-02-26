@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCumulative } from "@/lib/utils";
 import { MonteCarloResultsChart } from "@/components/dca/monte-carlo-results-chart";
+import { ExportButton } from "@/components/shared/export-button";
 
 interface DCAResultsSummaryProps {
   analysis: DCAAnalysis;
@@ -66,6 +67,15 @@ export function DCAResultsSummary({ analysis }: DCAResultsSummaryProps) {
           <MetricRow
             label="Econ. Limit"
             value={analysis.economic_limit ? `${analysis.economic_limit} ${rateUnit}` : "--"}
+          />
+          <Separator />
+          <ExportButton
+            path={`/wells/${analysis.well_id}/dca/${analysis.id}/export`}
+            filename={`dca_${analysis.model_type}_forecast.csv`}
+            label="Export Forecast"
+            variant="outline"
+            size="sm"
+            className="w-full"
           />
         </CardContent>
       </Card>

@@ -17,6 +17,7 @@ class User(Base, TimestampMixin):
     avatar_url: Mapped[str | None] = mapped_column(String(512))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     email_verified: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    preferences: Mapped[dict] = mapped_column(JSONB, default=dict)
 
     memberships: Mapped[list["TeamMembership"]] = relationship(back_populates="user")
 

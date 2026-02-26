@@ -115,6 +115,35 @@ class ApiClient {
     return this.handleResponse<T>(response);
   }
 
+  async download(path: string, filename: string): Promise<void> {
+    const headers: HeadersInit = {};
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("petroflow_token");
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+    }
+
+    const response = await fetch(`${this.baseUrl}${path}`, {
+      method: "GET",
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Download failed: ${response.statusText}`);
+    }
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   async upload<T>(path: string, formData: FormData): Promise<ApiResponse<T>> {
     const headers: HeadersInit = {};
     if (typeof window !== "undefined") {

@@ -1,4 +1,6 @@
+import uuid
 from fastapi import APIRouter, Depends, Body
+from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from passlib.context import CryptContext
@@ -107,3 +109,64 @@ async def get_me(current_user: CurrentUser = Depends(get_current_user)):
         "team_id": str(current_user.team_id),
         "role": current_user.role,
     })
+
+
+class ProfileUpdate(BaseModel):
+    name: str
+
+
+@router.put("/profile")
+async def update_profile(
+    data: ProfileUpdate,
+    db: AsyncSession = Depends(get_db),
+    current_user: CurrentUser = Depends(get_current_user),
+):
+    user = await db.get(User, current_user.id)
+    if not user:
+        raise UnauthorizedException("User not found")
+
+    user.name = data.name
+    await db.flush()
+
+    return success_response({
+        "id": str(user.id),
+        "email": user.email,
+        "name": user.name,
+    })
+
+
+@router.get("/preferences")
+async def get_preferences(
+    db: AsyncSession = Depends(get_db),
+    current_user: CurrentUser = Depends(get_current_user),
+):
+    user = await db.get(User, current_user.id)
+    if not user:
+        raise UnauthorizedException("User not found")
+
+    return success_response(user.preferences or {})
+
+
+class PreferencesUpdate(BaseModel):
+    unit_system: str | None = None
+    default_dca_model: str | None = None
+    default_economic_limit: float | None = None
+
+
+@router.put("/preferences")
+async def update_preferences(
+    data: PreferencesUpdate,
+    db: AsyncSession = Depends(get_db),
+    current_user: CurrentUser = Depends(get_current_user),
+):
+    user = await db.get(User, current_user.id)
+    if not user:
+        raise UnauthorizedException("User not found")
+
+    prefs = dict(user.preferences or {})
+    update = data.model_dump(exclude_none=True)
+    prefs.update(update)
+    user.preferences = prefs
+    await db.flush()
+
+    return success_response(prefs)

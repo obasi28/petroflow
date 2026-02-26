@@ -22,9 +22,11 @@ export default function WellDetailLayout({
     ? "production"
     : pathname.includes("/dca")
       ? "dca"
-      : pathname.includes("/import")
-        ? "import"
-        : "overview";
+      : pathname.includes("/pvt")
+        ? "pvt"
+        : pathname.includes("/import")
+          ? "import"
+          : "overview";
 
   if (isLoading) {
     return (
@@ -59,6 +61,9 @@ export default function WellDetailLayout({
           </TabsTrigger>
           <TabsTrigger value="dca" asChild>
             <Link href={`/wells/${wellId}/dca`}>DCA Analysis</Link>
+          </TabsTrigger>
+          <TabsTrigger value="pvt" asChild>
+            <Link href={`/wells/${wellId}/pvt`}>PVT</Link>
           </TabsTrigger>
           <TabsTrigger value="import" asChild>
             <Link href={`/wells/${wellId}/import`}>Import Data</Link>

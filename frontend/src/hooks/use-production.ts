@@ -36,3 +36,21 @@ export function useBatchCreateProduction(wellId: string) {
     },
   });
 }
+
+export function useDeleteProduction(wellId: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (params: { start_date?: string; end_date?: string }) =>
+      api.del(`/wells/${wellId}/production?${new URLSearchParams(
+        Object.fromEntries(
+          Object.entries(params).filter(([, v]) => v != null) as [string, string][]
+        )
+      ).toString()}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["production", wellId] });
+      queryClient.invalidateQueries({ queryKey: ["production-stats", wellId] });
+      queryClient.invalidateQueries({ queryKey: ["dca", wellId] });
+    },
+  });
+}
