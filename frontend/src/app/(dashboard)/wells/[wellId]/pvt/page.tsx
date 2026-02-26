@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import { useCalculatePVT, usePVTStudies, useSavePVTStudy } from "@/hooks/use-pvt";
 import { PVTInputForm } from "@/components/pvt/pvt-input-form";
@@ -44,6 +44,32 @@ export default function PVTPage() {
   const saveMutation = useSavePVTStudy(wellId);
   const { data: studiesData } = usePVTStudies(wellId);
   const savedStudies = studiesData?.data || [];
+
+  // Auto-load most recent saved study on first mount
+  const autoLoaded = useRef(false);
+  useEffect(() => {
+    if (!autoLoaded.current && savedStudies.length > 0 && !result) {
+      autoLoaded.current = true;
+      const latest = savedStudies[0];
+      setResult(latest.results);
+      setInputs({
+        api_gravity: latest.inputs.api_gravity ?? 35,
+        gas_gravity: latest.inputs.gas_gravity ?? 0.75,
+        temperature: latest.inputs.temperature ?? 200,
+        separator_pressure: latest.inputs.separator_pressure ?? 100,
+        separator_temperature: latest.inputs.separator_temperature ?? 60,
+        rs_at_pb: latest.inputs.rs_at_pb ?? null,
+        max_pressure: 6000,
+        num_points: 50,
+        ...Object.fromEntries(
+          Object.entries(latest.correlation_set || {}).map(([k, v]) => [
+            `correlation_${k}`,
+            v,
+          ]),
+        ),
+      });
+    }
+  }, [savedStudies, result]);
 
   const handleCalculate = useCallback(() => {
     calculateMutation.mutate(inputs, {

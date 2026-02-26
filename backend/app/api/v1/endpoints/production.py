@@ -53,6 +53,19 @@ async def get_statistics(
     return success_response(stats.model_dump())
 
 
+@router.get("/analytics")
+async def get_production_analytics(
+    well_id: uuid.UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: CurrentUser = Depends(get_current_user),
+):
+    """Compute production analytics (WOR, GOR, decline rates, cumulatives)."""
+    analytics = await production_service.compute_analytics(
+        db, well_id, current_user.team_id
+    )
+    return success_response(analytics)
+
+
 @router.get("/export")
 async def export_production_csv(
     well_id: uuid.UUID,

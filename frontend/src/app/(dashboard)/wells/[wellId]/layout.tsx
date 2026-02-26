@@ -18,15 +18,19 @@ export default function WellDetailLayout({
   const { data, isLoading } = useWell(wellId);
   const well = data?.data;
 
-  const currentTab = pathname.includes("/production")
-    ? "production"
-    : pathname.includes("/dca")
-      ? "dca"
-      : pathname.includes("/pvt")
-        ? "pvt"
-        : pathname.includes("/import")
-          ? "import"
-          : "overview";
+  const currentTab = pathname.includes("/material-balance")
+    ? "material-balance"
+    : pathname.includes("/well-test")
+      ? "well-test"
+      : pathname.includes("/production")
+        ? "production"
+        : pathname.includes("/dca")
+          ? "dca"
+          : pathname.includes("/pvt")
+            ? "pvt"
+            : pathname.includes("/import")
+              ? "import"
+              : "overview";
 
   if (isLoading) {
     return (
@@ -47,27 +51,27 @@ export default function WellDetailLayout({
     );
   }
 
+  const tabs = [
+    { value: "overview", label: "Overview", href: `/wells/${wellId}` },
+    { value: "production", label: "Production", href: `/wells/${wellId}/production` },
+    { value: "dca", label: "DCA Analysis", href: `/wells/${wellId}/dca` },
+    { value: "pvt", label: "PVT", href: `/wells/${wellId}/pvt` },
+    { value: "material-balance", label: "Material Balance", href: `/wells/${wellId}/material-balance` },
+    { value: "well-test", label: "Well Test", href: `/wells/${wellId}/well-test` },
+    { value: "import", label: "Import Data", href: `/wells/${wellId}/import` },
+  ];
+
   return (
     <div className="space-y-6">
       <WellHeader well={well} />
 
       <Tabs value={currentTab}>
         <TabsList>
-          <TabsTrigger value="overview" asChild>
-            <Link href={`/wells/${wellId}`}>Overview</Link>
-          </TabsTrigger>
-          <TabsTrigger value="production" asChild>
-            <Link href={`/wells/${wellId}/production`}>Production</Link>
-          </TabsTrigger>
-          <TabsTrigger value="dca" asChild>
-            <Link href={`/wells/${wellId}/dca`}>DCA Analysis</Link>
-          </TabsTrigger>
-          <TabsTrigger value="pvt" asChild>
-            <Link href={`/wells/${wellId}/pvt`}>PVT</Link>
-          </TabsTrigger>
-          <TabsTrigger value="import" asChild>
-            <Link href={`/wells/${wellId}/import`}>Import Data</Link>
-          </TabsTrigger>
+          {tabs.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value} asChild>
+              <Link href={tab.href}>{tab.label}</Link>
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
 

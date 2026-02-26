@@ -155,6 +155,89 @@ async def get_statistics(
     )
 
 
+async def compute_analytics(
+    db: AsyncSession, well_id: uuid.UUID, team_id: uuid.UUID
+) -> dict:
+    """Compute production analytics: WOR, GOR, decline rates, cumulatives.
+
+    Returns a dict with time-series arrays ready for frontend charting.
+    """
+    records = await get_production(db, well_id, team_id)
+    if not records:
+        return {
+            "dates": [], "oil_rate": [], "gas_rate": [], "water_rate": [],
+            "cum_oil": [], "cum_gas": [], "cum_water": [],
+            "gor": [], "wor": [], "water_cut": [], "decline_rate": [],
+            "summary": {},
+        }
+
+    dates: list[str] = []
+    oil_rates: list[float] = []
+    gas_rates: list[float] = []
+    water_rates: list[float] = []
+    cum_oil_arr: list[float] = []
+    cum_gas_arr: list[float] = []
+    cum_water_arr: list[float] = []
+    gor_vals: list[float | None] = []
+    wor_vals: list[float | None] = []
+    wc_vals: list[float | None] = []
+    decline_rates: list[float | None] = []
+
+    for i, rec in enumerate(records):
+        dates.append(str(rec.production_date))
+        qo = rec.oil_rate or 0.0
+        qg = rec.gas_rate or 0.0
+        qw = rec.water_rate or 0.0
+
+        oil_rates.append(qo)
+        gas_rates.append(qg)
+        water_rates.append(qw)
+        cum_oil_arr.append(rec.cum_oil or 0.0)
+        cum_gas_arr.append(rec.cum_gas or 0.0)
+        cum_water_arr.append(rec.cum_water or 0.0)
+
+        # GOR
+        gor_vals.append(rec.gor if rec.gor is not None else (qg / qo if qo > 0 else None))
+        # WOR
+        wor_vals.append(qw / qo if qo > 0 else None)
+        # Water cut
+        total_liquid = qo + qw
+        wc_vals.append(qw / total_liquid if total_liquid > 0 else None)
+        # Instantaneous decline rate
+        if i > 0 and oil_rates[i - 1] > 0:
+            d = -(qo - oil_rates[i - 1]) / oil_rates[i - 1]
+            decline_rates.append(round(d, 6))
+        else:
+            decline_rates.append(None)
+
+    # Summary metrics
+    valid_declines = [d for d in decline_rates if d is not None]
+    avg_decline = sum(valid_declines) / len(valid_declines) if valid_declines else 0.0
+
+    return {
+        "dates": dates,
+        "oil_rate": oil_rates,
+        "gas_rate": gas_rates,
+        "water_rate": water_rates,
+        "cum_oil": cum_oil_arr,
+        "cum_gas": cum_gas_arr,
+        "cum_water": cum_water_arr,
+        "gor": gor_vals,
+        "wor": wor_vals,
+        "water_cut": wc_vals,
+        "decline_rate": decline_rates,
+        "summary": {
+            "peak_oil_rate": max(oil_rates) if oil_rates else 0.0,
+            "current_oil_rate": oil_rates[-1] if oil_rates else 0.0,
+            "total_cum_oil": cum_oil_arr[-1] if cum_oil_arr else 0.0,
+            "total_cum_gas": cum_gas_arr[-1] if cum_gas_arr else 0.0,
+            "total_cum_water": cum_water_arr[-1] if cum_water_arr else 0.0,
+            "avg_decline_rate": round(avg_decline, 6),
+            "num_records": len(records),
+        },
+    }
+
+
 async def delete_production(
     db: AsyncSession,
     well_id: uuid.UUID,

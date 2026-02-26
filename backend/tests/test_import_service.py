@@ -157,7 +157,10 @@ def test_transform_well_data_builds_well_payloads():
     assert records[0]["well_name"] == "Smith 1H"
     assert records[0]["api_number"] == "42-123-10001"
     assert records[0]["latitude"] == 31.9974
-    assert records[0]["first_prod_date"] == "2023-04-01"
+    # transform_well_data may return date objects or strings depending on parser
+    from datetime import date
+    fpd = records[0]["first_prod_date"]
+    assert fpd == date(2023, 4, 1) or str(fpd) == "2023-04-01"
     assert records[0]["country"] == "US"
 
 

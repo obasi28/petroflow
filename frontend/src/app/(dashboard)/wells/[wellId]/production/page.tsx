@@ -8,9 +8,11 @@ import { ProductionTable } from "@/components/production/production-table";
 import { ProductionStats } from "@/components/production/production-stats";
 import { ProductionEntryDialog } from "@/components/production/production-entry-dialog";
 import { ProductionDeleteDialog } from "@/components/production/production-delete-dialog";
+import { ProductionAnalytics } from "@/components/production/production-analytics";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
 import { ExportButton } from "@/components/shared/export-button";
 import type { ProductionRecord } from "@/types/production";
@@ -57,49 +59,60 @@ export default function ProductionPage() {
 
   return (
     <>
-      {records.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-16">
-            <p className="text-muted-foreground">No production data available.</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Import data from the Import tab or add records manually.
-            </p>
-            <Button className="mt-4" onClick={() => setEntryOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Record
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-4">
-          {/* Header with Export + Add buttons */}
-          <div className="flex items-center justify-end gap-2">
-            <ExportButton
-              path={`/wells/${wellId}/production/export`}
-              filename={`production_${wellId}.csv`}
-              label="Export CSV"
-            />
-            <Button size="sm" onClick={() => setEntryOpen(true)}>
-              <Plus className="mr-1.5 h-3.5 w-3.5" />
-              Add Record
-            </Button>
-          </div>
+      <Tabs defaultValue="data" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="data">Production Data</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+        </TabsList>
 
-          <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
-            <div className="space-y-6">
-              <ProductionChart data={records} />
-              <ProductionTable
-                data={records}
-                onEdit={handleEdit}
-                onDeleteSelected={handleDelete}
-              />
+        <TabsContent value="data">
+          {records.length === 0 ? (
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-16">
+                <p className="text-muted-foreground">No production data available.</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Import data from the Import tab or add records manually.
+                </p>
+                <Button className="mt-4" onClick={() => setEntryOpen(true)}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Record
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-4">
+              <div className="flex items-center justify-end gap-2">
+                <ExportButton
+                  path={`/wells/${wellId}/production/export`}
+                  filename={`production_${wellId}.csv`}
+                  label="Export CSV"
+                />
+                <Button size="sm" onClick={() => setEntryOpen(true)}>
+                  <Plus className="mr-1.5 h-3.5 w-3.5" />
+                  Add Record
+                </Button>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
+                <div className="space-y-6">
+                  <ProductionChart data={records} />
+                  <ProductionTable
+                    data={records}
+                    onEdit={handleEdit}
+                    onDeleteSelected={handleDelete}
+                  />
+                </div>
+                <div>{stats && <ProductionStats stats={stats} />}</div>
+              </div>
             </div>
-            <div>{stats && <ProductionStats stats={stats} />}</div>
-          </div>
-        </div>
-      )}
+          )}
+        </TabsContent>
 
-      {/* Entry/Edit Dialog */}
+        <TabsContent value="analytics">
+          <ProductionAnalytics />
+        </TabsContent>
+      </Tabs>
+
       <ProductionEntryDialog
         wellId={wellId}
         open={entryOpen}
@@ -107,7 +120,6 @@ export default function ProductionPage() {
         editRecord={editRecord}
       />
 
-      {/* Delete Confirmation Dialog */}
       <ProductionDeleteDialog
         wellId={wellId}
         open={deleteOpen}

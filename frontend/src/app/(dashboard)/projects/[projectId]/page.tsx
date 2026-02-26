@@ -1,8 +1,16 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useProject, useProjectDCA, useProjectSummary } from "@/hooks/use-projects";
+import {
+  useProject,
+  useProjectDCA,
+  useProjectMB,
+  useProjectWT,
+  useProjectSummary,
+  useBatchDCA,
+} from "@/hooks/use-projects";
 import { useWells } from "@/hooks/use-wells";
 import { WellTable } from "@/components/wells/well-table";
 import {
@@ -17,8 +25,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Upload } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus, Upload, Play, Loader2 } from "lucide-react";
 import { formatCumulative, formatDate } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -27,15 +44,48 @@ export default function ProjectDetailPage() {
   const { data: projectData, isLoading: projectLoading } = useProject(projectId);
   const { data: projectSummaryData, isLoading: summaryLoading } = useProjectSummary(projectId);
   const { data: projectDCAData, isLoading: dcaLoading } = useProjectDCA(projectId);
+  const { data: projectMBData, isLoading: mbLoading } = useProjectMB(projectId);
+  const { data: projectWTData, isLoading: wtLoading } = useProjectWT(projectId);
   const { data: wellsData, isLoading: wellsLoading } = useWells({
     project_id: projectId,
     per_page: 100,
   });
 
+  const batchDCA = useBatchDCA(projectId);
+
+  const [batchModelType, setBatchModelType] = useState("exponential");
+  const [batchFluidType, setBatchFluidType] = useState("oil");
+
   const project = projectData?.data;
   const wells = wellsData?.data || [];
   const summary = projectSummaryData?.data;
-  const analyses = projectDCAData?.data || [];
+  const dcaAnalyses = projectDCAData?.data || [];
+  const mbAnalyses = projectMBData?.data || [];
+  const wtAnalyses = projectWTData?.data || [];
+
+  const handleBatchDCA = useCallback(() => {
+    batchDCA.mutate(
+      {
+        model_type: batchModelType,
+        fluid_type: batchFluidType,
+        forecast_months: 240,
+        economic_limit: 10.0,
+      },
+      {
+        onSuccess: (response) => {
+          const result = response.data;
+          if (result) {
+            toast.success(
+              `Batch DCA complete: ${result.succeeded}/${result.total_wells} wells analyzed` +
+                (result.failed > 0 ? ` (${result.failed} failed)` : ""),
+            );
+          }
+        },
+        onError: (err) =>
+          toast.error(err instanceof Error ? err.message : "Batch DCA failed"),
+      },
+    );
+  }, [batchDCA, batchModelType, batchFluidType]);
 
   if (projectLoading) {
     return (
@@ -80,7 +130,8 @@ export default function ProjectDetailPage() {
         </div>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-4">
+      {/* KPI Cards */}
+      <div className="grid gap-3 md:grid-cols-3 lg:grid-cols-6">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-xs text-muted-foreground">Wells</CardTitle>
@@ -95,6 +146,22 @@ export default function ProjectDetailPage() {
           </CardHeader>
           <CardContent className="text-xl font-semibold">
             {summaryLoading ? <Skeleton className="h-7 w-12" /> : (summary?.dca_count ?? 0)}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs text-muted-foreground">MB Analyses</CardTitle>
+          </CardHeader>
+          <CardContent className="text-xl font-semibold">
+            {summaryLoading ? <Skeleton className="h-7 w-12" /> : (summary?.mb_count ?? 0)}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xs text-muted-foreground">Well Tests</CardTitle>
+          </CardHeader>
+          <CardContent className="text-xl font-semibold">
+            {summaryLoading ? <Skeleton className="h-7 w-12" /> : (summary?.wt_count ?? 0)}
           </CardContent>
         </Card>
         <Card>
@@ -119,6 +186,8 @@ export default function ProjectDetailPage() {
         <TabsList>
           <TabsTrigger value="wells">Wells</TabsTrigger>
           <TabsTrigger value="dca">DCA Analyses</TabsTrigger>
+          <TabsTrigger value="mb">Material Balance</TabsTrigger>
+          <TabsTrigger value="wt">Well Tests</TabsTrigger>
           <TabsTrigger value="summary">Production Summary</TabsTrigger>
         </TabsList>
 
@@ -142,14 +211,58 @@ export default function ProjectDetailPage() {
         <TabsContent value="dca">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Project DCA Analyses</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base">Project DCA Analyses</CardTitle>
+                <div className="flex items-center gap-2">
+                  <Select value={batchModelType} onValueChange={setBatchModelType}>
+                    <SelectTrigger className="h-8 w-[140px] text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="exponential" className="text-xs">Exponential</SelectItem>
+                      <SelectItem value="hyperbolic" className="text-xs">Hyperbolic</SelectItem>
+                      <SelectItem value="harmonic" className="text-xs">Harmonic</SelectItem>
+                      <SelectItem value="stretched_exponential" className="text-xs">SEPD</SelectItem>
+                      <SelectItem value="duong" className="text-xs">Duong</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={batchFluidType} onValueChange={setBatchFluidType}>
+                    <SelectTrigger className="h-8 w-[80px] text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="oil" className="text-xs">Oil</SelectItem>
+                      <SelectItem value="gas" className="text-xs">Gas</SelectItem>
+                      <SelectItem value="water" className="text-xs">Water</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    size="sm"
+                    className="h-8 text-xs"
+                    onClick={handleBatchDCA}
+                    disabled={batchDCA.isPending || wells.length === 0}
+                  >
+                    {batchDCA.isPending ? (
+                      <>
+                        <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+                        Running...
+                      </>
+                    ) : (
+                      <>
+                        <Play className="mr-1 h-3 w-3" />
+                        Batch DCA ({wells.length} wells)
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               {dcaLoading ? (
                 <Skeleton className="h-40 w-full" />
-              ) : analyses.length === 0 ? (
+              ) : dcaAnalyses.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
-                  No analyses found yet for wells in this project.
+                  No DCA analyses found. Use &quot;Batch DCA&quot; to run analysis on all wells.
                 </p>
               ) : (
                 <div className="rounded-md border">
@@ -159,24 +272,136 @@ export default function ProjectDetailPage() {
                         <TableHead className="text-xs">Well</TableHead>
                         <TableHead className="text-xs">Analysis</TableHead>
                         <TableHead className="text-xs">Model</TableHead>
-                        <TableHead className="text-right text-xs">R2</TableHead>
+                        <TableHead className="text-right text-xs">R²</TableHead>
                         <TableHead className="text-right text-xs">EUR</TableHead>
                         <TableHead className="text-xs">Updated</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {analyses.map((analysis) => (
-                        <TableRow key={analysis.id}>
-                          <TableCell className="text-xs font-medium">{analysis.well_name}</TableCell>
-                          <TableCell className="text-xs">{analysis.name}</TableCell>
-                          <TableCell className="text-xs capitalize">{analysis.model_type.replaceAll("_", " ")}</TableCell>
+                      {dcaAnalyses.map((a) => (
+                        <TableRow key={a.id}>
+                          <TableCell className="text-xs font-medium">
+                            <Link href={`/wells/${a.well_id}/dca`} className="hover:underline text-primary">
+                              {a.well_name}
+                            </Link>
+                          </TableCell>
+                          <TableCell className="text-xs">{a.name}</TableCell>
+                          <TableCell className="text-xs capitalize">{a.model_type.replaceAll("_", " ")}</TableCell>
                           <TableCell className="text-right text-xs font-mono">
-                            {analysis.r_squared != null ? analysis.r_squared.toFixed(4) : "--"}
+                            {a.r_squared != null ? a.r_squared.toFixed(4) : "--"}
                           </TableCell>
                           <TableCell className="text-right text-xs font-mono text-primary">
-                            {formatCumulative(analysis.eur)}
+                            {formatCumulative(a.eur)}
                           </TableCell>
-                          <TableCell className="text-xs">{formatDate(analysis.updated_at)}</TableCell>
+                          <TableCell className="text-xs">{formatDate(a.updated_at)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="mb">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Material Balance Analyses</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {mbLoading ? (
+                <Skeleton className="h-40 w-full" />
+              ) : mbAnalyses.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No material balance analyses found. Run analyses from individual well pages.
+                </p>
+              ) : (
+                <div className="rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="text-xs">Well</TableHead>
+                        <TableHead className="text-xs">Analysis</TableHead>
+                        <TableHead className="text-xs">Method</TableHead>
+                        <TableHead className="text-right text-xs">OOIP (STB)</TableHead>
+                        <TableHead className="text-xs">Drive Mechanism</TableHead>
+                        <TableHead className="text-xs">Updated</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {mbAnalyses.map((a) => (
+                        <TableRow key={a.id}>
+                          <TableCell className="text-xs font-medium">
+                            <Link href={`/wells/${a.well_id}/material-balance`} className="hover:underline text-primary">
+                              {a.well_name}
+                            </Link>
+                          </TableCell>
+                          <TableCell className="text-xs">{a.name}</TableCell>
+                          <TableCell className="text-xs capitalize">{a.method.replace("_", " ")}</TableCell>
+                          <TableCell className="text-right text-xs font-mono">
+                            {a.ooip != null ? a.ooip.toLocaleString() : "--"}
+                          </TableCell>
+                          <TableCell className="text-xs">
+                            {a.drive_mechanism ? (
+                              <Badge variant="outline" className="text-[10px]">
+                                {a.drive_mechanism}
+                              </Badge>
+                            ) : "--"}
+                          </TableCell>
+                          <TableCell className="text-xs">{formatDate(a.updated_at)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="wt">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Well Test Analyses</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {wtLoading ? (
+                <Skeleton className="h-40 w-full" />
+              ) : wtAnalyses.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No well test analyses found. Run analyses from individual well pages.
+                </p>
+              ) : (
+                <div className="rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="text-xs">Well</TableHead>
+                        <TableHead className="text-xs">Analysis</TableHead>
+                        <TableHead className="text-xs">Type</TableHead>
+                        <TableHead className="text-right text-xs">k (mD)</TableHead>
+                        <TableHead className="text-right text-xs">Skin</TableHead>
+                        <TableHead className="text-xs">Updated</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {wtAnalyses.map((a) => (
+                        <TableRow key={a.id}>
+                          <TableCell className="text-xs font-medium">
+                            <Link href={`/wells/${a.well_id}/well-test`} className="hover:underline text-primary">
+                              {a.well_name}
+                            </Link>
+                          </TableCell>
+                          <TableCell className="text-xs">{a.name}</TableCell>
+                          <TableCell className="text-xs capitalize">{a.test_type}</TableCell>
+                          <TableCell className="text-right text-xs font-mono">
+                            {a.permeability != null ? a.permeability.toFixed(2) : "--"}
+                          </TableCell>
+                          <TableCell className="text-right text-xs font-mono">
+                            {a.skin_factor != null ? a.skin_factor.toFixed(2) : "--"}
+                          </TableCell>
+                          <TableCell className="text-xs">{formatDate(a.updated_at)}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

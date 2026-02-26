@@ -37,6 +37,27 @@ export function useBatchCreateProduction(wellId: string) {
   });
 }
 
+export function useProductionAnalytics(wellId: string) {
+  return useQuery({
+    queryKey: ["production-analytics", wellId],
+    queryFn: () => api.get<{
+      dates: string[];
+      oil_rate: number[];
+      gas_rate: number[];
+      water_rate: number[];
+      cum_oil: number[];
+      cum_gas: number[];
+      cum_water: number[];
+      gor: (number | null)[];
+      wor: (number | null)[];
+      water_cut: (number | null)[];
+      decline_rate: (number | null)[];
+      summary: Record<string, number>;
+    }>(`/wells/${wellId}/production/analytics`),
+    enabled: !!wellId,
+  });
+}
+
 export function useDeleteProduction(wellId: string) {
   const queryClient = useQueryClient();
 

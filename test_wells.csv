@@ -1,0 +1,454 @@
+well_name,api_number,well_type,well_status,orientation,latitude,longitude,basin,field,county,state,first_prod_date,production_date,days_on,oil_rate,gas_rate,water_rate,cum_oil,cum_gas,cum_water
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2023-09-01,28,1072.44,969.97,67.2,30028.2,27159.18,1881.66
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2023-10-01,30,1004.65,918.4,78.98,60167.71,54711.19,4251.11
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2023-11-01,30,909.91,840.61,86.49,87464.94,79929.53,6845.87
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2023-12-01,28,958.98,895.24,107.41,114316.46,104996.38,9853.35
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-01-01,29,845.11,797.13,109.43,138824.65,128113.2,13026.79
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-02-01,29,848.04,808.11,125.11,163417.66,151548.43,16654.87
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-03-01,31,794.37,764.67,131.98,188043.02,175253.18,20746.37
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-04-01,28,773.49,752.07,143.4,209700.61,196311.03,24761.46
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-05-01,31,763.8,750.05,156.79,233378.34,219562.61,29621.91
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-06-01,30,740.67,734.52,167.27,255598.35,241598.08,34640.04
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-07-01,28,743.88,744.91,183.82,276426.87,262455.52,39787.11
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-08-01,30,687.25,694.87,184.97,297044.45,283301.57,45336.25
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-09-01,30,708.21,722.92,206.77,318290.62,304989.13,51539.44
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-10-01,28,635.06,654.41,200.44,336072.21,323312.48,57151.75
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-11-01,28,675.75,702.88,229.86,354993.07,342993.23,63587.96
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2024-12-01,28,619.47,650.35,226.5,372338.11,361202.99,69929.96
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-01-01,30,637.44,675.39,249.94,391461.21,381464.83,77428.08
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-02-01,28,608.92,651.09,255.51,408511.06,399695.22,84582.25
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-03-01,31,583.75,629.83,261.65,426607.45,419220.04,92693.37
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-04-01,30,595.06,647.8,284.44,444459.17,438653.92,101226.66
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-05-01,28,569.45,625.44,289.88,460403.87,456166.3,109343.34
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-06-01,28,533.1,590.68,288.64,475330.68,472705.41,117425.12
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-07-01,30,521.62,583.02,300.05,490979.34,490196.04,126426.58
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-08-01,28,504.13,568.36,307.79,505095.08,506110.13,135044.69
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-09-01,30,507.29,576.84,328.45,520313.92,523415.37,144898.3
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-10-01,28,513.1,588.41,352.05,534680.64,539890.94,154755.64
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-11-01,29,493.22,570.4,358.4,548984.13,556432.64,165149.19
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2025-12-01,29,490.01,571.44,376.9,563194.44,573004.32,176079.19
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2026-01-01,28,462.23,543.52,376.18,576136.97,588223.01,186612.12
+Permian Red Hills #1H,42-135-79655,oil,active,horizontal,31.847495,-103.598981,Permian Basin,Red Hills,Loving,TX,2023-09-01,2026-02-01,28,472.63,560.33,406.84,589370.54,603912.19,198003.56
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2022-12-01,28,858.58,537.07,89.31,24040.29,15037.85,2500.59
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-01-01,31,810.83,512.81,97.09,49176.11,30934.94,5510.48
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-02-01,22,771.15,493.05,104.82,66141.45,41782.03,7816.54
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-03-01,28,705.82,456.16,107.7,85904.4,54554.6,10832.09
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-04-01,30,711.68,464.87,120.8,107254.65,68500.78,14456.06
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-05-01,30,717.72,473.79,134.51,128786.35,82714.5,18491.34
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-06-01,30,638.23,425.73,131.24,147933.22,95486.42,22428.41
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-07-01,31,618.0,416.51,138.68,167091.12,108398.29,26727.56
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-08-01,31,673.77,458.76,164.25,187977.99,122619.98,31819.4
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-09-01,23,591.63,406.93,156.06,201585.44,131979.35,35408.79
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-10-01,28,561.0,389.75,159.57,217293.47,142892.23,39876.68
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-11-01,30,572.31,401.56,175.0,234462.66,154939.05,45126.54
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2023-12-01,28,539.39,382.2,176.83,249565.59,165640.59,50077.76
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-01-01,29,521.17,372.89,182.75,264679.41,176454.45,55377.42
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-02-01,17,500.75,361.75,187.41,273192.11,182604.15,58563.43
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-03-01,28,509.45,371.56,203.13,287456.63,193007.77,64251.01
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-04-01,30,481.2,354.28,204.06,301892.54,203636.29,70372.77
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-05-01,29,457.07,339.68,205.84,315147.53,213487.09,76342.06
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-06-01,20,493.0,369.8,235.46,325007.56,220883.07,81051.29
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-07-01,28,463.59,350.95,234.54,337988.16,230709.62,87618.43
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-08-01,29,416.97,318.54,223.22,350080.23,239947.22,94091.75
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-09-01,28,423.89,326.76,239.89,361949.23,249096.54,100808.71
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-10-01,30,421.72,328.0,252.08,374600.73,258936.62,108371.23
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-11-01,28,387.16,303.8,244.26,385441.12,267443.07,115210.56
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2024-12-01,30,391.75,310.12,260.7,397193.76,276746.71,123031.59
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-01-01,31,381.01,304.25,267.29,409004.97,286178.45,131317.44
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-02-01,28,375.34,302.33,277.45,419514.63,294643.58,139085.92
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-03-01,31,362.84,294.77,282.48,430762.75,303781.35,147842.92
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-04-01,29,360.76,295.57,295.72,441224.77,312352.91,156418.7
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-05-01,29,353.49,292.06,305.01,451476.07,320822.78,165263.88
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-06-01,29,327.04,272.47,296.97,460960.21,328724.44,173876.03
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-07-01,30,335.25,281.63,320.34,471017.58,337173.28,183486.16
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-08-01,29,325.88,276.01,327.65,480468.02,345177.66,192987.88
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-09-01,30,339.52,289.92,359.19,490653.68,353875.26,203763.64
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-10-01,31,320.73,276.09,357.05,500596.19,362434.03,214832.3
+Permian Pecos Valley #2H,42-248-26429,oil,active,horizontal,31.939739,-103.624067,Permian Basin,Pecos Valley,Reeves,TX,2022-12-01,2025-11-01,29,318.3,276.21,372.94,509827.01,370444.05,225647.65
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2023-07-01,30,1044.7,645.13,113.27,31341.15,19353.83,3397.95
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2023-08-01,28,1042.13,647.05,134.16,60520.9,37471.2,7154.3
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2023-09-01,28,975.53,608.98,146.14,87835.71,54522.63,11246.14
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2023-10-01,30,983.19,617.07,168.79,117331.5,73034.85,16309.87
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2023-11-01,16,852.06,537.64,165.64,130964.46,81637.1,18960.09
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2023-12-01,31,845.65,536.45,184.37,157179.72,98266.92,24675.5
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-01-01,31,842.11,537.03,204.29,183285.18,114914.98,31008.48
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-02-01,29,796.65,510.73,213.64,206388.12,129726.05,37204.16
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-03-01,31,752.02,484.65,221.73,229700.8,144750.08,44077.64
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-04-01,28,766.61,496.63,247.34,251165.75,158655.6,51003.19
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-05-01,28,666.83,434.23,234.51,269837.04,170814.18,57569.35
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-06-01,30,701.3,459.04,267.9,290876.17,184585.52,65606.32
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-07-01,31,629.23,413.99,260.33,310382.26,197419.07,73676.43
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-08-01,31,619.22,409.48,276.75,329578.01,210113.07,82255.69
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-09-01,16,637.51,423.73,307.12,339778.22,216892.73,87169.58
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-10-01,31,627.04,418.88,324.98,359216.6,229878.08,97243.94
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-11-01,30,598.8,402.03,333.32,377180.63,241939.01,107243.52
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2024-12-01,30,563.13,379.98,336.19,394074.58,253338.38,117329.33
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-01-01,29,559.83,379.64,358.02,410309.77,264347.9,127712.03
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-02-01,28,563.91,384.3,385.92,426099.37,275108.42,138517.72
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-03-01,30,557.01,381.47,407.57,442809.56,286552.58,150744.79
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-04-01,29,506.97,348.91,396.35,457511.69,296671.0,162239.09
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-05-01,30,507.08,350.7,423.36,472724.18,307191.88,174939.92
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-06-01,29,507.33,352.57,452.15,487436.68,317416.51,188052.25
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-07-01,29,516.59,360.75,491.35,502417.68,327878.18,202301.44
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-08-01,28,443.29,311.05,449.93,514829.72,336587.66,214899.47
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-09-01,28,462.38,326.0,500.82,527776.24,345715.77,228922.29
+Permian Ward South #3H,42-380-41906,oil,active,horizontal,32.086814,-103.574815,Permian Basin,Ward South,Ward,TX,2023-07-01,2025-10-01,30,428.93,303.86,495.86,540644.01,354831.68,243798.18
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-04-01,28,723.1,499.49,63.39,20246.68,13985.67,1774.96
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-05-01,29,688.4,480.16,75.04,40210.41,27910.33,3951.04
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-06-01,29,655.31,461.49,85.97,59214.42,41293.55,6444.2
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-07-01,31,636.56,452.57,98.21,78947.74,55323.26,9488.79
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-08-01,30,591.5,424.52,105.49,96692.89,68058.94,12653.53
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-09-01,30,594.06,430.36,120.85,114514.78,80969.7,16278.97
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-10-01,31,547.86,400.58,125.79,131498.51,93387.65,20178.43
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-11-01,28,543.16,400.8,139.56,146707.03,104610.03,24086.05
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2023-12-01,28,529.68,394.42,151.23,161538.01,115653.69,28320.54
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-01-01,25,502.45,377.52,158.49,174099.24,125091.81,32282.69
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-02-01,24,469.0,355.55,162.63,185355.29,133625.04,36185.85
+Permian Mentone #4H,42-487-46976,oil,active,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-03-01,30,439.6,336.22,166.88,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-04-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-05-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-06-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-07-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-08-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-09-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-10-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-11-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2024-12-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2025-01-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2025-02-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2025-03-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2025-04-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2025-05-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2025-06-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Mentone #4H,42-487-46976,oil,shut_in,horizontal,31.816707,-103.871311,Permian Basin,Mentone,Loving,TX,2023-04-01,2025-07-01,0,0.0,0.0,0.0,198543.37,143711.77,41192.38
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-01-01,31,1089.28,950.94,74.47,33767.8,29479.23,2308.66
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-02-01,28,1066.43,935.96,83.63,63627.96,55686.07,4650.25
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-03-01,25,951.0,839.07,84.31,87402.94,76662.89,6758.12
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-04-01,30,963.47,854.56,95.48,116307.07,102299.72,9622.41
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-05-01,30,860.09,766.87,94.38,142109.73,125305.76,12453.87
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-06-01,30,819.71,734.68,98.84,166701.0,147346.16,15419.14
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-07-01,30,824.57,742.88,108.55,191438.25,169632.52,18675.63
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-08-01,30,780.05,706.4,111.49,214839.81,190824.45,22020.3
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-09-01,29,749.79,682.48,115.79,236583.71,210616.43,25378.3
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-10-01,29,729.56,667.47,121.24,257741.08,229973.02,28894.17
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-11-01,22,671.42,617.4,119.62,272512.41,243555.84,31525.85
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2022-12-01,30,665.17,614.74,126.64,292467.38,261998.12,35325.18
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-01-01,29,639.01,593.55,129.65,310998.79,279210.99,39084.92
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-02-01,28,634.5,592.31,136.82,328764.86,295795.66,42915.99
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-03-01,29,608.11,570.5,139.06,346400.02,312340.21,46948.59
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-04-01,29,588.46,554.81,142.4,363465.43,328429.67,51078.05
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-05-01,29,556.52,527.28,142.23,379604.39,343720.77,55202.85
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-06-01,29,566.36,539.24,152.63,396028.9,359358.86,59629.0
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-07-01,31,533.18,510.14,151.26,412557.56,375173.05,64318.16
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-08-01,29,505.77,486.26,150.84,427224.95,389274.69,68692.49
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-09-01,30,473.71,457.65,148.32,441436.38,403004.1,73142.16
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-10-01,29,442.39,429.44,145.24,454265.61,415457.89,77354.25
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-11-01,30,454.27,443.09,156.22,467893.65,428750.54,82040.79
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2023-12-01,28,460.32,451.13,165.64,480782.6,441382.29,86678.63
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-01-01,29,428.1,421.55,161.03,493197.48,453607.21,91348.53
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-02-01,29,424.17,419.65,166.64,505498.32,465777.08,96181.2
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-03-01,28,423.9,421.36,173.8,517367.48,477575.12,101047.6
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-04-01,30,400.33,399.8,171.17,529377.45,489569.0,106182.6
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-05-01,31,406.97,408.32,181.33,541993.53,502226.92,111803.84
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-06-01,29,387.2,390.29,179.67,553222.38,513545.25,117014.27
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-07-01,30,362.68,367.26,175.16,564102.69,524562.92,122269.02
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-08-01,30,353.28,359.38,177.48,574701.02,535344.37,127593.55
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-09-01,28,361.15,369.07,188.65,584813.29,545678.42,132875.62
+Permian Toyah Draw #5H,42-351-73023,oil,active,horizontal,31.790565,-103.617418,Permian Basin,Toyah Draw,Reeves,TX,2022-01-01,2024-10-01,28,349.77,359.07,189.87,594606.93,555732.44,138191.91
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-04-01,29,899.92,581.18,81.43,26097.6,16854.15,2361.44
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-05-01,28,814.9,531.4,86.69,48914.76,31733.21,4788.65
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-06-01,30,807.81,531.85,99.15,73148.91,47688.7,7763.12
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-07-01,31,717.46,476.88,100.15,95390.28,62472.0,10867.83
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-08-01,30,683.03,458.29,107.21,115881.24,76220.71,14084.06
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-09-01,29,667.37,451.98,116.7,135234.96,89328.06,17468.31
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-10-01,31,596.84,407.96,115.39,153736.99,101974.95,21045.3
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-11-01,30,597.96,412.49,127.0,171675.73,114349.6,24855.26
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2022-12-01,22,574.41,399.86,133.3,184312.86,123146.51,27787.86
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-01-01,28,531.77,373.52,134.21,199202.49,133605.06,31545.81
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-02-01,28,544.69,386.02,148.91,214453.77,144413.54,35715.41
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-03-01,28,517.25,369.83,152.65,228936.87,154768.67,39989.62
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-04-01,30,496.94,358.43,157.83,243845.16,165521.56,44724.4
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-05-01,29,459.58,334.37,156.66,257173.02,175218.34,49267.41
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-06-01,28,460.59,338.01,168.1,270069.67,184682.48,53974.34
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-07-01,29,417.55,309.05,162.83,282178.73,193644.8,58696.43
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-08-01,16,388.45,289.95,161.55,288393.93,198283.95,61281.25
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-09-01,28,406.42,305.92,179.96,299773.74,206849.64,66320.18
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-10-01,29,370.12,280.92,174.23,310507.12,214996.25,71372.87
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-11-01,30,368.75,282.2,184.3,321569.63,223462.22,76901.92
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2023-12-01,31,351.05,270.86,186.06,332452.11,231858.86,82669.94
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-01-01,30,331.77,258.07,186.29,342405.24,239601.02,88258.59
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-02-01,28,337.72,264.82,200.7,351861.38,247016.05,93878.27
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-03-01,29,323.58,255.77,203.37,361245.31,254433.45,99775.94
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-04-01,29,310.05,247.03,205.93,370236.85,261597.25,105747.98
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-05-01,29,292.16,234.61,204.95,378709.58,268400.97,111691.44
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-06-01,29,284.8,230.49,210.89,386968.73,275085.11,117807.26
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-07-01,31,284.57,232.09,222.34,395790.39,282279.97,124699.86
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-08-01,31,283.53,233.02,233.66,404579.73,289503.74,131943.41
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-09-01,28,263.13,217.92,228.67,411947.39,295605.39,138346.18
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-10-01,28,262.53,219.07,240.53,419298.22,301739.31,145081.09
+Permian Monahans North #6H,42-414-80232,oil,active,horizontal,31.967324,-103.65349,Permian Basin,Monahans North,Ward,TX,2022-04-01,2024-11-01,29,256.05,215.28,247.31,426723.81,307982.32,152252.95
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-03-01,30,527.88,309.25,83.66,15836.53,9277.57,2509.91
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-04-01,30,531.13,313.19,89.32,31770.49,18673.37,5189.46
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-05-01,29,481.72,285.9,85.75,45740.25,26964.53,7676.16
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-06-01,29,487.91,291.45,91.73,59889.64,35416.6,10336.44
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-07-01,31,519.08,312.06,102.88,75981.08,45090.49,13525.66
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-08-01,30,479.4,290.05,99.98,90363.05,53791.85,16524.99
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-09-01,29,446.01,271.55,97.71,103297.2,61666.89,19358.65
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-10-01,31,428.21,262.36,98.4,116571.66,69800.07,22409.18
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-11-01,23,433.07,267.0,104.25,126532.36,75941.14,24806.88
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2022-12-01,31,430.39,267.0,108.38,139874.43,84218.13,28166.71
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-01-01,31,422.87,263.96,111.27,152983.4,92400.8,31616.07
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-02-01,28,421.56,264.76,115.78,164787.09,99814.01,34857.87
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-03-01,30,402.51,254.34,115.27,176862.37,107444.12,38315.84
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-04-01,30,391.73,249.03,116.86,188614.3,114915.01,41821.56
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-05-01,31,365.67,233.86,113.53,199950.04,122164.82,45341.05
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-06-01,28,352.85,227.02,113.92,209829.73,128521.31,48530.95
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-07-01,28,346.29,224.13,116.18,219525.79,134796.86,51784.05
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-08-01,31,354.58,230.85,123.53,230517.8,141953.36,55613.5
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-09-01,28,339.67,222.45,122.8,240028.6,148182.0,59051.77
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-10-01,21,339.42,223.59,127.25,247156.5,152877.41,61724.02
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-11-01,29,324.2,214.81,125.97,256558.24,159106.77,65377.07
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2023-12-01,28,335.68,223.7,135.1,265957.29,165370.42,69159.97
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-01-01,29,331.03,221.88,137.94,275557.27,171804.8,73160.13
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-02-01,29,305.53,205.95,131.74,284417.53,177777.38,76980.53
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-03-01,29,300.42,203.66,133.98,293129.82,183683.64,80866.05
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-04-01,29,287.06,195.71,132.36,301454.56,189359.12,84704.5
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-05-01,22,278.09,190.65,132.51,307572.43,193553.52,87619.77
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-06-01,29,303.07,208.95,149.19,316361.5,199613.01,91946.39
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-07-01,31,278.84,193.31,141.75,325005.42,205605.59,96340.69
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-08-01,29,260.48,181.58,136.7,332559.33,210871.49,100305.1
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-09-01,29,284.58,199.47,154.13,340812.04,216656.19,104774.98
+Eagle Ford Briscoe Ranch #1H,42-405-61713,oil,active,horizontal,28.532148,-99.352634,Eagle Ford Shale,Briscoe Ranch,Webb,TX,2022-03-01,2024-10-01,31,277.92,195.87,155.3,349427.53,222728.24,109589.39
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-01-01,30,711.9,545.12,109.46,21357.03,16353.62,3283.66
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-02-01,28,719.81,554.78,118.14,41511.71,31887.46,6591.49
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-03-01,28,627.85,487.04,109.67,59091.38,45524.66,9662.32
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-04-01,29,624.68,487.71,115.84,77206.99,59668.29,13021.55
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-05-01,30,572.54,449.87,112.44,94383.15,73164.43,16394.67
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-06-01,30,568.83,449.8,118.05,111448.03,86658.56,19936.31
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-07-01,31,567.39,451.51,124.2,129037.09,100655.22,23786.62
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-08-01,28,511.5,409.59,117.89,143359.0,112123.72,27087.62
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-09-01,28,517.67,417.12,125.43,157853.73,123803.15,30599.52
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-10-01,28,499.69,405.14,127.08,171845.11,135147.04,34157.82
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-11-01,28,473.53,386.3,126.24,185103.89,145963.33,37692.45
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2022-12-01,31,476.75,391.31,133.06,199883.2,158094.02,41817.31
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-01-01,29,438.32,361.96,127.93,212594.48,168590.92,45527.19
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-02-01,28,439.89,365.46,134.11,224911.27,178823.71,49282.24
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-03-01,29,410.82,343.37,130.7,236825.06,188781.33,53072.66
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-04-01,29,400.37,336.64,132.81,248435.78,198543.76,56924.03
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-05-01,25,381.58,322.75,131.85,257975.33,206612.47,60220.37
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-06-01,25,353.45,300.72,127.13,266811.55,214130.53,63398.5
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-07-01,25,366.89,313.99,137.25,275983.69,221980.31,66829.77
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-08-01,29,356.26,306.68,138.52,286315.15,230873.99,70846.99
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-09-01,29,360.19,311.87,145.48,296760.74,239918.2,75065.83
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-10-01,29,330.7,287.99,138.65,306351.13,248269.95,79086.83
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-11-01,29,337.66,295.74,146.88,316143.36,256846.5,83346.44
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2023-12-01,19,329.68,290.4,148.71,322407.31,262364.15,86171.97
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2024-01-01,28,312.94,277.22,146.31,331169.62,270126.35,90268.53
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2024-02-01,28,292.92,260.96,141.87,339371.44,277433.1,94241.01
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2024-03-01,30,290.88,260.59,145.89,348097.89,285250.9,98617.76
+Eagle Ford Catarina #2H,42-428-15247,oil,active,horizontal,28.36883,-99.565125,Eagle Ford Shale,Catarina,La Salle,TX,2022-01-01,2024-04-01,30,303.07,273.03,157.34,357189.95,293441.77,103338.03
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-03-01,31,501.7,390.59,52.23,15552.85,12108.33,1619.18
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-04-01,30,468.03,366.84,55.5,29593.78,23113.59,3284.06
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-05-01,20,441.93,348.71,58.96,38432.37,30087.84,4463.32
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-06-01,29,423.03,336.03,62.89,50700.37,39832.78,6287.2
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-07-01,28,399.57,319.5,65.66,61888.46,48778.87,8125.78
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-08-01,31,389.67,313.63,70.31,73968.14,58501.54,10305.32
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-09-01,30,375.32,304.07,73.93,85227.81,67623.55,12523.24
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-10-01,30,338.64,276.13,72.47,95386.97,75907.51,14697.28
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-11-01,29,344.61,282.82,79.78,105380.78,84109.32,17010.92
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2023-12-01,28,327.03,270.12,81.6,114537.7,91672.56,19295.85
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-01-01,31,309.75,257.47,83.04,124139.79,99654.09,21870.06
+Eagle Ford Asherton #3H,42-109-19552,oil,active,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-02-01,29,288.9,241.66,82.97,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-03-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-04-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-05-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-06-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-07-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-08-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-09-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-10-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-11-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2024-12-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2025-01-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2025-02-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Asherton #3H,42-109-19552,oil,shut_in,horizontal,28.633416,-99.430498,Eagle Ford Shale,Asherton,Dimmit,TX,2023-03-01,2025-03-01,0,0.0,0.0,0.0,132517.77,106662.26,24276.25
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2024-08-01,28,446.32,348.08,77.05,12497.04,9746.23,2157.53
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2024-09-01,29,437.79,343.37,83.75,25192.86,19704.09,4586.4
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2024-10-01,29,411.26,324.4,86.61,37119.39,29111.75,7097.96
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2024-11-01,28,387.76,307.6,89.38,47976.76,37724.47,9600.51
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2024-12-01,23,360.77,287.79,90.58,56274.39,44343.64,11683.76
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-01-01,29,328.21,263.28,89.38,65792.4,51978.78,14275.88
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-02-01,28,341.38,275.37,100.48,75350.94,59689.06,17089.4
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-03-01,28,321.84,261.05,102.07,84362.56,66998.34,19947.25
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-04-01,30,297.21,242.39,101.27,93278.96,74270.16,22985.33
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-05-01,28,283.2,232.23,103.42,101208.64,80772.61,25881.17
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-06-01,28,270.58,223.08,105.68,108784.85,87018.99,28840.13
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-07-01,21,267.19,221.48,111.39,114395.82,91670.11,31179.29
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-08-01,31,252.1,210.1,111.99,122210.87,98183.1,34651.02
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-09-01,29,233.15,195.34,110.2,128972.19,103848.07,37846.83
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-10-01,30,227.16,191.34,114.09,135787.07,109588.32,41269.44
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-11-01,28,226.97,192.19,120.97,142142.18,114969.62,44656.72
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2025-12-01,29,216.03,183.89,122.07,148407.14,120302.52,48196.82
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-01-01,28,216.26,185.05,129.43,154462.39,125483.92,51820.87
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-02-01,28,198.05,170.36,125.45,160007.91,130253.87,55333.34
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-03-01,28,199.04,172.09,133.32,165581.0,135072.4,59066.43
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-04-01,29,197.47,171.61,139.8,171307.54,140049.13,63120.56
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-05-01,30,178.72,156.11,133.65,176669.0,144732.48,67130.12
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-06-01,30,179.34,157.46,141.62,182049.18,149456.18,71378.58
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-07-01,30,176.83,156.04,147.39,187354.11,154137.47,75800.26
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-08-01,31,172.42,152.92,151.65,192699.12,158877.96,80501.51
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-09-01,28,167.6,149.39,155.53,197392.01,163061.01,84856.44
+Eagle Ford Laredo North #4H,42-373-66724,oil,active,horizontal,28.417088,-99.72988,Eagle Ford Shale,Laredo North,Webb,TX,2024-08-01,2026-10-01,29,159.82,143.17,156.46,202026.93,167213.05,89393.9
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2024-09-01,28,859.43,534.89,70.6,24063.97,14977.0,1976.74
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2024-10-01,29,766.43,480.61,77.25,46290.48,28914.77,4216.94
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2024-11-01,29,775.82,490.15,93.17,68789.34,43128.99,6918.77
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2024-12-01,28,681.6,433.82,95.47,87874.1,55275.88,9592.06
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-01-01,30,742.49,476.06,119.38,110148.87,69557.74,13173.56
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-02-01,28,671.9,433.95,122.46,128962.03,81708.47,16602.58
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-03-01,31,645.57,419.98,132.06,148974.65,94727.88,20696.3
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-04-01,30,660.53,432.81,150.4,168790.49,107712.31,25208.41
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-05-01,17,602.35,397.52,151.64,179030.37,114470.14,27786.36
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-06-01,30,577.24,383.66,159.76,196347.71,125980.08,32579.29
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-07-01,30,610.54,408.66,184.87,214663.86,138239.89,38125.51
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-08-01,29,525.75,354.38,173.46,229910.69,148516.87,43155.79
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-09-01,29,510.46,346.47,182.84,244713.91,158564.35,48458.22
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-10-01,31,500.51,342.07,194.05,260229.85,169168.46,54473.66
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-11-01,30,487.89,335.73,204.18,274866.51,179240.36,60599.14
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2025-12-01,28,439.76,304.67,198.2,287179.65,187771.22,66148.82
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-01-01,30,432.06,301.37,209.3,300141.58,196812.43,72427.79
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-02-01,28,438.21,307.72,227.75,312411.46,205428.56,78804.76
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-03-01,28,433.9,306.73,241.57,324560.63,214016.97,85568.86
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-04-01,29,403.06,286.82,240.08,336249.44,222334.83,92531.1
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-05-01,30,401.14,287.34,255.33,348283.67,230955.02,100190.92
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-06-01,28,386.69,278.8,262.76,359110.94,238761.51,107548.3
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-07-01,31,352.65,255.91,255.62,370042.98,246694.87,115472.54
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-08-01,28,362.75,264.95,280.31,380200.08,254113.56,123321.15
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-09-01,28,355.99,261.68,293.09,390167.67,261440.63,131527.58
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-10-01,30,331.67,245.37,290.84,400117.9,268801.68,140252.67
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-11-01,25,337.26,251.08,314.89,408549.34,275078.74,148124.9
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2026-12-01,28,300.94,225.46,299.15,416975.78,281391.65,156501.0
+Eagle Ford Fowlerton #5H,42-386-81009,oil,active,horizontal,28.363345,-99.722887,Eagle Ford Shale,Fowlerton,La Salle,TX,2024-09-01,2027-01-01,30,308.83,232.82,326.83,426240.75,288376.28,166305.78
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2023-07-01,28,165.34,10739.59,9.08,4629.46,300708.54,254.35
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2023-08-01,29,155.72,10114.82,9.9,9145.33,594038.26,541.53
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2023-09-01,30,144.58,9390.92,10.47,13482.58,875765.97,855.49
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2023-10-01,29,145.13,9427.15,11.8,17691.43,1149153.34,1197.78
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2023-11-01,28,135.71,8814.8,12.27,21491.18,1395967.63,1541.35
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2023-12-01,28,131.42,8536.27,13.1,25170.87,1634983.23,1908.08
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-01-01,29,122.64,7965.81,13.38,28727.29,1865991.78,2295.96
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-02-01,28,122.94,7985.87,14.58,32169.72,2089596.22,2704.34
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-03-01,28,120.05,7797.64,15.41,35531.01,2307930.22,3135.8
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-04-01,28,116.81,7587.58,16.15,38801.75,2520382.46,3588.03
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-05-01,30,101.58,6598.26,15.07,41849.2,2718330.35,4040.1
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-06-01,28,100.88,6552.95,16.0,44673.95,2901812.85,4488.11
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-07-01,28,99.24,6445.93,16.78,47452.56,3082298.78,4957.81
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-08-01,31,95.62,6210.72,17.18,50416.63,3274831.24,5490.38
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-09-01,30,92.89,6033.44,17.7,53203.21,3455834.51,6021.24
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-10-01,29,90.63,5887.18,18.27,55831.61,3626562.83,6550.95
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-11-01,30,87.16,5661.61,18.55,58446.45,3796410.99,7107.3
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2024-12-01,31,80.57,5233.18,18.06,60943.99,3958639.72,7667.28
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-01-01,31,82.78,5376.97,19.53,63510.15,4125325.67,8272.59
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-02-01,28,80.13,5205.14,19.85,65753.91,4271069.54,8828.52
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-03-01,28,78.28,5084.95,20.35,67945.85,4413448.17,9398.18
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-04-01,29,73.93,4801.87,20.13,70089.69,4552702.26,9981.83
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-05-01,30,71.74,4659.99,20.44,72241.94,4692502.1,10594.9
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-06-01,29,69.7,4527.61,20.75,74263.34,4823802.76,11196.68
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-07-01,29,64.39,4182.39,20.01,76130.61,4945092.12,11777.07
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-08-01,25,63.81,4144.95,20.69,77725.91,5048715.75,12294.27
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-09-01,29,62.87,4083.99,21.24,79549.25,5167151.32,12910.3
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-10-01,31,61.32,3983.37,21.57,81450.32,5290635.89,13579.11
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-11-01,28,59.17,3843.68,21.66,83107.2,5398258.92,14185.6
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2025-12-01,21,57.28,3720.94,21.8,84310.17,5476398.76,14643.43
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2026-01-01,25,57.71,3748.7,22.82,85752.97,5570116.34,15213.97
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2026-02-01,28,54.18,3519.5,22.25,87270.11,5668662.37,15836.92
+Marcellus Waynesburg #1H,37-403-54348,gas,active,horizontal,39.972837,-80.086346,Marcellus Shale,Waynesburg,Greene,WV,2023-07-01,2026-03-01,29,54.19,3519.62,23.09,88841.48,5770731.34,16506.52
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2023-08-01,29,219.42,11236.9,15.84,6363.11,325869.96,459.46
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2023-09-01,29,207.9,10647.11,17.34,12392.24,634636.23,962.36
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2023-10-01,30,189.31,9695.16,17.96,18071.63,925491.08,1501.1
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2023-11-01,28,194.26,9948.5,20.7,23510.9,1204048.94,2080.62
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2023-12-01,22,178.32,9132.2,21.13,27433.94,1404957.24,2545.45
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-01-01,30,183.85,9415.25,24.03,32949.35,1687414.82,3266.24
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-02-01,29,172.77,8847.72,24.73,37959.55,1943998.75,3983.49
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-03-01,29,179.5,9192.5,27.98,43164.98,2210581.34,4795.04
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-04-01,30,165.08,8454.02,27.89,48117.31,2464201.83,5631.69
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-05-01,28,161.75,8283.67,29.48,52646.35,2696144.71,6457.22
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-06-01,30,160.82,8235.77,31.51,57470.83,2943217.83,7402.41
+Marcellus Amwell #2H,37-175-39687,gas,active,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-07-01,29,151.02,7734.13,31.7,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-08-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-09-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-10-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-11-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2024-12-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-01-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-02-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-03-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-04-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-05-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-06-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-07-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-08-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-09-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Amwell #2H,37-175-39687,gas,shut_in,horizontal,39.85781,-80.348299,Marcellus Shale,Amwell,Washington,WV,2023-08-01,2025-10-01,0,0.0,0.0,0.0,61850.43,3167507.55,8321.57
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2023-06-01,29,167.45,5886.78,14.28,4856.14,170716.48,414.18
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2023-07-01,28,162.25,5703.69,15.03,9399.01,330419.78,834.89
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2023-08-01,22,146.41,5147.17,14.65,12620.13,443657.44,1157.11
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2023-09-01,28,138.67,4874.83,14.91,16502.83,580152.71,1574.71
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2023-10-01,31,135.9,4777.65,15.65,20715.83,728259.85,2059.97
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2023-11-01,30,133.5,4693.15,16.41,24720.83,869054.33,2552.24
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2023-12-01,29,131.2,4612.16,17.15,28525.51,1002806.99,3049.72
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-01-01,30,127.51,4482.54,17.69,32350.77,1137283.18,3580.3
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-02-01,28,119.48,4200.4,17.54,35696.3,1254894.38,4071.31
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-03-01,30,116.66,4101.11,18.08,39196.07,1377927.74,4613.58
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-04-01,28,116.8,4106.24,19.07,42466.6,1492902.6,5147.46
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-05-01,29,110.71,3891.86,19.0,45677.09,1605766.64,5698.56
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-06-01,30,105.65,3714.08,19.04,48846.57,1717188.89,6269.69
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-07-01,29,104.85,3686.01,19.8,51887.26,1824083.28,6843.94
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-08-01,29,96.43,3389.95,19.06,54683.71,1922391.79,7396.66
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-09-01,30,96.62,3396.8,19.96,57582.44,2024295.88,7995.45
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-10-01,29,91.12,3203.46,19.65,60225.05,2117196.31,8565.28
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-11-01,30,88.27,3103.27,19.85,62873.29,2210294.37,9160.66
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2024-12-01,31,85.06,2990.32,19.92,65510.2,2302994.42,9778.11
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-01-01,28,92.25,3243.06,22.48,68093.23,2393800.09,10407.42
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-02-01,28,87.35,3070.63,22.12,70538.92,2479777.67,11026.8
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-03-01,31,82.47,2899.11,21.69,73095.4,2569650.05,11699.23
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-04-01,29,79.0,2777.39,21.56,75386.53,2650194.38,12324.62
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-05-01,30,76.31,2682.71,21.6,77675.88,2730675.73,12972.6
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-06-01,29,75.32,2647.9,22.09,79860.2,2807464.9,13613.23
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-07-01,28,74.63,2623.62,22.67,81949.85,2880926.21,14247.86
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-08-01,28,71.45,2511.63,22.45,83950.31,2951251.92,14876.56
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-09-01,28,69.7,2450.38,22.66,85901.99,3019862.51,15510.92
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-10-01,29,69.04,2426.93,23.19,87904.02,3090243.34,16183.52
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-11-01,28,72.66,2554.5,25.22,89938.62,3161769.21,16889.68
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2025-12-01,29,66.0,2320.33,23.65,91852.71,3229058.8,17575.64
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2026-01-01,31,64.92,2282.27,24.01,93865.26,3299809.25,18320.0
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2026-02-01,28,62.92,2211.78,24.01,95626.89,3361739.04,18992.15
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2026-03-01,29,58.54,2057.8,23.03,97324.42,3421415.18,19660.02
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2026-04-01,28,59.6,2095.13,24.17,98993.14,3480078.77,20336.73
+Marcellus Jefferson South #3H,37-109-23634,gas,active,horizontal,39.992921,-80.008632,Marcellus Shale,Jefferson South,Greene,WV,2023-06-01,2026-05-01,28,60.26,2118.57,25.18,100680.54,3539398.86,21041.78
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2023-10-01,30,266.77,9734.53,16.13,8002.96,292035.86,483.85
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2023-11-01,22,256.93,9375.64,18.28,13655.42,498300.0,885.95
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2023-12-01,30,250.62,9145.38,20.56,21174.03,772661.51,1502.71
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-01-01,28,239.23,8729.71,22.28,27872.45,1017093.35,2126.66
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-02-01,28,233.89,8534.79,24.44,34421.3,1256067.43,2811.01
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-03-01,31,231.64,8452.71,26.89,41602.08,1518101.36,3644.59
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-04-01,30,226.76,8274.83,29.01,48404.99,1766346.37,4514.81
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-05-01,28,209.99,7662.91,29.4,54284.84,1980907.91,5338.02
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-06-01,29,206.72,7543.35,31.49,60279.66,2199664.92,6251.36
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-07-01,18,203.31,7419.0,33.54,63939.25,2333207.0,6855.09
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-08-01,16,199.03,7262.66,35.4,67123.67,2449409.54,7421.5
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-09-01,15,190.42,6948.59,36.38,69979.95,2553638.34,7967.22
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-10-01,19,185.86,6782.28,38.02,73511.33,2682501.72,8689.54
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-11-01,29,181.83,6635.28,39.7,78784.5,2874924.97,9840.88
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2024-12-01,28,174.34,6361.78,40.53,83665.97,3053054.73,10975.59
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-01-01,29,182.55,6661.29,45.07,88959.81,3246232.2,12282.62
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-02-01,28,178.21,6502.89,46.63,93949.56,3428313.16,13588.37
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-03-01,31,168.2,6137.83,46.56,99163.8,3618585.83,15031.81
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-04-01,29,173.08,6315.83,50.6,104183.09,3801745.03,16499.15
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-05-01,31,151.62,5532.63,46.73,108883.2,3973256.49,17947.86
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-06-01,29,161.41,5889.97,52.38,113564.06,4144065.65,19466.89
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-07-01,23,153.3,5593.97,52.31,117089.89,4272726.99,20669.96
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-08-01,28,152.99,5582.6,54.82,121373.49,4429039.86,22204.96
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-09-01,30,150.53,5493.07,56.59,125889.46,4593832.06,23902.55
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-10-01,28,147.06,5366.44,57.93,130007.2,4744092.5,25524.69
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-11-01,29,150.3,5484.42,61.99,134365.76,4903140.58,27322.35
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2025-12-01,29,136.35,4975.49,58.83,138319.86,5047429.75,29028.34
+Marcellus Canton #4H,37-423-34027,gas,active,horizontal,39.932628,-80.139664,Marcellus Shale,Canton,Washington,WV,2023-10-01,2026-01-01,28,137.86,5030.5,62.17,142179.83,5188283.84,30769.09
