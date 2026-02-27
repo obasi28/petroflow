@@ -33,6 +33,8 @@ export function useCreateDCA(wellId: string) {
     mutationFn: (data: DCACreate) => api.post<DCAAnalysis>(`/wells/${wellId}/dca`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dca", wellId] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 }
@@ -64,6 +66,8 @@ export function useDeleteDCA(wellId: string) {
     mutationFn: (analysisId: string) => api.del(`/wells/${wellId}/dca/${analysisId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dca", wellId] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 }

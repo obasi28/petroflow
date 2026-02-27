@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   Droplets,
   FolderKanban,
+  BarChart3,
   Settings,
   type LucideIcon,
 } from "lucide-react";
@@ -34,6 +35,11 @@ export const mainNavItems: NavItem[] = [
     title: "Wells",
     href: "/wells",
     icon: Droplets,
+  },
+  {
+    title: "Multi-Well Analysis",
+    href: "/analysis",
+    icon: BarChart3,
   },
 ];
 

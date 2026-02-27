@@ -32,7 +32,7 @@ export default function WellOverviewPage() {
   return (
     <div className="space-y-6">
       {/* Production Stats Row */}
-      <WellStatsCards stats={stats} isLoading={statsLoading} />
+      <WellStatsCards stats={stats} isLoading={statsLoading} well={well} />
 
       {/* Main content: 2-column layout */}
       <div className="grid gap-4 md:grid-cols-2">

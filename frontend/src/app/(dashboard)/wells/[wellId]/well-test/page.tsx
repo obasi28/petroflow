@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { useParams } from "next/navigation";
 import {
   useAnalyzeWellTest,
@@ -8,6 +8,7 @@ import {
   useSaveWellTest,
   useDeleteWellTest,
 } from "@/hooks/use-well-test";
+import { useWTStore } from "@/stores/well-test-store";
 import { WellTestInputForm } from "@/components/well-test/well-test-input-form";
 import { WellTestDiagnosticChart } from "@/components/well-test/well-test-diagnostic-chart";
 import { WellTestResultsPanel } from "@/components/well-test/well-test-results-panel";
@@ -22,67 +23,13 @@ import type {
   WellTestAnalysis,
 } from "@/types/well-test";
 
-/* ---------- Synthetic drawdown data for demo ---------- */
-function generateSyntheticDrawdown(): { time: number[]; pressure: number[] } {
-  const time: number[] = [];
-  const pressure: number[] = [];
-  const pi = 3500;
-  const q = 250;
-  const k = 50;
-  const h = 50;
-  const mu = 0.8;
-  const bo = 1.2;
-  const phi = 0.15;
-  const ct = 1.5e-5;
-  const rw = 0.35;
-  const s = 2;
-
-  // m = 162.6 * q * mu * bo / (k * h)
-  const m = (162.6 * q * mu * bo) / (k * h);
-  // Pwf = Pi - m * [log10(t) + log10(k/(phi*mu*ct*rw^2)) - 3.23 + 0.87*s]
-  const logArg = Math.log10(k / (phi * mu * ct * rw * rw)) - 3.23 + 0.87 * s;
-
-  // Generate 50 logarithmically-spaced time points from 0.01 to 100 hrs
-  for (let i = 0; i < 50; i++) {
-    const t = 0.01 * Math.pow(10, (i / 49) * 4); // 0.01 to 100 hrs
-    time.push(parseFloat(t.toFixed(4)));
-    const pwf = pi - m * (Math.log10(t) + logArg);
-    // Add slight noise for realism
-    const noise = (Math.random() - 0.5) * 3;
-    pressure.push(parseFloat((pwf + noise).toFixed(1)));
-  }
-
-  return { time, pressure };
-}
-
-const synth = generateSyntheticDrawdown();
-
-const DEFAULT_INPUTS: WellTestAnalyzeRequest = {
-  time: synth.time,
-  pressure: synth.pressure,
-  rate: 250,
-  test_type: "drawdown",
-  tp: null,
-  pwf_at_shutin: null,
-  well_params: {
-    mu: 0.8,
-    bo: 1.2,
-    h: 50,
-    phi: 0.15,
-    ct: 1.5e-5,
-    rw: 0.35,
-    pi: 3500,
-  },
-};
-
 export default function WellTestPage() {
   const params = useParams();
   const wellId = params.wellId as string;
 
-  const [inputs, setInputs] = useState<WellTestAnalyzeRequest>(DEFAULT_INPUTS);
-  const [result, setResult] = useState<WellTestAnalyzeResponse | null>(null);
-  const [chartMode, setChartMode] = useState<"log_log" | "semi_log">("log_log");
-  const [analysisName, setAnalysisName] = useState("");
+  // Zustand store — state persists across tab switches within the same well
+  const store = useWTStore();
+  const { inputs, result, chartMode, analysisName, autoLoaded } = store.getWellState(wellId);
 
   const analyzeMutation = useAnalyzeWellTest();
   const saveMutation = useSaveWellTest(wellId);
@@ -90,22 +37,21 @@ export default function WellTestPage() {
   const { data: analysesData } = useWellTestAnalyses(wellId);
   const savedAnalyses = analysesData?.data || [];
 
-  // Auto-load most recent saved analysis on first mount
-  const autoLoaded = useRef(false);
+  // Auto-load most recent saved analysis (only once per well)
   useEffect(() => {
-    if (!autoLoaded.current && savedAnalyses.length > 0 && !result) {
-      autoLoaded.current = true;
+    if (!autoLoaded && savedAnalyses.length > 0 && !result) {
+      store.setAutoLoaded(wellId);
       const latest = savedAnalyses[0];
       const storedResults = latest.results as unknown as WellTestAnalyzeResponse;
       if (storedResults?.test_type) {
-        setResult(storedResults);
+        store.setResult(wellId, storedResults);
       }
       const storedData = latest.test_data as { inputs?: WellTestAnalyzeRequest };
       if (storedData?.inputs) {
-        setInputs(storedData.inputs);
+        store.setInputs(wellId, storedData.inputs);
       }
     }
-  }, [savedAnalyses, result]);
+  }, [savedAnalyses, result, autoLoaded, wellId, store]);
 
   /* ---------- Handlers ---------- */
 
@@ -119,7 +65,7 @@ export default function WellTestPage() {
       {
         onSuccess: (response) => {
           if (response.data) {
-            setResult(response.data);
+            store.setResult(wellId, response.data);
             toast.success(
               `Analysis complete: k = ${response.data.summary.permeability_md.toFixed(1)} md, S = ${response.data.summary.skin_factor.toFixed(2)}`,
             );
@@ -128,7 +74,7 @@ export default function WellTestPage() {
         onError: () => toast.error("Well test analysis failed"),
       },
     );
-  }, [inputs, wellId, analyzeMutation]);
+  }, [inputs, wellId, analyzeMutation, store]);
 
   const handleSave = useCallback(() => {
     if (!result || !analysisName.trim()) {
@@ -147,23 +93,23 @@ export default function WellTestPage() {
       {
         onSuccess: () => {
           toast.success("Analysis saved");
-          setAnalysisName("");
+          store.setAnalysisName(wellId, "");
         },
         onError: () => toast.error("Failed to save analysis"),
       },
     );
-  }, [result, analysisName, inputs, saveMutation]);
+  }, [result, analysisName, inputs, saveMutation, wellId, store]);
 
   const handleLoadAnalysis = useCallback((analysis: WellTestAnalysis) => {
     const storedResults = analysis.results as unknown as WellTestAnalyzeResponse;
-    setResult(storedResults);
+    store.setResult(wellId, storedResults);
 
     const storedData = analysis.test_data as { inputs?: WellTestAnalyzeRequest };
     if (storedData?.inputs) {
-      setInputs(storedData.inputs);
+      store.setInputs(wellId, storedData.inputs);
     }
     toast.success(`Loaded: ${analysis.name}`);
-  }, []);
+  }, [wellId, store]);
 
   const handleDeleteAnalysis = useCallback(
     (id: string) => {
@@ -181,7 +127,7 @@ export default function WellTestPage() {
     <div className="grid gap-4 lg:grid-cols-[260px_1fr_260px]">
       {/* Left Panel: Inputs */}
       <div className="space-y-3">
-        <WellTestInputForm inputs={inputs} onChange={setInputs} />
+        <WellTestInputForm inputs={inputs} onChange={(v) => store.setInputs(wellId, v)} />
 
         <Button
           className="w-full"
@@ -203,7 +149,7 @@ export default function WellTestPage() {
               <Input
                 placeholder="Analysis name..."
                 value={analysisName}
-                onChange={(e) => setAnalysisName(e.target.value)}
+                onChange={(e) => store.setAnalysisName(wellId, e.target.value)}
                 className="h-8 text-xs"
               />
               <Button
@@ -278,7 +224,7 @@ export default function WellTestPage() {
                       variant={chartMode === key ? "default" : "ghost"}
                       size="sm"
                       className="h-7 text-xs"
-                      onClick={() => setChartMode(key)}
+                      onClick={() => store.setChartMode(wellId, key)}
                     >
                       {label}
                     </Button>

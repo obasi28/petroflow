@@ -66,3 +66,23 @@ export interface ProductionFilters {
   page?: number;
   per_page?: number;
 }
+
+export interface BulkProductionWellSummary {
+  well_identifier: string;
+  well_name: string | null;
+  records_imported: number;
+  records_deleted?: number;
+  status: "success" | "not_found" | "error";
+  error?: string;
+}
+
+export interface BulkProductionImportResult {
+  file_name: string;
+  file_type: string;
+  total_wells_detected: number;
+  matched_wells: number;
+  unmatched_wells: number;
+  total_records_imported: number;
+  per_well_summary: BulkProductionWellSummary[];
+  errors: Array<{ well_identifier: string; message: string }>;
+}

@@ -17,8 +17,10 @@ from app.services.import_service import (
     parse_excel,
     auto_detect_columns,
     auto_detect_well_columns,
+    auto_detect_bulk_production_columns,
     transform_production_data,
     transform_well_data,
+    transform_bulk_production_data,
 )
 from app.utils.exceptions import ValidationException
 
@@ -476,5 +478,204 @@ async def upload_wells_file(
         "created_count": created_count,
         "updated_count": updated_count,
         "skipped_count": skipped_count,
+        "errors": errors[:20],
+    })
+
+
+# ---------------------------------------------------------------------------
+# Bulk production upload (multi-well)
+# ---------------------------------------------------------------------------
+
+async def _resolve_well(
+    db: AsyncSession,
+    team_id: uuid.UUID,
+    identifier: str,
+    project_id: uuid.UUID | None = None,
+) -> Well | None:
+    """Try to match a string identifier to a Well by name, API number, or UWI."""
+    from sqlalchemy import func
+
+    for field in [Well.well_name, Well.api_number, Well.uwi]:
+        query = select(Well).where(
+            func.lower(field) == identifier.lower(),
+            Well.team_id == team_id,
+            Well.is_deleted == False,
+        )
+        if project_id:
+            query = query.where(Well.project_id == project_id)
+        result = await db.execute(query)
+        well = result.scalar_one_or_none()
+        if well:
+            return well
+    return None
+
+
+@router.post("/production/bulk")
+async def upload_bulk_production(
+    file: UploadFile = File(...),
+    execute: bool = Form(False),
+    column_mapping: str | None = Form(None),
+    project_id: str | None = Form(None),
+    replace_existing: bool = Form(False),
+    db: AsyncSession = Depends(get_db),
+    current_user: CurrentUser = Depends(get_current_user),
+):
+    """Upload production data for multiple wells in a single file."""
+    content = await file.read()
+    filename = (file.filename or "unknown").lower()
+
+    if filename.endswith(".csv"):
+        file_type = "csv"
+        columns, preview = parse_csv(content)
+    elif filename.endswith((".xlsx", ".xls")):
+        file_type = "xlsx"
+        columns, preview = parse_excel(content)
+    else:
+        raise ValidationException("Unsupported file type. Use CSV or Excel.", field="file")
+
+    suggested_mapping = auto_detect_bulk_production_columns(columns)
+
+    # Resolve project_id
+    resolved_project_id: uuid.UUID | None = None
+    if project_id:
+        try:
+            resolved_project_id = uuid.UUID(project_id)
+        except ValueError:
+            raise ValidationException("Invalid project_id format", field="project_id")
+
+    # Preview mode
+    if not execute:
+        return success_response({
+            "file_name": filename,
+            "file_type": file_type,
+            "file_size": len(content),
+            "columns": columns,
+            "preview": preview,
+            "suggested_mapping": suggested_mapping,
+        })
+
+    # Execute mode
+    if column_mapping:
+        try:
+            raw_mapping = json.loads(column_mapping)
+            if not isinstance(raw_mapping, dict):
+                raise ValueError("column_mapping must be a JSON object")
+        except (json.JSONDecodeError, ValueError):
+            raise ValidationException("Invalid column_mapping JSON", field="column_mapping")
+
+        # Normalize: accept both backend-style and frontend-style keys
+        mapping: dict[str, str] = {}
+        for key in ("well_identifier_column", "date_column", "oil_column", "gas_column", "water_column"):
+            if isinstance(raw_mapping.get(key), str) and raw_mapping[key].strip():
+                mapping[key] = raw_mapping[key]
+
+        # Frontend-style aliases
+        frontend_aliases = {
+            "well_identifier_column": ["well_identifier", "well_name", "well"],
+            "date_column": ["production_date", "date", "prod_date"],
+            "oil_column": ["oil_rate", "oil"],
+            "gas_column": ["gas_rate", "gas"],
+            "water_column": ["water_rate", "water"],
+        }
+        for target_key, aliases in frontend_aliases.items():
+            if target_key in mapping:
+                continue
+            for alias in aliases:
+                val = raw_mapping.get(alias)
+                if isinstance(val, str) and val.strip():
+                    mapping[target_key] = val
+                    break
+    else:
+        mapping = suggested_mapping
+
+    if not mapping.get("well_identifier_column"):
+        raise ValidationException(
+            "A well identifier column (well_name, api_number, or uwi) is required",
+            field="column_mapping",
+        )
+
+    try:
+        grouped = transform_bulk_production_data(content, file_type, mapping)
+    except ValueError as exc:
+        raise ValidationException(str(exc), field="column_mapping")
+
+    if not grouped:
+        raise ValidationException("No valid production rows found in uploaded file")
+
+    total_imported = 0
+    per_well_summary: list[dict] = []
+    errors: list[dict] = []
+
+    for identifier, raw_records in grouped.items():
+        well = await _resolve_well(db, current_user.team_id, identifier, resolved_project_id)
+        if not well:
+            per_well_summary.append({
+                "well_identifier": identifier,
+                "well_name": None,
+                "records_imported": 0,
+                "status": "not_found",
+                "error": f"No well matched '{identifier}'",
+            })
+            errors.append({"well_identifier": identifier, "message": f"No well matched '{identifier}'"})
+            continue
+
+        try:
+            records = [ProductionRecordCreate.model_validate(r) for r in raw_records]
+            if not records:
+                per_well_summary.append({
+                    "well_identifier": identifier,
+                    "well_name": well.well_name,
+                    "records_imported": 0,
+                    "status": "error",
+                    "error": "No valid records after parsing",
+                })
+                continue
+
+            deleted_count = 0
+            if replace_existing:
+                deleted_count = await production_service.delete_production(
+                    db, well.id, current_user.team_id
+                )
+            imported_count = await production_service.upsert_production(
+                db, well.id, current_user.team_id, records
+            )
+            total_imported += imported_count
+
+            per_well_summary.append({
+                "well_identifier": identifier,
+                "well_name": well.well_name,
+                "records_imported": imported_count,
+                "records_deleted": deleted_count,
+                "status": "success",
+            })
+        except Exception as exc:
+            logger.warning("Bulk import for '%s' failed: %s", identifier, exc, exc_info=True)
+            per_well_summary.append({
+                "well_identifier": identifier,
+                "well_name": well.well_name,
+                "records_imported": 0,
+                "status": "error",
+                "error": str(exc),
+            })
+            errors.append({"well_identifier": identifier, "message": str(exc)})
+
+    try:
+        await db.flush()
+    except SQLAlchemyError as exc:
+        raise ValidationException(
+            f"Bulk production import failed during database write: {str(exc)}"
+        )
+
+    matched = sum(1 for s in per_well_summary if s["status"] == "success")
+    unmatched = sum(1 for s in per_well_summary if s["status"] == "not_found")
+
+    return success_response({
+        "file_name": filename,
+        "file_type": file_type,
+        "total_wells_detected": len(grouped),
+        "matched_wells": matched,
+        "unmatched_wells": unmatched,
+        "total_records_imported": total_imported,
+        "per_well_summary": per_well_summary,
         "errors": errors[:20],
     })

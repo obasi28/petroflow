@@ -16,6 +16,7 @@ export function useWells(filters: WellFilters = {}) {
         basin: filters.basin,
         search: filters.search,
       }),
+    refetchInterval: 60_000,
   });
 }
 
@@ -34,6 +35,8 @@ export function useCreateWell() {
     mutationFn: (data: WellCreate) => api.post<Well>("/wells", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["wells"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 }
@@ -46,6 +49,8 @@ export function useUpdateWell(wellId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["wells"] });
       queryClient.invalidateQueries({ queryKey: ["wells", wellId] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 }
@@ -57,6 +62,8 @@ export function useDeleteWell() {
     mutationFn: (wellId: string) => api.del(`/wells/${wellId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["wells"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 }

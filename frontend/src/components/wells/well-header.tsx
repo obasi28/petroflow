@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { Well } from "@/types/well";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -46,9 +47,11 @@ export function WellHeader({ well }: WellHeaderProps) {
             {well.operator && <span>Op: {well.operator}</span>}
           </div>
         </div>
-        <Button variant="outline" size="sm">
-          <Pencil className="mr-2 h-3.5 w-3.5" />
-          Edit
+        <Button variant="outline" size="sm" asChild>
+          <Link href={`/wells/${well.id}/edit`}>
+            <Pencil className="mr-2 h-3.5 w-3.5" />
+            Edit
+          </Link>
         </Button>
       </div>
 

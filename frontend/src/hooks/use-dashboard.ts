@@ -17,5 +17,6 @@ export function useDashboardProductionSummary(months: number = 24) {
     queryKey: ["dashboard", "production-summary", months],
     queryFn: () =>
       api.get<ProductionSummaryPoint[]>("/dashboard/production-summary", { months }),
+    refetchInterval: 60_000,
   });
 }

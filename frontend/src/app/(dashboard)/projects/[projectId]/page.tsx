@@ -116,6 +116,12 @@ export default function ProjectDetailPage() {
         </div>
         <div className="flex gap-2">
           <Button asChild variant="outline" size="sm">
+            <Link href={`/projects/${projectId}/import-production`}>
+              <Upload className="mr-2 h-4 w-4" />
+              Import Production
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="sm">
             <Link href={`/projects/${projectId}/import-wells`}>
               <Upload className="mr-2 h-4 w-4" />
               Import Wells

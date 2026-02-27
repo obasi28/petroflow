@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCalculatePVT, usePVTStudies, useSavePVTStudy } from "@/hooks/use-pvt";
+import { usePVTStore } from "@/stores/pvt-store";
 import { PVTInputForm } from "@/components/pvt/pvt-input-form";
 import { PVTCorrelationSelector } from "@/components/pvt/pvt-correlation-selector";
 import { PVTChart } from "@/components/pvt/pvt-chart";
@@ -13,46 +14,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Loader2, Play, Save, Trash2 } from "lucide-react";
-import type { PVTCalculateRequest, PVTCalculateResponse, PVTStudy } from "@/types/pvt";
-
-const DEFAULT_INPUTS: PVTCalculateRequest = {
-  api_gravity: 35,
-  gas_gravity: 0.75,
-  temperature: 200,
-  separator_pressure: 100,
-  separator_temperature: 60,
-  rs_at_pb: 500,
-  max_pressure: 6000,
-  num_points: 50,
-  correlation_bubble_point: "standing",
-  correlation_rs: "standing",
-  correlation_bo: "standing",
-  correlation_dead_oil_viscosity: "beggs_robinson",
-};
+import { Loader2, Play, Save } from "lucide-react";
+import type { PVTStudy } from "@/types/pvt";
 
 export default function PVTPage() {
   const params = useParams();
   const wellId = params.wellId as string;
 
-  const [inputs, setInputs] = useState<PVTCalculateRequest>(DEFAULT_INPUTS);
-  const [result, setResult] = useState<PVTCalculateResponse | null>(null);
-  const [chartMode, setChartMode] = useState<"bo_rs" | "viscosity" | "z_factor">("bo_rs");
-  const [studyName, setStudyName] = useState("");
+  // Zustand store — state persists across tab switches within the same well
+  const store = usePVTStore();
+  const { inputs, result, chartMode, studyName, autoLoaded } = store.getWellState(wellId);
 
   const calculateMutation = useCalculatePVT();
   const saveMutation = useSavePVTStudy(wellId);
   const { data: studiesData } = usePVTStudies(wellId);
   const savedStudies = studiesData?.data || [];
 
-  // Auto-load most recent saved study on first mount
-  const autoLoaded = useRef(false);
+  // Auto-load most recent saved study (only once per well)
   useEffect(() => {
-    if (!autoLoaded.current && savedStudies.length > 0 && !result) {
-      autoLoaded.current = true;
+    if (!autoLoaded && savedStudies.length > 0 && !result) {
+      store.setAutoLoaded(wellId);
       const latest = savedStudies[0];
-      setResult(latest.results);
-      setInputs({
+      store.setResult(wellId, latest.results);
+      store.setInputs(wellId, {
         api_gravity: latest.inputs.api_gravity ?? 35,
         gas_gravity: latest.inputs.gas_gravity ?? 0.75,
         temperature: latest.inputs.temperature ?? 200,
@@ -69,13 +53,13 @@ export default function PVTPage() {
         ),
       });
     }
-  }, [savedStudies, result]);
+  }, [savedStudies, result, autoLoaded, wellId, store]);
 
   const handleCalculate = useCallback(() => {
     calculateMutation.mutate(inputs, {
       onSuccess: (response) => {
         if (response.data) {
-          setResult(response.data);
+          store.setResult(wellId, response.data);
           toast.success(
             `PVT computed: Pb = ${response.data.bubble_point.toFixed(0)} psia`,
           );
@@ -83,7 +67,7 @@ export default function PVTPage() {
       },
       onError: () => toast.error("PVT calculation failed"),
     });
-  }, [inputs, calculateMutation]);
+  }, [inputs, calculateMutation, wellId, store]);
 
   const handleSave = useCallback(() => {
     if (!result || !studyName.trim()) {
@@ -100,16 +84,16 @@ export default function PVTPage() {
       {
         onSuccess: () => {
           toast.success("PVT study saved");
-          setStudyName("");
+          store.setStudyName(wellId, "");
         },
         onError: () => toast.error("Failed to save study"),
       },
     );
-  }, [result, studyName, saveMutation]);
+  }, [result, studyName, saveMutation, wellId, store]);
 
   const handleLoadStudy = useCallback((study: PVTStudy) => {
-    setResult(study.results);
-    setInputs({
+    store.setResult(wellId, study.results);
+    store.setInputs(wellId, {
       api_gravity: study.inputs.api_gravity ?? 35,
       gas_gravity: study.inputs.gas_gravity ?? 0.75,
       temperature: study.inputs.temperature ?? 200,
@@ -126,14 +110,14 @@ export default function PVTPage() {
       ),
     });
     toast.success(`Loaded: ${study.name}`);
-  }, []);
+  }, [wellId, store]);
 
   return (
     <div className="grid gap-4 lg:grid-cols-[240px_1fr_260px]">
       {/* Left Panel: Inputs */}
       <div className="space-y-3">
-        <PVTInputForm inputs={inputs} onChange={setInputs} />
-        <PVTCorrelationSelector inputs={inputs} onChange={setInputs} />
+        <PVTInputForm inputs={inputs} onChange={(v) => store.setInputs(wellId, v)} />
+        <PVTCorrelationSelector inputs={inputs} onChange={(v) => store.setInputs(wellId, v)} />
 
         <Button
           className="w-full"
@@ -155,7 +139,7 @@ export default function PVTPage() {
               <Input
                 placeholder="Study name..."
                 value={studyName}
-                onChange={(e) => setStudyName(e.target.value)}
+                onChange={(e) => store.setStudyName(wellId, e.target.value)}
                 className="h-8 text-xs"
               />
               <Button
@@ -217,7 +201,7 @@ export default function PVTPage() {
                       variant={chartMode === key ? "default" : "ghost"}
                       size="sm"
                       className="h-7 text-xs"
-                      onClick={() => setChartMode(key)}
+                      onClick={() => store.setChartMode(wellId, key)}
                     >
                       {label}
                     </Button>

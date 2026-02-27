@@ -56,6 +56,7 @@ export function useProjectSummaries() {
   return useQuery({
     queryKey: ["projects", "summaries"],
     queryFn: () => api.get<ProjectListSummary[]>("/projects/summaries"),
+    refetchInterval: 60_000,
   });
 }
 
@@ -64,6 +65,7 @@ export function useProjectSummary(projectId: string) {
     queryKey: ["projects", projectId, "summary"],
     queryFn: () => api.get<ProjectSummary>(`/projects/${projectId}/summary`),
     enabled: !!projectId,
+    refetchInterval: 60_000,
   });
 }
 
@@ -76,6 +78,7 @@ export function useBatchDCA(projectId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects", projectId, "dca"] });
       queryClient.invalidateQueries({ queryKey: ["projects", projectId, "summary"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
     },
   });
 }

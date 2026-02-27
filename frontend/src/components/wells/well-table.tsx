@@ -122,7 +122,7 @@ const columns: ColumnDef<Well>[] = [
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/wells/${row.original.id}`}>
+            <Link href={`/wells/${row.original.id}/edit`}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit
             </Link>

@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
-import type { ProductionRecord, ProductionBatchCreate, ProductionStatistics, ProductionFilters } from "@/types/production";
+import type { ProductionRecord, ProductionBatchCreate, ProductionStatistics, ProductionFilters, BulkProductionImportResult } from "@/types/production";
 
 export function useProduction(wellId: string, filters: ProductionFilters = {}) {
   return useQuery({
@@ -21,6 +21,7 @@ export function useProductionStats(wellId: string) {
     queryKey: ["production-stats", wellId],
     queryFn: () => api.get<ProductionStatistics>(`/wells/${wellId}/production/statistics`),
     enabled: !!wellId,
+    refetchInterval: 30_000,
   });
 }
 
@@ -33,6 +34,8 @@ export function useBatchCreateProduction(wellId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["production", wellId] });
       queryClient.invalidateQueries({ queryKey: ["production-stats", wellId] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 }
@@ -72,6 +75,25 @@ export function useDeleteProduction(wellId: string) {
       queryClient.invalidateQueries({ queryKey: ["production", wellId] });
       queryClient.invalidateQueries({ queryKey: ["production-stats", wellId] });
       queryClient.invalidateQueries({ queryKey: ["dca", wellId] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+}
+
+export function useBulkProductionImport() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (formData: FormData) =>
+      api.upload<BulkProductionImportResult>("/imports/production/bulk", formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["production"] });
+      queryClient.invalidateQueries({ queryKey: ["production-stats"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["wells"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["dca"] });
     },
   });
 }

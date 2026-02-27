@@ -23,6 +23,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useProjects } from "@/hooks/use-projects";
 
 interface WellFormProps {
@@ -32,6 +33,7 @@ interface WellFormProps {
 }
 
 export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) {
+  const router = useRouter();
   const toInputValue = (value: string | number | undefined | null) => value ?? "";
   const { data: projectsData } = useProjects();
   const projects = projectsData?.data || [];
@@ -380,7 +382,7 @@ export function WellForm({ onSubmit, isLoading, defaultValues }: WellFormProps) 
         <Separator />
 
         <div className="flex justify-end gap-3">
-          <Button type="button" variant="outline">
+          <Button type="button" variant="outline" onClick={() => router.back()}>
             Cancel
           </Button>
           <Button type="submit" disabled={isLoading}>

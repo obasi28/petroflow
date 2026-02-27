@@ -259,3 +259,94 @@ def transform_well_data(file_content: bytes, file_type: str, column_mapping: dic
         records.append(record)
 
     return records
+
+
+# ---------------------------------------------------------------------------
+# Bulk production helpers
+# ---------------------------------------------------------------------------
+
+WELL_IDENTIFIER_PATTERNS = [
+    "well_name", "well name", "well", "wellname",
+    "api", "api_number", "api number", "api_num", "api#",
+    "uwi", "uwi_number", "uwi number",
+]
+
+
+def auto_detect_bulk_production_columns(columns: list[str]) -> dict:
+    """Extend standard production detection with a well identifier column."""
+    mapping = auto_detect_columns(columns)
+
+    for col in columns:
+        col_lower = col.lower().strip()
+        if any(p == col_lower or p in col_lower for p in WELL_IDENTIFIER_PATTERNS):
+            if "well_identifier_column" not in mapping:
+                mapping["well_identifier_column"] = col
+                break
+
+    return mapping
+
+
+def transform_bulk_production_data(
+    file_content: bytes,
+    file_type: str,
+    column_mapping: dict,
+) -> dict[str, list[dict]]:
+    """Transform file into production records grouped by well identifier.
+
+    Returns: { "well_identifier_value": [{"production_date": ..., "oil_rate": ...}, ...] }
+    """
+    df = _read_table(file_content, file_type)
+
+    well_id_col = column_mapping.get("well_identifier_column")
+    date_col = column_mapping.get("date_column")
+    oil_col = column_mapping.get("oil_column")
+    gas_col = column_mapping.get("gas_column")
+    water_col = column_mapping.get("water_column")
+
+    if not well_id_col:
+        raise ValueError("Well identifier column mapping is required")
+    if not date_col:
+        raise ValueError("Date column mapping is required")
+
+    available_columns = set(df.columns.tolist())
+    for mapped_col in (well_id_col, date_col, oil_col, gas_col, water_col):
+        if mapped_col and mapped_col not in available_columns:
+            raise ValueError(
+                f"Mapped column '{mapped_col}' was not found in file. "
+                "Please review the mapping and try again."
+            )
+
+    grouped: dict[str, list[dict]] = {}
+
+    for _, row in df.iterrows():
+        identifier = row.get(well_id_col)
+        if pd.isna(identifier) or not str(identifier).strip():
+            continue
+        identifier = str(identifier).strip()
+
+        try:
+            prod_date = pd.to_datetime(row[date_col]).date()
+        except (ValueError, TypeError):
+            continue
+
+        record: dict = {"production_date": prod_date.isoformat()}
+
+        if oil_col and pd.notna(row.get(oil_col)):
+            try:
+                record["oil_rate"] = float(row[oil_col])
+            except (TypeError, ValueError):
+                pass
+        if gas_col and pd.notna(row.get(gas_col)):
+            try:
+                record["gas_rate"] = float(row[gas_col])
+            except (TypeError, ValueError):
+                pass
+        if water_col and pd.notna(row.get(water_col)):
+            try:
+                record["water_rate"] = float(row[water_col])
+            except (TypeError, ValueError):
+                pass
+
+        grouped.setdefault(identifier, []).append(record)
+
+    return grouped

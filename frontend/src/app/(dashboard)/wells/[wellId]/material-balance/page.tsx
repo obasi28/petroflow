@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { useParams } from "next/navigation";
 import {
   useCalculateMB,
@@ -8,6 +8,7 @@ import {
   useSaveMBAnalysis,
   useDeleteMBAnalysis,
 } from "@/hooks/use-material-balance";
+import { useMBStore } from "@/stores/material-balance-store";
 import { MaterialBalanceInputForm } from "@/components/material-balance/material-balance-input-form";
 import { MaterialBalanceChart } from "@/components/material-balance/material-balance-chart";
 import { DriveMechanismPanel } from "@/components/material-balance/drive-mechanism-panel";
@@ -22,44 +23,13 @@ import type {
   MaterialBalanceAnalysis,
 } from "@/types/material-balance";
 
-const DEFAULT_INPUTS: MaterialBalanceCalculateRequest = {
-  initial_pressure: 4000,
-  boi: 1.2511,
-  bgi: 0.00087,
-  rsi: 510,
-  method: "havlena_odeh",
-  gas_cap_ratio: 0,
-  swi: 0.2,
-  cf: 0.000003,
-  cw: 0.000003,
-  pressure_history: [
-    { pressure: 3900, np_cum: 500000, gp_cum: 255000, wp_cum: 0, wi_cum: 0, gi_cum: 0 },
-    { pressure: 3800, np_cum: 1100000, gp_cum: 522500, wp_cum: 10000, wi_cum: 0, gi_cum: 0 },
-    { pressure: 3700, np_cum: 1800000, gp_cum: 810000, wp_cum: 30000, wi_cum: 0, gi_cum: 0 },
-    { pressure: 3600, np_cum: 2600000, gp_cum: 1118600, wp_cum: 60000, wi_cum: 0, gi_cum: 0 },
-    { pressure: 3500, np_cum: 3500000, gp_cum: 1487500, wp_cum: 100000, wi_cum: 0, gi_cum: 0 },
-  ],
-  pvt_data: [
-    { pressure: 4000, bo: 1.2511, bg: 0.00087, bw: 1.012, rs: 510 },
-    { pressure: 3900, bo: 1.2353, bg: 0.00092, bw: 1.012, rs: 477 },
-    { pressure: 3800, bo: 1.2222, bg: 0.00096, bw: 1.012, rs: 450 },
-    { pressure: 3700, bo: 1.2100, bg: 0.00101, bw: 1.013, rs: 425 },
-    { pressure: 3600, bo: 1.1990, bg: 0.00107, bw: 1.013, rs: 401 },
-  ],
-};
-
 export default function MaterialBalancePage() {
   const params = useParams();
   const wellId = params.wellId as string;
 
-  const [inputs, setInputs] =
-    useState<MaterialBalanceCalculateRequest>(DEFAULT_INPUTS);
-  const [result, setResult] =
-    useState<MaterialBalanceCalculateResponse | null>(null);
-  const [chartMode, setChartMode] = useState<"f_vs_et" | "campbell">(
-    "f_vs_et",
-  );
-  const [analysisName, setAnalysisName] = useState("");
+  // Zustand store — state persists across tab switches within the same well
+  const store = useMBStore();
+  const { inputs, result, chartMode, analysisName, autoLoaded } = store.getWellState(wellId);
 
   const calculateMutation = useCalculateMB();
   const saveMutation = useSaveMBAnalysis(wellId);
@@ -67,22 +37,21 @@ export default function MaterialBalancePage() {
   const { data: analysesData } = useMBAnalyses(wellId);
   const savedAnalyses = analysesData?.data || [];
 
-  // Auto-load most recent saved analysis on first mount
-  const autoLoaded = useRef(false);
+  // Auto-load most recent saved analysis (only once per well)
   useEffect(() => {
-    if (!autoLoaded.current && savedAnalyses.length > 0 && !result) {
-      autoLoaded.current = true;
+    if (!autoLoaded && savedAnalyses.length > 0 && !result) {
+      store.setAutoLoaded(wellId);
       const latest = savedAnalyses[0];
       const savedInputs = latest.inputs as unknown as MaterialBalanceCalculateRequest;
       if (savedInputs.pressure_history) {
-        setInputs(savedInputs);
+        store.setInputs(wellId, savedInputs);
       }
       const savedResults = latest.results as unknown as MaterialBalanceCalculateResponse;
       if (savedResults.ooip !== undefined) {
-        setResult(savedResults);
+        store.setResult(wellId, savedResults);
       }
     }
-  }, [savedAnalyses, result]);
+  }, [savedAnalyses, result, autoLoaded, wellId, store]);
 
   const handleCalculate = useCallback(() => {
     calculateMutation.mutate(
@@ -90,7 +59,7 @@ export default function MaterialBalancePage() {
       {
         onSuccess: (response) => {
           if (response.data) {
-            setResult(response.data);
+            store.setResult(wellId, response.data);
             const ooip = response.data.ooip;
             toast.success(
               ooip
@@ -104,7 +73,7 @@ export default function MaterialBalancePage() {
         onError: (err) => toast.error(err instanceof Error ? err.message : "Material balance calculation failed"),
       },
     );
-  }, [wellId, inputs, calculateMutation]);
+  }, [wellId, inputs, calculateMutation, store]);
 
   const handleSave = useCallback(() => {
     if (!result || !analysisName.trim()) {
@@ -124,28 +93,28 @@ export default function MaterialBalancePage() {
       {
         onSuccess: () => {
           toast.success("Analysis saved");
-          setAnalysisName("");
+          store.setAnalysisName(wellId, "");
         },
         onError: () => toast.error("Failed to save analysis"),
       },
     );
-  }, [result, analysisName, inputs, saveMutation]);
+  }, [result, analysisName, inputs, saveMutation, wellId, store]);
 
   const handleLoadAnalysis = useCallback(
     (analysis: MaterialBalanceAnalysis) => {
       const savedInputs =
         analysis.inputs as unknown as MaterialBalanceCalculateRequest;
       if (savedInputs.pressure_history) {
-        setInputs(savedInputs);
+        store.setInputs(wellId, savedInputs);
       }
       const savedResults =
         analysis.results as unknown as MaterialBalanceCalculateResponse;
       if (savedResults.ooip !== undefined) {
-        setResult(savedResults);
+        store.setResult(wellId, savedResults);
       }
       toast.success(`Loaded: ${analysis.name}`);
     },
-    [],
+    [wellId, store],
   );
 
   const handleDeleteAnalysis = useCallback(
@@ -162,7 +131,7 @@ export default function MaterialBalancePage() {
     <div className="grid gap-4 lg:grid-cols-[260px_1fr_260px]">
       {/* Left Panel: Inputs */}
       <div className="space-y-3">
-        <MaterialBalanceInputForm inputs={inputs} onChange={setInputs} />
+        <MaterialBalanceInputForm inputs={inputs} onChange={(v) => store.setInputs(wellId, v)} />
 
         <Button
           className="w-full"
@@ -184,7 +153,7 @@ export default function MaterialBalancePage() {
               <Input
                 placeholder="Analysis name..."
                 value={analysisName}
-                onChange={(e) => setAnalysisName(e.target.value)}
+                onChange={(e) => store.setAnalysisName(wellId, e.target.value)}
                 className="h-8 text-xs"
               />
               <Button
@@ -255,7 +224,7 @@ export default function MaterialBalancePage() {
                     variant={chartMode === key ? "default" : "ghost"}
                     size="sm"
                     className="h-7 text-xs"
-                    onClick={() => setChartMode(key)}
+                    onClick={() => store.setChartMode(wellId, key)}
                   >
                     {label}
                   </Button>
